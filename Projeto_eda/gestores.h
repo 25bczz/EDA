@@ -15,6 +15,4 @@ RG* adicionarGestor(RG* topoG, char nome[], char morada[], char password[], int 
 
 RG* removerGestor(RG* topoG, int NIF);
 
-int existeGestor(RG* topoG, int NIF, char password[]);
-
 #endif

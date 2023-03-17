@@ -11,10 +11,5 @@
 
 void main()
 {
-	RC* topoC = conteudoRC();
-	RG* topoG = conteudoRG();
-	RM* topoM = conteudoRM();
-	RA* topoA = conteudoRA();
-
-	menu(topoC, topoG, topoM, topoA);
+	menu();
 }

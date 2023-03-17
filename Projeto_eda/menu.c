@@ -99,8 +99,8 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação
     scanf("%s", password);
     v = verificarClienteGestor(topoC, topoG, NIF, password);
 
-    if(v) menuGestor(topoC, topoG, topoM, topoA);
-    else menuCliente(topoC, topoG, topoM, topoA);
+    if(v) menuGestor(topoC, topoG, topoM, topoA, NIF);
+    else menuCliente(topoC, topoG, topoM, topoA, NIF);
 }
 
 void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com o cliente
@@ -137,7 +137,7 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
 
                 if(!v)
                 {
-                topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
+                    topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
                 }
                 break;
             }
@@ -162,12 +162,13 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
 
                 if(!v)
                 {
-                topoG = adicionarGestor(topoG, nome, morada, password, NIF);
+                    topoG = adicionarGestor(topoG, nome, morada, password, NIF);
                 }
                 break;
             }
             default:
             {
+                limparTela();
                 print("Opcao invalida.\n");
                 enterContinuar();// Enter para continuar a interação e introduzir outra opção
                 break;
@@ -176,14 +177,164 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
     }while(op != 1 && op != 2);
 }
 
-void menu(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com o cliente
+void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de interação com o cliente
+{
+    int op;
+    do
+    {
+        RC* topoC = conteudoRC();
+        RG* topoG = conteudoRG();
+        RM* topoM = conteudoRM();
+        RA* topoA = conteudoRA();
+
+        limparTela();
+        printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Pesquisar meios por localidade\n5 - Editar dados da minha conta\n6 - Eliminar a minha conta\n0 - Sair\n");
+        scanf("%d", &op);
+
+        switch(op)
+        {
+            case 1:
+            {
+                float pagamento;
+
+                limparTela();
+                printf("Introduza o saldo que deseja carregar:\n");
+                scanf("%d", &pagamento);
+
+                topoC = carregarSaldo(topoC, NIF, pagamento);
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+
+                limparTela();
+                printf("Saldo atualizado com sucesso!\n");
+                enterContinuar();
+                break;
+            }
+            case 2:
+            {
+                limparTela();
+                listarMeios(topoM);
+                enterContinuar();
+                break;
+            }
+            case 3:
+            {
+                int ID, v;
+
+                limparTela();
+                listarMeios(topoM);
+                printf("Introduza o ID do meio que deseja alugar:\n");
+                scanf("%d", &ID);
+
+                v = Alugar(topoC, topoM, topoA, ID, NIF);
+
+                if(v)
+                {
+                    limparTela();
+                    printf("Meio alugado com sucesso\n");
+                    enterContinuar();
+                }
+                else
+                {
+                    limparTela();
+                    printf("Ocorreu um erro ao alugar o meio.\n");
+                    enterContinuar();
+                }
+
+                break;
+            }
+            case 4:
+            {
+                char localidade[TAM_MORADA];
+                RM* encontrados;
+
+                printf("Introduza a localidade que quer procurar:\n");
+                scanf("%s", localidade);
+
+                encontrados = pesquisarLocalidade(topoM, localidade);
+
+                limparTela();
+                listarMeios(encontrados);
+                enterContinuar();
+
+                break;
+            }
+            case 5:
+            {
+                limparTela();
+                topoC = editarDadosCliente(topoC, NIF);
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                break;
+            }
+            case 6:
+            {
+                int v;
+
+                limparTela();
+                printf("Deseja realmente eliminar a sua conta?\n1 - Sim\n2 - Nao");
+                scanf("%d", &v);
+                
+                if(v)
+                {
+                    topoC =  removerCliente(topoC, NIF);
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+
+                    printf("Conta eliminada com sucesso!\n");
+                    enterContinuar();
+                }
+
+                break;
+            }
+            case 0: break;
+            default:
+            {
+                limparTela();
+                printf("Opcao invalida.\n");
+                enterContinuar();
+            }
+        }
+    } while (op != 0);
+    
+}
+
+void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de interação com o cliente
 {
     int op;
 
     do
     {
+        RC* topoC = conteudoRC();
+        RG* topoG = conteudoRG();
+        RM* topoM = conteudoRM();
+        RA* topoA = conteudoRA();
+
+        limparTela();
+        printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
+        scanf("%d", &op);
+
+        switch(op)
+        {
+
+        }
+    } while (op != 0);
+    
+}
+
+void menu()// Menu de interação com o cliente
+{
+    int op;
+    do
+    {
+        RC* topoC = conteudoRC();
+	    RG* topoG = conteudoRG();
+	    RM* topoM = conteudoRM();
+	    RA* topoA = conteudoRA();
+
+
         limparTela();// Limpa a tela
-        printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair");
+        printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
         scanf("%d", &op);
         limparTela();// Limpa a tela
         switch(op)
@@ -196,13 +347,14 @@ void menu(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com 
             case 2:
             {
                 menuRegistro(topoC, topoG, topoM, topoA);// Entra em outro menu de interação com o utilizador
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
                 break;
             }
-            case 0:
-                //Falta isto
-                break;
+            case 0: break;
             default:
             {
+                limparTela();
                 print("Opcao invalida.\n");
                 enterContinuar();// Enter para continuar a interação e introduzir outra opção
                 break;

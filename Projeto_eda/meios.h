@@ -9,6 +9,7 @@ typedef struct registo_meio
 	int ID;
 	char nome[TAM_NOME], localizacao[TAM_MORADA];
 	float bateria, autonomia, custo;
+	int alugado;
 	struct registo_meio* seguinte;
 }RM;
 

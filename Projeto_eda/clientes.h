@@ -18,11 +18,15 @@ RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int
 
 RC* removerCliente(RC* topoC, int NIF);
 
-RC* editarDados(RC* topoC, int NIF);
+RC* editarDadosCliente(RC* topoC, int NIF);
 
 RC* carregarSaldo(RC* topoC, int NIF, float pagamento);
 
 int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF);
+
+RM* pesquisarLocalidade(RM* topoM, char localidade[]);
+
+int verificarAlugado(RM* topoM, int ID);
 
 int existeCliente(RC* topoC, int NIF, char password[]);
 
