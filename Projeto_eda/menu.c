@@ -9,84 +9,6 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
-int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Verifica se o usuário é cliente ou gestor, devolve 0 caso seja cliente e devolve 1 caso seja gestor
-{
-    int c = -1, g = -1, op;// Inicialização das variáveis como -1 para verificação
-
-    while(topoC != NULL)// Percorre a lista de clientes e verifica se há um NIF igual e altera o valor da variavel de controlo
-    {
-        if(topoC->NIF == NIF && (strcmp(topoC->password,password) == 0))
-        {
-            c = 0;
-        }
-        topoC = topoC->seguinte;
-    }
-
-    while(topoG != NULL)// Percorre a lista de gestores e verifica se há um NIF igual e altera o valor da variavel de controlo
-    {
-        if(topoG->NIF == NIF && (strcmp(topoG->password,password) == 0))
-        {
-            g = 1;
-        }
-        topoG = topoG->seguinte;
-    }
-
-    if(c != -1 && g != -1)// Verifica os valores das variaveis de controlo
-    {
-        do{
-            limparTela();
-            printf("Existem 2 contas com esses dados. Como deseja prosseguir?\n1 - Cliente\n2 - Gestor\n");
-            scanf("%d", &op);
-
-            switch(op)
-            {
-                case 1: return 0;
-                case 2: return 1;
-            }
-        }while(op != 1 && op != 2);
-    }
-    else if(c == -1 && g == -1)
-    {
-        limparTela();
-        printf("Não existe nenhuma conta com esses dados.\n");
-        enterContinuar();
-    }
-    else if(c != -1 && g == -1) return 0;
-    else return 1;
-}
-
-int verificarClienteNIF(RC* topoC, int NIF)// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
-{
-    while(topoC != NULL)
-    {
-        if(topoC->NIF == NIF)
-        {
-            limparTela();
-            printf("Ja existe um cliente com esse NIF registado.\n");
-            enterContinuar();
-            return 1;
-        }
-        topoC = topoC->seguinte;
-    }
-    return 0;
-}
-
-int verificarGestorNIF(RG* topoG, int NIF)// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
-{
-    while(topoG != NULL)
-    {
-        if(topoG->NIF == NIF)
-        {
-            limparTela();
-            printf("Ja existe um gestor com esse NIF registado.\n");
-            enterContinuar();
-            return 1;
-        }
-        topoG = topoG->seguinte;
-    }
-    return 0;
-}
-
 void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com o cliente
 {
     int v, NIF;
@@ -96,6 +18,7 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação
     printf("Introduza o seu NIF:\n");
     scanf("%d", &NIF);
     printf("Introduza a sua password\n");
+    limparBuffer();
     scanf("%s", password);
     v = verificarClienteGestor(topoC, topoG, NIF, password);
 
@@ -124,10 +47,10 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 gets(nome);
                 printf("Introduza a sua morada:\n");
                 limparBuffer();
-                gets(morada);
+                scanf("%s", morada);
                 printf("Introduza a sua password:\n");
                 limparBuffer();
-                gets(password);
+                scanf("%s", password);
                 printf("Introduza o seu NIF:\n");
                 scanf("%d", &NIF);
                 printf("Introduza a sua idade:\n");
@@ -139,6 +62,8 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 {
                     topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
                 }
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
                 break;
             }
             case 2:
@@ -151,10 +76,10 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 gets(nome);
                 printf("Introduza a sua morada:\n");
                 limparBuffer();
-                gets(morada);
+                scanf("%s", morada);
                 printf("Introduza a sua password:\n");
                 limparBuffer();
-                gets(password);
+                scanf("%s", password);
                 printf("Introduza o seu NIF:\n");
                 scanf("%d", &NIF);
 
@@ -164,6 +89,8 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 {
                     topoG = adicionarGestor(topoG, nome, morada, password, NIF);
                 }
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
                 break;
             }
             default:
@@ -248,7 +175,9 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
                 char localidade[TAM_MORADA];
                 RM* encontrados;
 
+                limparTela();
                 printf("Introduza a localidade que quer procurar:\n");
+                limparBuffer();
                 scanf("%s", localidade);
 
                 encontrados = pesquisarLocalidade(topoM, localidade);
@@ -272,7 +201,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
                 int v;
 
                 limparTela();
-                printf("Deseja realmente eliminar a sua conta?\n1 - Sim\n2 - Nao");
+                printf("Deseja realmente eliminar a sua conta?\n1 - Sim\n2 - Nao\n");
                 scanf("%d", &v);
                 
                 if(v)
@@ -316,7 +245,126 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
 
         switch(op)
         {
+            case 1:
+            {
+                limparTela();
+                listarClientes(topoC);
+                enterContinuar();
+                break;
+            }
+            case 2:
+            {
+                int v, elim;
 
+                limparTela();
+                listarClientes(topoC);
+                printf("\nIntroduza o NIF do cliente que deseja eliminar:\n");
+                scanf("%d", &elim);
+                limparTela();
+                printf("Deseja realmente eliminar este cliente?\n1 - Sim\n2 - Nao\n");
+                scanf("%d", &v);
+                
+                if(v)
+                {
+                    topoC =  removerCliente(topoC, elim);
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+
+                    limparTela();
+                    printf("Conta eliminada com sucesso!\n");
+                    enterContinuar();
+                }
+                break;
+            }
+            case 3:
+            {
+                limparTela();
+                listarMeios(topoM);
+                enterContinuar();
+                break;
+            }
+            case 4:
+            {
+                int ID;
+                char nome[TAM_NOME], localizacao[TAM_MORADA];
+                float bateria, autonomia, custo;
+
+                limparTela();
+                ID = darID(topoM);
+                printf("Introduza o tipo de meio que deseja adicionar:\n");
+                limparBuffer();
+                gets(nome);
+                printf("Introduza a localizacao do veiculo:\n");
+                limparBuffer();
+                scanf("%s", localizacao);
+                printf("Introduza a bateria restante no veiculo:\n");
+                scanf("%f", &bateria);
+                printf("Introduza a autonomia restante no veiculo:\n");
+                scanf("%f", &autonomia);
+                printf("Introduza o custo para alugar o veiculo:\n");
+                scanf("%f", &custo);
+
+                topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo);
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+
+                limparTela();
+                printf("Meio adicionado com sucesso\n");
+                enterContinuar();
+                break;
+            }
+            case 5:
+            {
+                char localidade[TAM_MORADA];
+                RM* encontrados;
+
+                limparTela();
+                printf("Introduza a localidade que quer procurar:\n");
+                limparBuffer();
+                scanf("%s", localidade);
+
+                encontrados = pesquisarLocalidade(topoM, localidade);
+
+                limparTela();
+                listarMeios(encontrados);
+                enterContinuar();
+                break;
+            }
+            case 6:
+            {
+                limparTela();
+                topoG = editarDadosGestor(topoG, NIF);
+                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                break;
+            }
+            case 7:
+            {
+                int v;
+
+                limparTela();
+                printf("Deseja realmente eliminar a sua conta?\n1 - Sim\n2 - Nao\n");
+                scanf("%d", &v);
+                
+                if(v)
+                {
+                    topoG =  removerGestor(topoG, NIF);
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+
+                    limparTela();
+                    printf("Conta eliminada com sucesso!\n");
+                    enterContinuar();
+                }
+                break;
+            }
+            case 0: break;
+            default:
+            {
+                limparTela();
+                printf("Opcao invalida.\n");
+                enterContinuar();
+            }
         }
     } while (op != 0);
     
@@ -347,8 +395,6 @@ void menu()// Menu de interação com o cliente
             case 2:
             {
                 menuRegistro(topoC, topoG, topoM, topoA);// Entra em outro menu de interação com o utilizador
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
                 break;
             }
             case 0: break;

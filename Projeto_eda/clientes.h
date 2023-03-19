@@ -12,24 +12,18 @@ typedef struct registo_cliente
 	struct registo_cliente* seguinte;
 }RC;
 
-//fzr listagem clientes
-
 RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int NIF, int idade);
-
-RC* removerCliente(RC* topoC, int NIF);
 
 RC* editarDadosCliente(RC* topoC, int NIF);
 
+RC* removerCliente(RC* topoC, int NIF);
+
 RC* carregarSaldo(RC* topoC, int NIF, float pagamento);
+
+void listarClientes(RC* topoC);
 
 int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF);
 
 RM* pesquisarLocalidade(RM* topoM, char localidade[]);
-
-int verificarAlugado(RM* topoM, int ID);
-
-int existeCliente(RC* topoC, int NIF, char password[]);
-
-int verificarPasswordAntigaClientes(RC* topoC, int NIF, char password[]);
 
 #endif

@@ -1,19 +1,20 @@
-	#include <stdio.h>
-    #include <stdlib.h>
+#ifndef UTILIDADES_H_
+#define UTILIDADES_H_
+ 
+void limparTela();
 
-    void limparTela()
-	{
-		system("@cls||clear");
-	}
+void limparBuffer();
 
-	void limparBuffer()
-	{
-		fflush(stdin);
-	}
+void enterContinuar();
 
-	void enterContinuar()
-	{
-		limparBuffer();
-		printf("Pressione ENTER para continuar..");
-		getchar();
-	}
+int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[]);// Verifica se o usuário é cliente ou gestor, devolve 0 caso seja cliente e devolve 1 caso seja gestor
+
+int verificarClienteNIF(RC* topoC, int NIF);// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
+
+int verificarGestorNIF(RG* topoG, int NIF);// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
+
+int verificarAlugado(RM* topoM, int ID);
+
+int verificarPasswordAntigaClientes(RC* topoC, int NIF, char password[]);
+
+#endif

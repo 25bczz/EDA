@@ -26,9 +26,9 @@ RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bate
 
 RM* removerMeio(RM* topoM, int ID);
 
-int existeMeio(RM* topoM, int ID);
-
 void listarMeios(RM* topoM);
+
+int darID(RM* topoM);
 
 RA* adicionarAluguer(RA* topoA, int NIF, RM* topoM);
 
