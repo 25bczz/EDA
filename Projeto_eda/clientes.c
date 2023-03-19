@@ -130,6 +130,26 @@ RC* removerCliente(RC* topoC, int NIF)
 		}
 }
 
+void listarClientes(RC* topoC)
+{
+	if (topoC != NULL)
+	{
+		limparTela();
+		while (topoC != NULL)
+		{
+			printf("NIF - %d\nNome - %s\nIdade - %d\n\n", topoC->NIF, topoC->nome, topoC->idade);
+			topoC = topoC->seguinte;
+		}
+		enterContinuar();
+	}
+	else
+	{
+		limparTela();
+		printf("Nao existem clientes.\n");
+		enterContinuar();
+	}
+}
+
 RC* carregarSaldo(RC* topoC, int NIF, float pagamento)
 {
 	while (topoC != NULL)
@@ -162,8 +182,8 @@ int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 				if (topoC->saldo < aux->custo) return 0;
 				else
 				{
-					topoC = carregarSaldo(topoC, NIF, -aux->custo);
-					topoA = adicionarAlugueres(topoA, aux, NIF);
+					topoC = carregarSaldo(topoC, NIF, -(aux->custo));
+					topoA = adicionarAluguer(topoA, aux, NIF);
 					return 1;
 				}
 			}
@@ -171,4 +191,40 @@ int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 		}
 	}
 	else return 0;
+}
+
+RM* pesquisarLocalidade(RM* topoM, char localidade[])
+{
+	int v = 0;
+	RM* aux = NULL;
+
+	if(topoM != NULL)
+	{
+		while(topoM != NULL)
+		{
+			if(strcmp(topoM->localizacao,localidade) == 0)
+			{
+				v = 1;
+				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
+			}
+			topoM = topoM->seguinte;
+		}
+
+		if(v)
+		{
+			limparTela();
+			listarMeios(aux);
+			entercontinuar();
+		}
+		else
+		{
+			printf("Nao existem meios disponiveis nessa localidade neste momento.\n");
+		}
+	}
+	else
+	{
+		limparTela();
+		printf("Nao existem meios disponiveis no momento\n");
+		enterContinuar();
+	}
 }

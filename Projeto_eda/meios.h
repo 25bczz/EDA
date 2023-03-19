@@ -30,6 +30,6 @@ void listarMeios(RM* topoM);
 
 int darID(RM* topoM);
 
-RA* adicionarAluguer(RA* topoA, int NIF, RM* topoM);
+RA* adicionarAluguer(RA* topoA, RM* topoM, int NIF);
 
 #endif

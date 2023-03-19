@@ -18,9 +18,9 @@ RC* editarDadosCliente(RC* topoC, int NIF);
 
 RC* removerCliente(RC* topoC, int NIF);
 
-RC* carregarSaldo(RC* topoC, int NIF, float pagamento);
-
 void listarClientes(RC* topoC);
+
+RC* carregarSaldo(RC* topoC, int NIF, float pagamento);
 
 int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF);
 
