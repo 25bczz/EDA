@@ -9,11 +9,20 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
+/// @brief Esta funcao adiciona um novo meio à lista ligada. Ela utiliza uma função auxiliar que atribui automaticamente o ID
+/// @param topoM endereço do topo da lista dos meios
+/// @param ID ID do novo meio
+/// @param nome tipo do novo meio
+/// @param localizacao localizacao onde se encontra o novo meio
+/// @param bateria bateria restante do novo meio
+/// @param autonomia autonomia restante do novo meio
+/// @param custo custo de aluguer de um novo meio
+/// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o novo meio adicionado no topo
 RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo)
 {
 	RM* novo = malloc(sizeof(RM));
 
-    ID = darid(topoM);
+    novo->ID = ID;
 	strcpy(novo->nome, nome);
 	strcpy(novo->localizacao, localizacao);
 	novo->bateria = bateria;
@@ -27,6 +36,10 @@ RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bate
 	return novo;
 }
 
+/// @brief Esta função permite a um gestor alterar o custo de aluguer de um certo meio
+/// @param topoM endereço do topo da lista dos meios
+/// @param ID ID do meio que desejamos alterar o valor
+/// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o custo do meio alterado
 RM* editarMeio(RM* topoM, int ID)
 {
     float custo;
@@ -53,6 +66,9 @@ RM* editarMeio(RM* topoM, int ID)
     return topoM;
 }
 
+/// @brief Esta funcao utiliza uma variavel auxiliar. Ela vai percorrendo a lista até achar o ID igual ao do meio que desejamos remover no endereço seguinte da lista para então o podermos remover
+/// @param topoM endereço do topo da lista dos meios
+/// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o meio removido
 RM* removerMeio(RM* topoM, int ID)
 {
 	while (topoM != NULL)
@@ -75,6 +91,9 @@ RM* removerMeio(RM* topoM, int ID)
 	}
 }
 
+/// @brief Esta função ordena os meios por quantidade de bateria, de maneira decrescente
+/// @param topoM endereço do topo da lista dos meios
+/// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com os meios ordenados por quantidade de bateria de forma decrescente
 RM* ordenarMeios(RM* topoM)
 {
     int trocado = 1;
@@ -109,6 +128,8 @@ RM* ordenarMeios(RM* topoM)
     }
 }
 
+/// @brief Esta funcao percorre a lista dos meios e vai imprimindo as informações no terminal
+/// @param topoM endereço do topo da lista dos meios
 void listarMeios(RM* topoM)
 {
 	if (topoM != NULL)
@@ -133,6 +154,9 @@ void listarMeios(RM* topoM)
 	}
 }
 
+/// @brief Esta função atribui automaticamente um ID para cada meio, por ordem crescente
+/// @param topoM endereço do topo da lista dos meios
+/// @return atribui um valor do tipo int, que é o novo ID para o meio
 int darID(RM* topoM)
 {
     if(topoM != NULL)
@@ -149,6 +173,11 @@ int darID(RM* topoM)
     else return 1;
 }
 
+/// @brief Esta função permite adionar um novo registo de aluguer à lista ligada
+/// @param topoA endereço do topo da lista dos alugueres
+/// @param topoM endereço do topo da lista do meio que foi alugado
+/// @param NIF NIF do cliente que alugou um meio
+/// @return retorna um valor do tipo apontador para RA, sendo este o endereço do topo da lista com o aluguer adicionado
 RA* adicionarAluguer(RA* topoA, RM* topoM, int NIF)
 {
 	RA* novo = malloc(sizeof(RA));

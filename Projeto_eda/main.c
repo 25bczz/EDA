@@ -9,6 +9,7 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
+/// @brief Esta função acede ao menu de interação
 void main()
 {
 	menu();

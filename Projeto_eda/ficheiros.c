@@ -11,7 +11,9 @@
 
 //				FICHEIROS DE TEXTO
 
-RC* conteudoRC()// Função para ler do ficheiro clientes.txt e adicionar à lista topoC e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RC os valores encontrados.
+/// @return retorna o endereço do topo da lista dos clientes com todos os dados
+RC* conteudoRC()
 {
 	FILE* fp;
 	char nome[TAM_NOME], morada[TAM_MORADA], password[TAM_PASSWORD];
@@ -38,7 +40,9 @@ RC* conteudoRC()// Função para ler do ficheiro clientes.txt e adicionar à lis
 	return topoC;
 }
 
-RG* conteudoRG()// Função para ler do ficheiro gestores.txt e adicionar à lista topoG e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RG os valores encontrados.
+/// @return retorna o endereço do topo da lista dos gestores com todos os dados
+RG* conteudoRG()
 {
 	FILE* fp;
 	char nome[TAM_NOME], morada[TAM_MORADA], password[TAM_PASSWORD];
@@ -64,7 +68,9 @@ RG* conteudoRG()// Função para ler do ficheiro gestores.txt e adicionar à lis
 	return topoG;
 }
 
-RM* conteudoRM()// Função para ler do ficheiro meios.txt e adicionar à lista topoM e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RM os valores encontrados.
+/// @return retorna o endereço do topo da lista dos meios com todos os dados
+RM* conteudoRM()
 {
 	FILE* fp;
 	int ID;
@@ -91,7 +97,9 @@ RM* conteudoRM()// Função para ler do ficheiro meios.txt e adicionar à lista 
 	return topoM;
 }
 
-RA* conteudoRA()// Função para ler do ficheiro alugueres.txt e adicionar à lista topoA e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RA os valores encontrados.
+/// @return retorna o endereço do topo da lista dos alugueres com todos os dados
+RA* conteudoRA()
 {
 	FILE* fp;
 	int NIF;
@@ -109,7 +117,7 @@ RA* conteudoRA()// Função para ler do ficheiro alugueres.txt e adicionar à li
 		while (!feof(fp))
 		{
 			fscanf(fp, "%d;%d;%[^;];%[^;];%f;%f;%f", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo);
-			topoA = adicionarAluguer(topoA, NIF, meio); //meio->ID, meio->nome, meio->localizacao, meio->bateria, meio->autonomia, meio->custo
+			topoA = adicionarAluguer(topoA, NIF, meio);
 		}
 		fclose(fp);
 	}
@@ -117,7 +125,12 @@ RA* conteudoRA()// Função para ler do ficheiro alugueres.txt e adicionar à li
 	return topoA;
 }
 
-void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+/// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro de texto
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 {
 	FILE* fp;
 
@@ -194,7 +207,9 @@ void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Função qu
 
 //			FICHEIROS BINÁRIOS
 
-RC* conteudoBinRC() // Função para ler do ficheiro clientes.bin e adicionar à lista aux e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro binário e vai acrescentando a uma lista do tipo RC os valores encontrados.
+/// @return retorna o endereço do topo da lista dos clientes com todos os dados
+RC* conteudoBinRC() 
 {
 	FILE* fp;
 	RC* aux = NULL;
@@ -214,7 +229,9 @@ RC* conteudoBinRC() // Função para ler do ficheiro clientes.bin e adicionar à
 	return aux;
 }
 
-RG* conteudoBinRG()// Função para ler do ficheiro gestores.bin e adicionar à lista aux e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro binário e vai acrescentando a uma lista do tipo RG os valores encontrados.
+/// @return retorna o endereço do topo da lista dos gestores com todos os dados
+RG* conteudoBinRG()
 {
 	FILE* fp;
 	RG* aux = NULL;
@@ -234,7 +251,9 @@ RG* conteudoBinRG()// Função para ler do ficheiro gestores.bin e adicionar à 
 	return aux;
 }
 
-RM* conteudoBinRM()// Função para ler do ficheiro meios.bin e adicionar à lista aux e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro binário e vai acrescentando a uma lista do tipo RM os valores encontrados.
+/// @return retorna o endereço do topo da lista dos meios com todos os dados
+RM* conteudoBinRM()
 {
 	FILE* fp;
 	RM* aux = NULL;
@@ -254,7 +273,9 @@ RM* conteudoBinRM()// Função para ler do ficheiro meios.bin e adicionar à lis
 	return aux;
 }
 
-RA* conteudoBinRA()// Função para ler do ficheiro alugueres.bin e adicionar à lista aux e devolver o endereço inicial da lista após ler tudo
+/// @brief função que lê um ficheiro binário e vai acrescentando a uma lista do tipo RA os valores encontrados.
+/// @return retorna o endereço do topo da lista dos alugueres com todos os dados
+RA* conteudoBinRA()
 {
 	FILE* fp;
 	RA* aux = NULL;
@@ -266,7 +287,7 @@ RA* conteudoBinRA()// Função para ler do ficheiro alugueres.bin e adicionar à
 		RA aluguer;
 		while (fread(&aluguer, sizeof(RG), 1, fp) == 1)
 		{
-			aux = adicionarAluguer(aux, aluguer.NIF, aluguer.meio); //aluguer.meio->ID, aluguer.meio->nome, aluguer.meio->localizacao, aluguer.meio->bateria, aluguer.meio->autonomia, aluguer.meio->custo
+			aux = adicionarAluguer(aux, aluguer.NIF, aluguer.meio); 
 		}
 		fclose(fp);
 	}
@@ -274,7 +295,12 @@ RA* conteudoBinRA()// Função para ler do ficheiro alugueres.bin e adicionar à
 	return aux;
 }
 
-void adicionarFicheiroBin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+/// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro binário
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void adicionarFicheiroBin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 {
 //				CLIENTES
 	FILE* fp;

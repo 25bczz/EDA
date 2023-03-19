@@ -9,6 +9,14 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
+/// @brief Esta funcao adiciona um novo cliente à lista ligada. Primeiramente ela verifica se já existe um cliente com o mesmo NIF, caso não exista acrescenta então o novo membro no topo da lista.
+/// @param topoC endereço do topo da lista a que vamos acrescentar o novo cliente
+/// @param nome nome do cliente novo
+/// @param morada morada do cliente novo
+/// @param password password do cliente novo
+/// @param NIF NIF do cliente novo
+/// @param idade idade do cliente novo
+/// @return retorna um valor do tipo apontador para RC, ou seja o novo endereço do topo da lista
 RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int NIF, int idade)
 {
 	if (!verificarClienteNIF(topoC, NIF))
@@ -29,7 +37,10 @@ RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int
 	}
 	else return topoC;
 }
-
+/// @brief Esta função interage com o utilizador e pergunta que dados ele quer alterar. Dependendo da escolha ele encaminha para tal e vai percorrendo a lista até ter o NIF igual ao introduzido anteriormente e altera os valores.
+/// @param topoC endereço do topo da lista dos clientes
+/// @param NIF NIF do cliente que desejamos alterar os dados
+/// @return retorna um valor do tipo apontador para RC, sendo este o endereço do topo da lista com os dados atualizados
 RC* editarDadosCliente(RC* topoC, int NIF)
 {
 	int opcao;
@@ -115,6 +126,10 @@ RC* editarDadosCliente(RC* topoC, int NIF)
 	return topoC;
 }
 
+/// @brief Esta funcao utiliza uma variavel auxiliar. Ela vai percorrendo a lista até achar o NIF igual ao do cliente que desejamos remover no endereço seguinte da lista para então o podermos remover
+/// @param topoC endereço do topo da lista dos clientes
+/// @param NIF NIF do cliente que desejamos alterar os dados
+/// @return retorna um valor do tipo apontador para RC, sendo este o endereço do topo da lista com o utilizador removido
 RC* removerCliente(RC* topoC, int NIF)
 {
 		while (topoC != NULL)
@@ -132,6 +147,8 @@ RC* removerCliente(RC* topoC, int NIF)
 		}
 }
 
+/// @brief Esta funcao percorre a lista dos clientes e vai imprimindo as informações no terminal
+/// @param topoC endereço do topo da lista dos clientes
 void listarClientes(RC* topoC)
 {
 	if (topoC != NULL)
@@ -152,6 +169,11 @@ void listarClientes(RC* topoC)
 	}
 }
 
+/// @brief Esta funcao permite carregar o saldo de um cliente
+/// @param topoC endereço do topo da lista dos clientes
+/// @param NIF NIF do cliente que queremos "depositar" saldo
+/// @param pagamento quantidade que desejamos "depositar" na conta do cliente
+/// @return retorna o endereço para o topo da lista atualizada
 RC* carregarSaldo(RC* topoC, int NIF, float pagamento)
 {
 	while (topoC != NULL)
@@ -165,6 +187,13 @@ RC* carregarSaldo(RC* topoC, int NIF, float pagamento)
 	}
 }
 
+/// @brief Esta função utiliza a função de verificação que verifica se um meio já está alugado, depois, se esse meio não se encontrar alugado, a variavel auxiliar toma os valores do meio desejado. Seguidamente, verificamos se o cliente tem saldo suficiente e fazemos a transação
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+/// @param ID ID do meio que desejamos alugar
+/// @param NIF NIF do cliente que quer alugar
+/// @return retorna 1 se for possivel alugar e 0 se nao se verificar esta condição
 int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 {
 	RM* aux = NULL;
@@ -206,6 +235,10 @@ int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 	else return 0;
 }
 
+/// @brief Esta função procura um meio numa certa localidade
+/// @param topoM endereço do topo da lista dos meios
+/// @param localidade localidade que desejamos procurar pelos meios
+/// @return retorna um endereço para o topo da lista com os meios encontrados naquela localidade apenas
 RM* pesquisarLocalidade(RM* topoM, char localidade[])
 {
 	int v = 0;

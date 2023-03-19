@@ -9,12 +9,17 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
-void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com o cliente
+/// @brief Menu de interação com o cliente
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
 
-    limparTela();// Limpa a tela
+    limparTela();
     printf("Introduza o seu NIF:\n");
     scanf("%d", &NIF);
     printf("Introduza a sua password\n");
@@ -26,12 +31,17 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação
     else menuCliente(topoC, topoG, topoM, topoA, NIF);
 }
 
-void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interação com o cliente
+/// @brief Menu de interação com o cliente
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 {
     int op, v;
 
     do{
-        limparTela();// Limpa a tela
+        limparTela();
         printf("Introduza a opcao que desejar:\n1 - Gestor\n2 - Cliente\n");
         scanf("%d", &op);
 
@@ -62,8 +72,8 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 {
                     topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
                 }
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             case 2:
@@ -89,22 +99,27 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)// Menu de interaç
                 {
                     topoG = adicionarGestor(topoG, nome, morada, password, NIF);
                 }
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             default:
             {
                 limparTela();
                 print("Opcao invalida.\n");
-                enterContinuar();// Enter para continuar a interação e introduzir outra opção
+                enterContinuar();
                 break;
             }
         }
     }while(op != 1 && op != 2);
 }
 
-void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de interação com o cliente
+/// @brief Menu de interação com o cliente
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
 {
     int op;
     do
@@ -129,8 +144,8 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
                 scanf("%d", &pagamento);
 
                 topoC = carregarSaldo(topoC, NIF, pagamento);
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 
                 limparTela();
                 printf("Saldo atualizado com sucesso!\n");
@@ -192,8 +207,8 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
             {
                 limparTela();
                 topoC = editarDadosCliente(topoC, NIF);
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             case 6:
@@ -207,8 +222,8 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
                 if(v)
                 {
                     topoC =  removerCliente(topoC, NIF);
-                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 
                     printf("Conta eliminada com sucesso!\n");
                     enterContinuar();
@@ -228,7 +243,12 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de 
     
 }
 
-void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de interação com o cliente
+/// @brief Menu de interação com o cliente
+/// @param topoC endereço do topo da lista dos clientes
+/// @param topoG endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos meios
+/// @param topoA endereço do topo da lista dos alugueres
+void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
 {
     int op;
 
@@ -267,8 +287,8 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
                 if(v)
                 {
                     topoC =  removerCliente(topoC, elim);
-                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 
                     limparTela();
                     printf("Conta eliminada com sucesso!\n");
@@ -305,8 +325,8 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
                 scanf("%f", &custo);
 
                 topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo);
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 
                 limparTela();
                 printf("Meio adicionado com sucesso\n");
@@ -334,8 +354,8 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
             {
                 limparTela();
                 topoG = editarDadosGestor(topoG, NIF);
-                adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                adicionarFicheiro(topoC, topoG, topoM, topoA);
+                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             case 7:
@@ -349,8 +369,8 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
                 if(v)
                 {
                     topoG =  removerGestor(topoG, NIF);
-                    adicionarFicheiro(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
-                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 
                     limparTela();
                     printf("Conta eliminada com sucesso!\n");
@@ -370,7 +390,8 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)// Menu de i
     
 }
 
-void menu()// Menu de interação com o cliente
+/// @brief Menu de interação com o cliente
+void menu()
 {
     int op;
     do
@@ -381,20 +402,20 @@ void menu()// Menu de interação com o cliente
 	    RA* topoA = conteudoRA();
 
 
-        limparTela();// Limpa a tela
+        limparTela();
         printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
         scanf("%d", &op);
-        limparTela();// Limpa a tela
+        limparTela();
         switch(op)
         {
             case 1:
             {
-                menuLogin(topoC, topoG, topoM, topoA);// Entra em outro menu de interação com o utilizador
+                menuLogin(topoC, topoG, topoM, topoA);
                 break; 
             }
             case 2:
             {
-                menuRegistro(topoC, topoG, topoM, topoA);// Entra em outro menu de interação com o utilizador
+                menuRegistro(topoC, topoG, topoM, topoA);
                 break;
             }
             case 0: break;
@@ -402,7 +423,7 @@ void menu()// Menu de interação com o cliente
             {
                 limparTela();
                 print("Opcao invalida.\n");
-                enterContinuar();// Enter para continuar a interação e introduzir outra opção
+                enterContinuar();
                 break;
             }
         }
