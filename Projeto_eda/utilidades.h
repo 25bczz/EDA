@@ -17,4 +17,6 @@ int verificarAlugado(RM* topoM, int ID);
 
 int verificarPasswordAntigaClientes(RC* topoC, int NIF, char password[]);
 
+int verificarPasswordAntigaGestores(RG* topoG, int NIF, char password[]);
+
 #endif

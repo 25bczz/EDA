@@ -1,7 +1,7 @@
 all: prog
 
-prog: main.o menu.o ficheiros.o clientes.o gestores.o meios.o
-	gcc -g -o prog main.o menu.o ficheiros.o clientes.o gestores.o meios.o
+prog: main.o menu.o ficheiros.o clientes.o gestores.o meios.o utilidades.o
+	gcc -g -o prog main.o menu.o ficheiros.o clientes.o gestores.o meios.o utilidades.o
 
 main.o: main.c menu.h ficheiros.h clientes.h gestores.h meios.h utilidades.h
 	gcc -g -o main.o main.c -c

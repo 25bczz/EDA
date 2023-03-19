@@ -104,11 +104,33 @@ int verificarGestorNIF(RG* topoG, int NIF)// Devolve 1 se houver um NIF igual jÃ
     return 0;
 }
 
+int verificarAlugado(RM* topoM, int ID)
+{
+    if(topoM != NULL)
+    {
+        if(topoM->ID == ID)
+        {
+            if(topoM->alugado) return 1;
+            else return 0;
+        }
+    }
+    else return 0;
+}
+
 int verificarPasswordAntigaClientes(RC* topoC,int NIF, char password[])
 {
 	while (topoC != NULL)
 	{
 		if (topoC->NIF == NIF) return strcmp(topoC->password, password);
         topoC = topoC->seguinte;
+	}
+}
+
+int verificarPasswordAntigaGestores(RG* topoG, int NIF, char password[])
+{
+    while (topoG != NULL)
+	{
+		if (topoG->NIF == NIF) return strcmp(topoG->password, password);
+        topoG = topoG->seguinte;
 	}
 }

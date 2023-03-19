@@ -13,6 +13,8 @@ typedef struct registo_gestor
 
 RG* adicionarGestor(RG* topoG, char nome[], char morada[], char password[], int NIF);
 
+RG* editarDadosGestor(RG* topoG, int NIF);
+
 RG* removerGestor(RG* topoG, int NIF);
 
 #endif

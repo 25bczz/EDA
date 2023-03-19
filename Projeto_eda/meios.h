@@ -20,11 +20,13 @@ typedef struct registo_alugueres
 	struct registo_alugueres* seguinte;
 }RA;
 
-//verificar aluguer no registo meios
-
 RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo);
 
+RM* editarMeio(RM* topoM, int ID);
+
 RM* removerMeio(RM* topoM, int ID);
+
+RM* ordenarMeios(RM* topoM);
 
 void listarMeios(RM* topoM);
 

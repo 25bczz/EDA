@@ -21,7 +21,9 @@ RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int
 		novo->NIF = NIF;
 		novo->idade = idade;
 		novo->saldo = 0;
-		novo->seguinte = topoC;
+
+		if(topoC != NULL) novo->seguinte = topoC;
+    	else novo->seguinte = NULL;
 
 		return novo;
 	}
@@ -166,10 +168,20 @@ RC* carregarSaldo(RC* topoC, int NIF, float pagamento)
 int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 {
 	RM* aux = NULL;
+	int v = 0;
 
 	while (topoM != NULL)
 	{
-		if (topoM->ID == ID) aux = topoM;
+		if (topoM->ID == ID) 
+		{
+			v = verificarAlugado(topoM, ID);
+
+			if(!v)
+			{
+				aux = topoM;
+			}
+			else return 0;
+		}
 		topoM = topoM->seguinte;
 	}
 
@@ -182,6 +194,7 @@ int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF)
 				if (topoC->saldo < aux->custo) return 0;
 				else
 				{
+					aux->alugado = 1;
 					topoC = carregarSaldo(topoC, NIF, -(aux->custo));
 					topoA = adicionarAluguer(topoA, aux, NIF);
 					return 1;
