@@ -1,5 +1,14 @@
 #ifndef MENU_H_
 #define MENU_H_
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "menu.h"
+#include "clientes.h"
+#include "meios.h"
+#include "gestores.h"
+#include "ficheiros.h"
+#include "utilidades.h"
 
 void menu();// Menu de interação com o cliente
 
