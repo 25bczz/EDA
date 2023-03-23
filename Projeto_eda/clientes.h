@@ -1,5 +1,5 @@
-#ifndef CLIENTES_H_
-#define CLIENTES_H_
+#ifndef CLIENTES_H
+#define CLIENTES_H
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "clientes.h"
 #include "meios.h"
 #include "gestores.h"
 #include "ficheiros.h"

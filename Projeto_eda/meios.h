@@ -1,5 +1,5 @@
-#ifndef MEIOS_H_
-#define MEIOS_H_
+#ifndef MEIOS_H
+#define MEIOS_H
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "clientes.h"
-#include "meios.h"
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"

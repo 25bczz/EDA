@@ -1,5 +1,5 @@
-#ifndef GESTOR_H_
-#define GESTOR_H_
+#ifndef GESTOR_H
+#define GESTOR_H
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
@@ -9,7 +9,6 @@
 #include "menu.h"
 #include "clientes.h"
 #include "meios.h"
-#include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
 

@@ -1,5 +1,5 @@
-#ifndef FICHEIROS_H_
-#define FICHEIROS_H_
+#ifndef FICHEIROS_H
+#define FICHEIROS_H
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,7 +7,6 @@
 #include "clientes.h"
 #include "meios.h"
 #include "gestores.h"
-#include "ficheiros.h"
 #include "utilidades.h"
 
 //				FICHEIROS DE TEXTO
