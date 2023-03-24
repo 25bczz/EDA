@@ -16,18 +16,18 @@ typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
 
-RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int NIF, int idade);
+RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade);
 
-RC* editarDadosCliente(RC* topoC, int NIF);
+RC* editarDadosCliente(RC* auxC, int NIF);
 
-RC* removerCliente(RC* topoC, int NIF);
+RC* removerCliente(RC* auxC, int NIF);
 
-void listarClientes(RC* topoC);
+void listarClientes(RC* auxC);
 
-RC* carregarSaldo(RC* topoC, int NIF, float pagamento);
+RC* carregarSaldo(RC* auxC, int NIF, float pagamento);
 
-int Alugar(RC* topoC, RM* topoM, RA* topoA, int ID, int NIF);
+int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF);
 
-RM* pesquisarLocalidade(RM* topoM, char localidade[]);
+RM* pesquisarLocalidade(RM* auxM, char localidade[]);
 
 #endif

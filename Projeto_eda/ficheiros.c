@@ -125,13 +125,17 @@ RA* conteudoRA()
 }
 
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro de texto
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
-/// @param topoA endereço do topo da lista dos alugueres
-void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
+/// @param auxC endereço do topo da lista dos clientes
+/// @param auxG endereço do topo da lista dos gestores
+/// @param auxM endereço do topo da lista dos meios
+/// @param auxA endereço do topo da lista dos alugueres
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 {
 	FILE* fp;
+	RC* topoC = auxC;
+	RG* topoG = auxG;
+	RM* topoM = auxM;
+	RA* topoA = auxA;
 
 //				CLIENTES
 	fp = fopen("clientes.txt", "w");
@@ -262,7 +266,7 @@ RM* conteudoBinRM()
 	if (fp != NULL)
 	{
 		RM meio;
-		while (fread(&meio, sizeof(RG), 1, fp) == 1)
+		while (fread(&meio, sizeof(RM), 1, fp) == 1)
 		{
 			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo);
 		}
@@ -284,7 +288,7 @@ RA* conteudoBinRA()
 	if (fp != NULL)
 	{
 		RA aluguer;
-		while (fread(&aluguer, sizeof(RG), 1, fp) == 1)
+		while (fread(&aluguer, sizeof(RA), 1, fp) == 1)
 		{
 			aux = adicionarAluguer(aux, aluguer.meio, aluguer.NIF); 
 		}
@@ -295,14 +299,19 @@ RA* conteudoBinRA()
 }
 
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro binário
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
-/// @param topoA endereço do topo da lista dos alugueres
-void adicionarFicheiroBin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
+/// @param auxC endereço do topo da lista dos clientes
+/// @param auxG endereço do topo da lista dos gestores
+/// @param auxM endereço do topo da lista dos meios
+/// @param auxA endereço do topo da lista dos alugueres
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 {
-//				CLIENTES
 	FILE* fp;
+	RC* topoC = auxC;
+	RG* topoG = auxG;
+	RM* topoM = auxM;
+	RA* topoA = auxA;
+
+//				CLIENTES
 	fp = fopen("clientes.bin", "wb");
 
 	while (topoC != NULL)

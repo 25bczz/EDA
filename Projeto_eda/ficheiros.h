@@ -16,7 +16,7 @@ RM* conteudoRM();// Função para ler do ficheiro meios.txt e adicionar à lista
 
 RA* conteudoRA();// Função para ler do ficheiro alugueres.txt e adicionar à lista topoA e devolver o endereço inicial da lista após ler tudo
 
-void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
 
 
 //				FICHEIROS BINÁRIOS
@@ -29,6 +29,6 @@ RM* conteudoBinRM();// Função para ler do ficheiro meios.bin e adicionar à li
 
 RA* conteudoBinRA();// Função para ler do ficheiro alugueres.bin e adicionar à lista aux e devolver o endereço inicial da lista após ler tudo
 
-void adicionarFicheiroBin(RC* topoC, RG* topoG, RM* topoM, RA* topoA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA);// Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro
 
 #endif
