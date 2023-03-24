@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,7 +18,7 @@
 /// @return retorna um valor do tipo apontador para RC, ou seja o novo endereço do topo da lista
 RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int NIF, int idade)
 {
-	if (!verificarClienteNIF(topoC, NIF))
+	if (verificarClienteNIF(topoC, NIF) == 0)
 	{
 		RC* novo = malloc(sizeof(RC));
 
@@ -145,6 +144,7 @@ RC* removerCliente(RC* topoC, int NIF)
 			}
 			topoC = topoC->seguinte;
 		}
+		return topoC;
 }
 
 /// @brief Esta funcao percorre a lista dos clientes e vai imprimindo as informações no terminal
@@ -185,6 +185,8 @@ RC* carregarSaldo(RC* topoC, int NIF, float pagamento)
         }
 		topoC = topoC->seguinte;
 	}
+
+	return topoC;
 }
 
 /// @brief Esta função utiliza a função de verificação que verifica se um meio já está alugado, depois, se esse meio não se encontrar alugado, a variavel auxiliar toma os valores do meio desejado. Seguidamente, verificamos se o cliente tem saldo suficiente e fazemos a transação
@@ -256,11 +258,11 @@ RM* pesquisarLocalidade(RM* topoM, char localidade[])
 			topoM = topoM->seguinte;
 		}
 
-		if(v)
+		if(v == 1)
 		{
 			limparTela();
 			listarMeios(aux);
-			entercontinuar();
+			enterContinuar();
 		}
 		else
 		{

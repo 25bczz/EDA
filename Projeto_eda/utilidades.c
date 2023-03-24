@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -74,8 +73,9 @@ int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Ver
     else if(c == -1 && g == -1)
     {
         limparTela();
-        printf("Não existe nenhuma conta com esses dados.\n");
+        printf("Nao existe nenhuma conta com esses dados.\n");
         enterContinuar();
+        return -1;
     }
     else if(c != -1 && g == -1) return 0;
     else return 1;
@@ -150,6 +150,7 @@ int verificarPasswordAntigaClientes(RC* topoC,int NIF, char password[])
 		if (topoC->NIF == NIF) return strcmp(topoC->password, password);
         topoC = topoC->seguinte;
 	}
+    return -1;
 }
 
 /// @brief Esta função verifica se uma palavra passe introduzida por um gestor é válida
@@ -164,4 +165,5 @@ int verificarPasswordAntigaGestores(RG* topoG, int NIF, char password[])
 		if (topoG->NIF == NIF) return strcmp(topoG->password, password);
         topoG = topoG->seguinte;
 	}
+    return -1;
 }

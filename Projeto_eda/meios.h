@@ -3,14 +3,6 @@
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "menu.h"
-#include "clientes.h"
-#include "gestores.h"
-#include "ficheiros.h"
-#include "utilidades.h"
 
 typedef struct registo_meio
 {
@@ -27,6 +19,9 @@ typedef struct registo_alugueres
 	RM* meio;
 	struct registo_alugueres* seguinte;
 }RA;
+
+typedef struct registo_cliente RC;
+typedef struct registo_gestor RG;
 
 RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo);
 

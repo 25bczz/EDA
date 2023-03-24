@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -9,8 +8,16 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
+#include "menu.c"
+#include "clientes.c"
+#include "meios.c"
+#include "gestores.c"
+#include "ficheiros.c"
+#include "utilidades.c"
+
 /// @brief Esta função acede ao menu de interação
 void main()
 {
+	printf("SOU LINDO");
 	menu();
 }

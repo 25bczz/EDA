@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,14 +24,14 @@ RC* conteudoRC()
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
 		while (!feof(fp))
 		{
-			fscanf(fp, "%[^;];%[^;];%[^;];%d;%d;%f", nome, morada, password, &NIF, &idade, &saldo);
-			topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade, saldo);
+			fscanf(fp, "%[^;];%[^;];%[^;];%d;%d", nome, morada, password, &NIF, &idade);
+			topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
 		}
 		fclose(fp);
 	}
@@ -53,7 +52,7 @@ RG* conteudoRG()
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -82,7 +81,7 @@ RM* conteudoRM()
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -110,14 +109,14 @@ RA* conteudoRA()
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
 		while (!feof(fp))
 		{
 			fscanf(fp, "%d;%d;%[^;];%[^;];%f;%f;%f", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo);
-			topoA = adicionarAluguer(topoA, NIF, meio);
+			topoA = adicionarAluguer(topoA, meio, NIF);
 		}
 		fclose(fp);
 	}
@@ -139,7 +138,7 @@ void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -156,7 +155,7 @@ void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -173,7 +172,7 @@ void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -191,7 +190,7 @@ void adicionarFicheiro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
 	if (fp == NULL)
 	{
-		printf("Ficheiro indisponivel.");
+		printf("Ficheiro indisponivel.\n");
 	}
 	else
 	{
@@ -221,7 +220,7 @@ RC* conteudoBinRC()
 		RC cliente;
 		while (fread(&cliente, sizeof(RC), 1, fp) == 1)
 		{
-			aux = adicionarCliente(aux, cliente.nome, cliente.morada, cliente.password, cliente.NIF, cliente.idade, cliente.saldo);
+			aux = adicionarCliente(aux, cliente.nome, cliente.morada, cliente.password, cliente.NIF, cliente.idade);
 		}
 		fclose(fp);
 	}
@@ -287,7 +286,7 @@ RA* conteudoBinRA()
 		RA aluguer;
 		while (fread(&aluguer, sizeof(RG), 1, fp) == 1)
 		{
-			aux = adicionarAluguer(aux, aluguer.NIF, aluguer.meio); 
+			aux = adicionarAluguer(aux, aluguer.meio, aluguer.NIF); 
 		}
 		fclose(fp);
 	}

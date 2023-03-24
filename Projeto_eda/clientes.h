@@ -3,14 +3,6 @@
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "menu.h"
-#include "meios.h"
-#include "gestores.h"
-#include "ficheiros.h"
-#include "utilidades.h"
 
 typedef struct registo_cliente
 {
@@ -19,6 +11,10 @@ typedef struct registo_cliente
 	float saldo;
 	struct registo_cliente* seguinte;
 }RC;
+
+typedef struct registo_gestor RG;
+typedef struct registo_meio RM;
+typedef struct registo_alugueres RA;
 
 RC* adicionarCliente(RC* topoC, char nome[], char morada[], char password[], int NIF, int idade);
 

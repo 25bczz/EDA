@@ -3,14 +3,6 @@
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "menu.h"
-#include "clientes.h"
-#include "meios.h"
-#include "ficheiros.h"
-#include "utilidades.h"
 
 typedef struct registo_gestor
 {
@@ -18,6 +10,10 @@ typedef struct registo_gestor
 	int NIF;
 	struct registo_gestor* seguinte;
 }RG;
+
+typedef struct registo_cliente RC;
+typedef struct registo_meio RM;
+typedef struct registo_alugueres RA;
 
 RG* adicionarGestor(RG* topoG, char nome[], char morada[], char password[], int NIF);
 

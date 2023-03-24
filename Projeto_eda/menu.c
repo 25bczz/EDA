@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -27,8 +26,8 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
     scanf("%s", password);
     v = verificarClienteGestor(topoC, topoG, NIF, password);
 
-    if(v) menuGestor(topoC, topoG, topoM, topoA, NIF);
-    else menuCliente(topoC, topoG, topoM, topoA, NIF);
+    if(v == 1) menuGestor(topoC, topoG, topoM, topoA, NIF);
+    else if(v == 0) menuCliente(topoC, topoG, topoM, topoA, NIF);
 }
 
 /// @brief Menu de interação com o cliente
@@ -42,7 +41,7 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
     do{
         limparTela();
-        printf("Introduza a opcao que desejar:\n1 - Gestor\n2 - Cliente\n");
+        printf("Introduza a opcao que desejar:\n1 - Cliente\n2 - Gestor\n");
         scanf("%d", &op);
 
         switch(op)
@@ -68,12 +67,12 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
                 v = verificarClienteNIF(topoC, NIF);
 
-                if(!v)
+                if(v == 0)
                 {
                     topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 }
-                adicionarFicheiro(topoC, topoG, topoM, topoA);
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             case 2:
@@ -95,18 +94,18 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 
                 v = verificarGestorNIF(topoG, NIF);
 
-                if(!v)
+                if(v == 0)
                 {
                     topoG = adicionarGestor(topoG, nome, morada, password, NIF);
+                    adicionarFicheiro(topoC, topoG, topoM, topoA);
+                    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 }
-                adicionarFicheiro(topoC, topoG, topoM, topoA);
-                adicionarFicheiroBin(topoC, topoG, topoM, topoA);
                 break;
             }
             default:
             {
                 limparTela();
-                print("Opcao invalida.\n");
+                printf("Opcao invalida.\n");
                 enterContinuar();
                 break;
             }
@@ -141,7 +140,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
 
                 limparTela();
                 printf("Introduza o saldo que deseja carregar:\n");
-                scanf("%d", &pagamento);
+                scanf("%f", &pagamento);
 
                 topoC = carregarSaldo(topoC, NIF, pagamento);
                 adicionarFicheiro(topoC, topoG, topoM, topoA);
@@ -284,7 +283,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 printf("Deseja realmente eliminar este cliente?\n1 - Sim\n2 - Nao\n");
                 scanf("%d", &v);
                 
-                if(v)
+                if(v == 1)
                 {
                     topoC =  removerCliente(topoC, elim);
                     adicionarFicheiro(topoC, topoG, topoM, topoA);
@@ -401,7 +400,6 @@ void menu()
 	    RM* topoM = conteudoRM();
 	    RA* topoA = conteudoRA();
 
-
         limparTela();
         printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
         scanf("%d", &op);
@@ -422,7 +420,7 @@ void menu()
             default:
             {
                 limparTela();
-                print("Opcao invalida.\n");
+                printf("Opcao invalida.\n");
                 enterContinuar();
                 break;
             }

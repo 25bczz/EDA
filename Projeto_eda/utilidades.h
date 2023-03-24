@@ -1,13 +1,10 @@
 #ifndef UTILIDADES_H
 #define UTILIDADES_H
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "menu.h"
-#include "clientes.h"
-#include "meios.h"
-#include "gestores.h"
-#include "ficheiros.h"
+
+typedef struct registo_cliente RC;
+typedef struct registo_gestor RG;
+typedef struct registo_meio RM;
+typedef struct registo_alugueres RA;
 
 void limparTela();
 

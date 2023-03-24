@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -61,7 +60,7 @@ RM* editarMeio(RM* topoM, int ID)
     }
     else
     {
-        printf("Nao ha nenhum veiculo registrado para alterar.");
+        printf("Nao ha nenhum veiculo registrado para alterar.\n");
     }
     return topoM;
 }
@@ -89,6 +88,7 @@ RM* removerMeio(RM* topoM, int ID)
 		}
 		topoM = topoM->seguinte;
 	}
+    return  topoM;
 }
 
 /// @brief Esta função ordena os meios por quantidade de bateria, de maneira decrescente
@@ -104,7 +104,7 @@ RM* ordenarMeios(RM* topoM)
         RM* atual = topoM;
         while (atual->seguinte != NULL) 
         {
-            if (atual->bateria < atual->seguinte->bateria) 
+            if (atual->autonomia < atual->seguinte->autonomia) 
             {
                 RM* proximo = atual->seguinte;
                 atual->seguinte = proximo->seguinte;
@@ -138,7 +138,7 @@ void listarMeios(RM* topoM)
         topoM = ordenarMeios(topoM);
 		while (topoM != NULL)
 		{
-            if(!topoM->alugado)
+            if(topoM->alugado == 0)
             {
                 printf("ID - %d\nTipo - %s\nLocalizacao - %s\nBateria - %.2f\nAutonomia - %2.f\nCusto - %.2f\n\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
             }

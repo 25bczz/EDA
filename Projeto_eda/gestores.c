@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -18,7 +17,7 @@
 /// @return retorna um valor do tipo apontador para RG, ou seja o novo endereço do topo da lista
 RG* adicionarGestor(RG* topoG, char nome[], char morada[], char password[], int NIF)
 {
-	if (!verificarGestorNIF(topoG, NIF))
+	if (verificarGestorNIF(topoG, NIF) == 0)
 	{
 		RG* novo = malloc(sizeof(RG));
 
@@ -126,4 +125,5 @@ RG* removerGestor(RG* topoG, int NIF)
 		}
 		topoG = topoG->seguinte;
 	}
+	return topoG;
 }
