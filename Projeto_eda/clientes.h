@@ -28,6 +28,6 @@ RC* carregarSaldo(RC* auxC, int NIF, float pagamento);
 
 int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF);
 
-RM* pesquisarLocalidade(RM* auxM, char localidade[]);
+void pesquisarLocalidade(RM* auxM, char localidade[]);
 
 #endif

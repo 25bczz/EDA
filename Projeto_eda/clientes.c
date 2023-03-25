@@ -249,7 +249,7 @@ int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 /// @param auxM endereço do topo da lista dos meios
 /// @param localidade localidade que desejamos procurar pelos meios
 /// @return retorna um endereço para o topo da lista com os meios encontrados naquela localidade apenas
-RM* pesquisarLocalidade(RM* auxM, char localidade[])
+void pesquisarLocalidade(RM* auxM, char localidade[])
 {
 	int v = 0;
 	RM* aux = NULL, *topoM = auxM;;
@@ -283,5 +283,4 @@ RM* pesquisarLocalidade(RM* auxM, char localidade[])
 		printf("Nao existem meios disponiveis no momento\n");
 		enterContinuar();
 	}
-	//falta ver oq dar return
 }

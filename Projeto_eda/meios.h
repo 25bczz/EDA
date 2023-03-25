@@ -23,18 +23,18 @@ typedef struct registo_alugueres
 typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 
-RM* adicionarMeio(RM* topoM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo);
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo);
 
-RM* editarMeio(RM* topoM, int ID);
+RM* editarMeio(RM* auxM, int ID);
 
-RM* removerMeio(RM* topoM, int ID);
+RM* removerMeio(RM* auxM, int ID);
 
-RM* ordenarMeios(RM* topoM);
+void ordenarMeios(RM* auxM);
 
-void listarMeios(RM* topoM);
+void listarMeios(RM* auxM);
 
-int darID(RM* topoM);
+int darID(RM* auxM);
 
-RA* adicionarAluguer(RA* topoA, RM* topoM, int NIF);
+RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF);
 
 #endif

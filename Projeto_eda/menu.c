@@ -187,19 +187,13 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 4:
             {
                 char localidade[TAM_MORADA];
-                RM* encontrados;
 
                 limparTela();
                 printf("Introduza a localidade que quer procurar:\n");
                 limparBuffer();
                 scanf("%s", localidade);
 
-                encontrados = pesquisarLocalidade(topoM, localidade);
-
-                limparTela();
-                listarMeios(encontrados);
-                enterContinuar();
-
+                pesquisarLocalidade(topoM, localidade);
                 break;
             }
             case 5:
@@ -335,18 +329,13 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 5:
             {
                 char localidade[TAM_MORADA];
-                RM* encontrados;
 
                 limparTela();
                 printf("Introduza a localidade que quer procurar:\n");
                 limparBuffer();
                 scanf("%s", localidade);
 
-                encontrados = pesquisarLocalidade(topoM, localidade);
-
-                limparTela();
-                listarMeios(encontrados);
-                enterContinuar();
+                pesquisarLocalidade(topoM, localidade);
                 break;
             }
             case 6:

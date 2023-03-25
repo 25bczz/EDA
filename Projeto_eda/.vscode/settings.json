@@ -6,6 +6,7 @@
         "clientes.h": "c",
         "string.h": "c",
         "menu.h": "c",
-        "ficheiros.h": "c"
+        "ficheiros.h": "c",
+        "gestores.h": "c"
     }
 }
