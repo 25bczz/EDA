@@ -1,8 +1,5 @@
 #ifndef GESTOR_H
 #define GESTOR_H
-#define TAM_NOME 50
-#define TAM_MORADA 100
-#define TAM_PASSWORD 30
 
 typedef struct registo_gestor
 {

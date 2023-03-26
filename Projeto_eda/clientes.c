@@ -261,7 +261,7 @@ void pesquisarLocalidade(RM* auxM, char localidade[])
 			if(strcmp(topoM->localizacao,localidade) == 0)
 			{
 				v = 1;
-				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
+				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado);
 			}
 			topoM = topoM->seguinte;
 		}

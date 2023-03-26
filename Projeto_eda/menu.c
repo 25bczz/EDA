@@ -119,11 +119,6 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
     int op;
     do
     {
-        RC* topoC = conteudoRC();
-        RG* topoG = conteudoRG();
-        RM* topoM = conteudoRM();
-        RA* topoA = conteudoRA();
-
         limparTela();
         printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Pesquisar meios por localidade\n5 - Editar dados da minha conta\n6 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
@@ -148,7 +143,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 2:
             {
                 limparTela();
-                listarMeios(topoM);
+                ordenarMeios(topoM);
                 enterContinuar();
                 break;
             }
@@ -276,7 +271,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 3:
             {
                 limparTela();
-                listarMeios(topoM);
+                ordenarMeios(topoM);
                 enterContinuar();
                 break;
             }
@@ -301,7 +296,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 printf("Introduza o custo para alugar o veiculo:\n");
                 scanf("%f", &custo);
 
-                topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo);
+                topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, 0);
 
                 limparTela();
                 printf("Meio adicionado com sucesso\n");

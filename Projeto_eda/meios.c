@@ -17,7 +17,7 @@
 /// @param autonomia autonomia restante do novo meio
 /// @param custo custo de aluguer de um novo meio
 /// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o novo meio adicionado no topo
-RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo)
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado)
 {
 	RM* novo = malloc(sizeof(RM));
     RM* topoM = auxM;
@@ -28,7 +28,7 @@ RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bater
 	novo->bateria = bateria;
 	novo->autonomia = autonomia;
     novo->custo = custo;
-    novo->alugado = 0;
+    novo->alugado = alugado;
 
     if(topoM != NULL) novo->seguinte = topoM;
     else novo->seguinte = NULL;

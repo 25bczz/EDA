@@ -1,8 +1,5 @@
 #ifndef MEIOS_H
 #define MEIOS_H
-#define TAM_NOME 50
-#define TAM_MORADA 100
-#define TAM_PASSWORD 30
 
 typedef struct registo_meio
 {
@@ -23,7 +20,7 @@ typedef struct registo_alugueres
 typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 
-RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo);
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado);
 
 RM* editarMeio(RM* auxM, int ID);
 

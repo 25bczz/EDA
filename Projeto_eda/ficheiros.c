@@ -28,9 +28,10 @@ RC* conteudoRC()
 	}
 	else
 	{
-		while (!feof(fp))
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
 		{
-			fscanf(fp, "%[^;];%[^;];%[^;];%d;%d", nome, morada, password, &NIF, &idade);
+			sscanf(linha, "%[^;];%[^;];%[^;];%d;%d", nome, morada, password, &NIF, &idade);
 			topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
 		}
 		fclose(fp);
@@ -56,9 +57,10 @@ RG* conteudoRG()
 	}
 	else
 	{
-		while (!feof(fp))
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
 		{
-			fscanf(fp, "%[^;];%[^;];%[^;];%d", nome, morada, password, &NIF);
+			sscanf(linha, "%[^;];%[^;];%[^;];%d", nome, morada, password, &NIF);
 			topoG = adicionarGestor(topoG, nome, morada, password, NIF);
 		}
 		fclose(fp);
@@ -72,7 +74,7 @@ RG* conteudoRG()
 RM* conteudoRM()
 {
 	FILE* fp;
-	int ID;
+	int ID, alugado;
 	char nome[TAM_NOME], localizacao[TAM_MORADA];
 	float bateria, autonomia, custo;
 	RM* topoM = NULL;
@@ -85,10 +87,11 @@ RM* conteudoRM()
 	}
 	else
 	{
-		while (!feof(fp))
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
 		{
-			fscanf(fp, "%d;%[^;];%[^;];%f;%f;%f", &ID, nome, localizacao, &bateria, &autonomia, &custo);
-			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo);
+			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado);
+			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado);
 		}
 		fclose(fp);
 	}
@@ -113,9 +116,10 @@ RA* conteudoRA()
 	}
 	else
 	{
-		while (!feof(fp))
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
 		{
-			fscanf(fp, "%d;%d;%[^;];%[^;];%f;%f;%f", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo);
+			sscanf(linha, "%d;%d;%[^;];%[^;];%f;%f;%f", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo);
 			topoA = adicionarAluguer(topoA, meio, NIF);
 		}
 		fclose(fp);
@@ -268,7 +272,7 @@ RM* conteudoBinRM()
 		RM meio;
 		while (fread(&meio, sizeof(RM), 1, fp) == 1)
 		{
-			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo);
+			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo, meio.alugado);
 		}
 		fclose(fp);
 	}

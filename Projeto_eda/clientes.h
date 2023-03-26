@@ -3,6 +3,7 @@
 #define TAM_NOME 50
 #define TAM_MORADA 100
 #define TAM_PASSWORD 30
+#define TAM_LINHA 200
 
 typedef struct registo_cliente
 {
