@@ -29,16 +29,19 @@ void enterContinuar()
 }
 
 /// @brief verifica através de uma password e um NIF se o utilizador é um cliente ou um gestor
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
+/// @param auxC endereço do topo da lista dos clientes
+/// @param auxG endereço do topo da lista dos gestores
 /// @param NIF NIF do utilizador
 /// @param password password do utilizador
-/// @return retorna um valor do tipo int = 1 se for gestor ou = 0 se for cliente
-int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Verifica se o usuário é cliente ou gestor, devolve 0 caso seja cliente e devolve 1 caso seja gestor
+/// @return retorna um valor do tipo int = 1 se for gestor ou = 0 se for cliente. Se não houver conta retorna -1;
+int verificarClienteGestor(RC* auxC, RG* auxG, int NIF, char password[])
 {
-    int c = -1, g = -1, op;// Inicialização das variáveis como -1 para verificação
+    RC* topoC = auxC;
+    RG* topoG = auxG;
 
-    while(topoC != NULL)// Percorre a lista de clientes e verifica se há um NIF igual e altera o valor da variavel de controlo
+    int c = -1, g = -1, op;
+
+    while(topoC != NULL)
     {
         if(topoC->NIF == NIF && (strcmp(topoC->password,password) == 0))
         {
@@ -47,7 +50,7 @@ int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Ver
         topoC = topoC->seguinte;
     }
 
-    while(topoG != NULL)// Percorre a lista de gestores e verifica se há um NIF igual e altera o valor da variavel de controlo
+    while(topoG != NULL)
     {
         if(topoG->NIF == NIF && (strcmp(topoG->password,password) == 0))
         {
@@ -56,7 +59,7 @@ int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Ver
         topoG = topoG->seguinte;
     }
 
-    if(c != -1 && g != -1)// Verifica os valores das variaveis de controlo
+    if(c != -1 && g != -1)
     {
         do{
             limparTela();
@@ -82,11 +85,13 @@ int verificarClienteGestor(RC* topoC, RG* topoG, int NIF, char password[])// Ver
 }
 
 /// @brief Esta função verifica se já existe algum cliente registrado com certo NIF
-/// @param topoC endereço do topo da lista dos clientes
+/// @param auxC endereço do topo da lista dos clientes
 /// @param NIF NIF do cliente que desejamos verificar se já há algum registrado
 /// @return Devolve 1 se houver um NIF igual já registado e 0 caso contrário
-int verificarClienteNIF(RC* topoC, int NIF)
+int verificarClienteNIF(RC* auxC, int NIF)
 {
+    RC* topoC = auxC;
+
     while(topoC != NULL)
     {
         if(topoC->NIF == NIF)
@@ -102,11 +107,13 @@ int verificarClienteNIF(RC* topoC, int NIF)
 }
 
 /// @brief Esta função verifica se já existe algum gestor registrado com certo NIF
-/// @param topoG endereço do topo da lista dos gestores
+/// @param auxG endereço do topo da lista dos gestores
 /// @param NIF NIF do cliente que desejamos verificar se já há algum registrado
 /// @return Devolve 1 se houver um NIF igual já registado e 0 caso contrário
-int verificarGestorNIF(RG* topoG, int NIF)// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
+int verificarGestorNIF(RG* auxG, int NIF)// Devolve 1 se houver um NIF igual já registado e 0 caso contrário
 {
+    RG* topoG = auxG;
+
     while(topoG != NULL)
     {
         if(topoG->NIF == NIF)
@@ -122,11 +129,13 @@ int verificarGestorNIF(RG* topoG, int NIF)// Devolve 1 se houver um NIF igual j�
 }
 
 /// @brief Esta função verifica se determinado veiculo ja está alugado
-/// @param topoM endereço do topo da lista dos meios
+/// @param auxM endereço do topo da lista dos meios
 /// @param ID ID do meio que desejamos verificar
 /// @return devolve 1 se já estiver alugado e 0 se não estiver
-int verificarAlugado(RM* topoM, int ID)
+int verificarAlugado(RM* auxM, int ID)
 {
+    RM* topoM = auxM;
+
     if(topoM != NULL)
     {
         if(topoM->ID == ID)
@@ -139,12 +148,14 @@ int verificarAlugado(RM* topoM, int ID)
 }
 
 /// @brief Esta função verifica se uma palavra passe introduzida por um cliente é válida
-/// @param topoC endereço do topo da lista dos clientes
+/// @param auxC endereço do topo da lista dos clientes
 /// @param NIF NIF do cliente que estamos a verificar
 /// @param password password que estamos a verificar se estava válida
 /// @return retorna 0 se a comparação resultar em igual e valores diferentes de 0 se forem diferentes
-int verificarPasswordAntigaClientes(RC* topoC,int NIF, char password[])
+int verificarPasswordAntigaClientes(RC* auxC,int NIF, char password[])
 {
+    RC* topoC = auxC;
+
 	while (topoC != NULL)
 	{
 		if (topoC->NIF == NIF) return strcmp(topoC->password, password);
@@ -154,12 +165,14 @@ int verificarPasswordAntigaClientes(RC* topoC,int NIF, char password[])
 }
 
 /// @brief Esta função verifica se uma palavra passe introduzida por um gestor é válida
-/// @param topoG endereço do topo da lista dos gestores
+/// @param auxG endereço do topo da lista dos gestores
 /// @param NIF NIF do gestor que estamos a verificar
 /// @param password password que estamos a verificar se estava válida
 /// @return retorna 0 se a comparação resultar em igual e valores diferentes de 0 se forem diferentes
-int verificarPasswordAntigaGestores(RG* topoG, int NIF, char password[])
+int verificarPasswordAntigaGestores(RG* auxG, int NIF, char password[])
 {
+    RG* topoG = auxG;
+
     while (topoG != NULL)
 	{
 		if (topoG->NIF == NIF) return strcmp(topoG->password, password);
