@@ -69,6 +69,7 @@ RG* conteudoRG()
 	return topoG;
 }
 
+
 /// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RM os valores encontrados.
 /// @return retorna o endereço do topo da lista dos meios com todos os dados
 RM* conteudoRM()
@@ -98,6 +99,7 @@ RM* conteudoRM()
 
 	return topoM;
 }
+
 
 /// @brief função que lê um ficheiro txt e vai acrescentando a uma lista do tipo RA os valores encontrados.
 /// @return retorna o endereço do topo da lista dos alugueres com todos os dados
@@ -152,7 +154,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoC != NULL)
 		{
-			fprintf(fp, "%s;%s;%s;%d;%d;%.2f", topoC->nome, topoC->morada, topoC->password, topoC->NIF, topoC->idade, topoC->saldo);
+			fprintf(fp, "%s;%s;%s;%d;%d;%.2f\n", topoC->nome, topoC->morada, topoC->password, topoC->NIF, topoC->idade, topoC->saldo);
 			topoC = topoC->seguinte;
 		}
 		fclose(fp);
@@ -169,7 +171,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoG != NULL)
 		{
-			fprintf(fp, "%s;%s;%s;%d", topoG->nome, topoG->morada, topoG->password, topoG->NIF);
+			fprintf(fp, "%s;%s;%s;%d\n", topoG->nome, topoG->morada, topoG->password, topoG->NIF);
 			topoG = topoG->seguinte;
 		}
 		fclose(fp);
@@ -186,7 +188,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoM != NULL)
 		{
-			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f,%d", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo,topoM->alugado);
+			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f,%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo,topoM->alugado);
 			topoM = topoM->seguinte;
 		}
 		fclose(fp);
@@ -204,7 +206,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoA != NULL)
 		{
-			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f", topoA->NIF, topoA->meio->ID, topoA->meio->nome, topoA->meio->localizacao, topoA->meio->bateria, topoA->meio->autonomia, topoA->meio->custo);
+			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f\n", topoA->NIF, topoA->meio->ID, topoA->meio->nome, topoA->meio->localizacao, topoA->meio->bateria, topoA->meio->autonomia, topoA->meio->custo);
 			topoA = topoA->seguinte;
 		}
 		fclose(fp);

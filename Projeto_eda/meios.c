@@ -64,7 +64,7 @@ RM* editarMeio(RM* auxM, int ID)
     {
         printf("Nao ha nenhum veiculo registrado para alterar.\n");
     }
-    return topoM;
+    return auxM;
 }
 
 /// @brief Esta funcao utiliza uma variavel auxiliar. Ela vai percorrendo a lista até achar o ID igual ao do meio que desejamos remover no endereço seguinte da lista para então o podermos remover
@@ -97,41 +97,42 @@ RM* removerMeio(RM* auxM, int ID)
 
 /// @brief Esta função ordena os meios por quantidade de bateria, de maneira decrescente
 /// @param auxM endereço do topo da lista dos meios
-void ordenarMeios(RM* auxM)
+void ordenarMeios(RM** auxM)
 {
     int trocado = 1;
-    RM* topoM = auxM;
-
-    while (trocado) 
-    {
-        trocado = 0;
-        RM* anterior = NULL;
-        RM* atual = topoM;
-        while (atual->seguinte != NULL) 
+    RM** topoM = &(*auxM);
+    if ((*auxM) != NULL){
+        while (trocado) 
         {
-            if (atual->autonomia < atual->seguinte->autonomia) 
+            trocado = 0;
+            RM* anterior = NULL;
+            RM* atual = (*topoM);
+            while (atual->seguinte != NULL) 
             {
-                RM* proximo = atual->seguinte;
-                atual->seguinte = proximo->seguinte;
-                proximo->seguinte = atual;
-                if (anterior != NULL)
+                if (atual->autonomia < atual->seguinte->autonomia) 
                 {
-                    anterior->seguinte = proximo;
-                } else 
+                    RM* proximo = atual->seguinte;
+                    atual->seguinte = proximo->seguinte;
+                    proximo->seguinte = atual;
+                    if (anterior != NULL)
+                    {
+                        anterior->seguinte = proximo;
+                    } else 
+                    {
+                        (*topoM) = proximo;
+                    }
+                    anterior = proximo;
+                    trocado = 1;
+                } 
+                else 
                 {
-                    topoM = proximo;
+                    anterior = atual;
+                    atual = atual->seguinte;
                 }
-                anterior = proximo;
-                trocado = 1;
-            } 
-            else 
-            {
-                anterior = atual;
-                atual = atual->seguinte;
             }
         }
-    }
-    listarMeios(topoM);
+        listarMeios(*topoM);
+    }else   printf("\nA lista esta vazia\n");
 }
 
 /// @brief Esta funcao percorre a lista dos meios e vai imprimindo as informações no terminal

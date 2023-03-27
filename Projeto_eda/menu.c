@@ -13,7 +13,7 @@
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA* topoA)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
@@ -24,10 +24,10 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
     printf("Introduza a sua password\n");
     limparBuffer();
     scanf("%s", password);
-    v = verificarClienteGestor(topoC, topoG, NIF, password);
+    v = verificarClienteGestor(*topoC, *topoG, NIF, password);
 
-    if(v == 1) menuGestor(topoC, topoG, topoM, topoA, NIF);
-    else if(v == 0) menuCliente(topoC, topoG, topoM, topoA, NIF);
+    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), topoA, NIF);
+    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), topoA, NIF);
 }
 
 /// @brief Menu de interação com o cliente
@@ -35,7 +35,7 @@ void menuLogin(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
+void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 {
     int op, v;
 
@@ -65,11 +65,11 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
                 printf("Introduza a sua idade:\n");
                 scanf("%d", &idade);
 
-                v = verificarClienteNIF(topoC, NIF);
+                v = verificarClienteNIF(*topoC, NIF);
 
                 if(v == 0)
                 {
-                    topoC = adicionarCliente(topoC, nome, morada, password, NIF, idade);
+                    *topoC = adicionarCliente(*topoC, nome, morada, password, NIF, idade);
                 }
                 break;
             }
@@ -90,11 +90,11 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
                 printf("Introduza o seu NIF:\n");
                 scanf("%d", &NIF);
 
-                v = verificarGestorNIF(topoG, NIF);
+                v = verificarGestorNIF(*topoG, NIF);
 
                 if(v == 0)
                 {
-                    topoG = adicionarGestor(topoG, nome, morada, password, NIF);
+                    *topoG = adicionarGestor(*topoG, nome, morada, password, NIF);
                 }
                 break;
             }
@@ -114,7 +114,7 @@ void menuRegistro(RC* topoC, RG* topoG, RM* topoM, RA* topoA)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA* topoA, int NIF)
 {
     int op;
     do
@@ -133,7 +133,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 printf("Introduza o saldo que deseja carregar:\n");
                 scanf("%f", &pagamento);
 
-                topoC = carregarSaldo(topoC, NIF, pagamento);
+                *topoC = carregarSaldo(*topoC, NIF, pagamento);
 
                 limparTela();
                 printf("Saldo atualizado com sucesso!\n");
@@ -143,7 +143,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 2:
             {
                 limparTela();
-                ordenarMeios(topoM);
+                ordenarMeios(&(*topoM));
                 enterContinuar();
                 break;
             }
@@ -152,11 +152,11 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 int ID, v;
 
                 limparTela();
-                listarMeios(topoM);
+                listarMeios(*topoM);
                 printf("Introduza o ID do meio que deseja alugar:\n");
                 scanf("%d", &ID);
 
-                v = Alugar(topoC, topoM, topoA, ID, NIF);
+                v = Alugar(*topoC, *topoM, topoA, ID, NIF);
 
                 if(v)
                 {
@@ -182,13 +182,13 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 limparBuffer();
                 scanf("%s", localidade);
 
-                pesquisarLocalidade(topoM, localidade);
+                pesquisarLocalidade(*topoM, localidade);
                 break;
             }
             case 5:
             {
                 limparTela();
-                topoC = editarDadosCliente(topoC, NIF);
+                *topoC = editarDadosCliente(*topoC, NIF);
 
                 break;
             }
@@ -202,7 +202,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 
                 if(v)
                 {
-                    topoC =  removerCliente(topoC, NIF);
+                    *topoC =  removerCliente(*topoC, NIF);
 
                     printf("Conta eliminada com sucesso!\n");
                     enterContinuar();
@@ -227,7 +227,7 @@ void menuCliente(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
 {
     int op;
 
@@ -242,7 +242,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 1:
             {
                 limparTela();
-                listarClientes(topoC);
+                listarClientes(*topoC);
                 enterContinuar();
                 break;
             }
@@ -251,7 +251,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 int v, elim;
 
                 limparTela();
-                listarClientes(topoC);
+                listarClientes(*topoC);
                 printf("\nIntroduza o NIF do cliente que deseja eliminar:\n");
                 scanf("%d", &elim);
                 limparTela();
@@ -260,7 +260,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 
                 if(v == 1)
                 {
-                    topoC =  removerCliente(topoC, elim);
+                    *topoC =  removerCliente(*topoC, elim);
 
                     limparTela();
                     printf("Conta eliminada com sucesso!\n");
@@ -271,7 +271,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
             case 3:
             {
                 limparTela();
-                ordenarMeios(topoM);
+                ordenarMeios(&(*topoM));
                 enterContinuar();
                 break;
             }
@@ -282,7 +282,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 float bateria, autonomia, custo;
 
                 limparTela();
-                ID = darID(topoM);
+                ID = darID(*topoM);
                 printf("Introduza o tipo de meio que deseja adicionar:\n");
                 limparBuffer();
                 gets(nome);
@@ -296,7 +296,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 printf("Introduza o custo para alugar o veiculo:\n");
                 scanf("%f", &custo);
 
-                topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, 0);
+                *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0);
 
                 limparTela();
                 printf("Meio adicionado com sucesso\n");
@@ -312,13 +312,13 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 limparBuffer();
                 scanf("%s", localidade);
 
-                pesquisarLocalidade(topoM, localidade);
+                pesquisarLocalidade(*topoM, localidade);
                 break;
             }
             case 6:
             {
                 limparTela();
-                topoG = editarDadosGestor(topoG, NIF);
+                *topoG = editarDadosGestor(*topoG, NIF);
                 break;
             }
             case 7:
@@ -331,7 +331,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
                 
                 if(v)
                 {
-                    topoG =  removerGestor(topoG, NIF);
+                    *topoG =  removerGestor(*topoG, NIF);
 
                     limparTela();
                     printf("Conta eliminada com sucesso!\n");
@@ -351,6 +351,7 @@ void menuGestor(RC* topoC, RG* topoG, RM* topoM, RA* topoA, int NIF)
     
 }
 
+/*
 /// @brief Menu de interação com o cliente
 void menu()
 {
@@ -392,3 +393,4 @@ void menu()
     adicionarFicheiro(topoC, topoG, topoM, topoA);
     adicionarFicheiroBin(topoC, topoG, topoM, topoA);
 }
+*/

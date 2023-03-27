@@ -8,14 +8,14 @@
 #include "ficheiros.h"
 #include "utilidades.h"
 
-
+/* Utilizado para dar debug
 #include "menu.c"
 #include "clientes.c"
 #include "meios.c"
 #include "gestores.c"
 #include "ficheiros.c"
 #include "utilidades.c"
-
+*/
 
 /// @brief Esta função acede ao menu de interação
 void main()
@@ -25,10 +25,11 @@ void main()
 	RG* topoG = NULL;
 	RM* topoM = NULL;
 	RA* topoA = NULL;
-    /*RC* topoC = conteudoBinRC();
-	RG* topoG = conteudoBinRG();
-	RM* topoM = conteudoBinRM();
-	RA* topoA = conteudoBinRA();*/
+
+    topoC = conteudoRC();
+	topoG = conteudoRG();
+	topoM = conteudoRM();
+	topoA = conteudoRA();
 
     do
     {
@@ -40,12 +41,12 @@ void main()
         {
             case 1:
             {
-                menuLogin(topoC, topoG, topoM, topoA);
+                menuLogin(&topoC, &topoG, &topoM, topoA);
                 break; 
             }
             case 2:
             {
-                menuRegistro(topoC, topoG, topoM, topoA);
+                menuRegistro(&topoC, &topoG, &topoM, &topoA);
                 break;
             }
             case 0: break;

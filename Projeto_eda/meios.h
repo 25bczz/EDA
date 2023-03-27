@@ -26,7 +26,7 @@ RM* editarMeio(RM* auxM, int ID);
 
 RM* removerMeio(RM* auxM, int ID);
 
-void ordenarMeios(RM* auxM);
+void ordenarMeios(RM** auxM);
 
 void listarMeios(RM* auxM);
 

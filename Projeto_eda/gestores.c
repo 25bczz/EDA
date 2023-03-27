@@ -106,7 +106,7 @@ RG* editarDadosGestor(RG* auxG, int NIF)
     limparTela();
     printf("Dados alterados com sucesso\n");
     enterContinuar();
-	return topoG;
+	return auxG;
 }
 
 /// @brief Esta funcao utiliza uma variavel auxiliar. Ela vai percorrendo a lista até achar o NIF igual ao do gestor que desejamos remover no endereço seguinte da lista para então o podermos remover
