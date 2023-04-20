@@ -188,7 +188,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoM != NULL)
 		{
-			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f,%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado);
+			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f;%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado);
 			topoM = topoM->seguinte;
 		}
 		fclose(fp);
