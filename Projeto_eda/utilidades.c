@@ -136,15 +136,16 @@ int verificarAlugado(RM* auxM, int ID)
 {
     RM* topoM = auxM;
 
-    if(topoM != NULL)
+    while(topoM != NULL)
     {
         if(topoM->ID == ID)
         {
             if(topoM->alugado) return 1;
             else return 0;
         }
+        topoM = topoM->seguinte;
     }
-    else return 0;
+    return 0;
 }
 
 /// @brief Esta função verifica se uma palavra passe introduzida por um cliente é válida

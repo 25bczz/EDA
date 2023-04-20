@@ -73,26 +73,34 @@ RM* editarMeio(RM* auxM, int ID)
 /// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o meio removido
 RM* removerMeio(RM* auxM, int ID)
 {
-    RM* topoM = auxM;
-	while (topoM != NULL)
-	{
-		if (topoM->seguinte->ID == ID)
-		{
-			RM* anterior = topoM;
-			topoM = topoM->seguinte;
-			anterior->seguinte = topoM->seguinte;
-			free(topoM);
+        RM* anterior = auxM, *atual = auxM, *aux;
 
-            while(anterior != NULL)
-            {
-                anterior->ID = --anterior->ID;
-                anterior = anterior->seguinte;
+        if (atual == NULL){
+            return(NULL);
+        }
+        else if (atual->ID == ID) 
+        {
+            aux = atual->seguinte;
+            free(atual);
+            return(aux);
+        }
+        else
+        {
+            for (atual; atual != NULL && atual->ID != ID;atual=atual->seguinte){
+
+                anterior = atual;
+
             }
-            return anterior;
-		}
-		topoM = topoM->seguinte;
-	}
-    return  topoM;
+                if (atual == NULL) {
+                    return(auxM);
+                }
+                else
+                {
+                    anterior->seguinte = atual->seguinte;
+                    free(atual);
+                    return(auxM);
+                }
+        }
 }
 
 /// @brief Esta função ordena os meios por quantidade de bateria, de maneira decrescente

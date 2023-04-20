@@ -69,7 +69,7 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 
                 if(v == 0)
                 {
-                    *topoC = adicionarCliente(*topoC, nome, morada, password, NIF, idade);
+                    *topoC = adicionarCliente(*topoC, nome, morada, password, NIF, idade, 0);
                 }
                 break;
             }

@@ -17,7 +17,7 @@ typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
 
-RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade);
+RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade, float saldo);
 
 RC* editarDadosCliente(RC* auxC, int NIF);
 

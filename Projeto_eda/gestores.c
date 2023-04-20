@@ -115,18 +115,32 @@ RG* editarDadosGestor(RG* auxG, int NIF)
 /// @return retorna um valor do tipo apontador para RG, sendo este o endereço do topo da lista com o utilizador removido
 RG* removerGestor(RG* auxG, int NIF)
 {
-	RG* topoG = auxG;
-    while (topoG != NULL)
-	{
-		if (topoG->seguinte->NIF == NIF)
-		{
-			RG* anterior = topoG;
-			topoG = topoG->seguinte;
-			anterior->seguinte = topoG->seguinte;
-			free(topoG);
-            return anterior;
-		}
-		topoG = topoG->seguinte;
-	}
-	return topoG;
+        RG* anterior = auxG, *atual = auxG, *aux;
+
+        if (atual == NULL){
+            return(NULL);
+        }
+        else if (atual->NIF == NIF) 
+        {
+            aux = atual->seguinte;
+            free(atual);
+            return(aux);
+        }
+        else
+        {
+            for (atual; atual != NULL && atual->NIF != NIF;atual=atual->seguinte){
+
+                anterior = atual;
+
+            }
+                if (atual == NULL) {
+                    return(auxG);
+                }
+                else
+                {
+                    anterior->seguinte = atual->seguinte;
+                    free(atual);
+                    return(auxG);
+                }
+        }
 }

@@ -16,7 +16,7 @@
 /// @param NIF NIF do cliente novo
 /// @param idade idade do cliente novo
 /// @return retorna um valor do tipo apontador para RC, ou seja o novo endereço do topo da lista
-RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade)
+RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade, float saldo)
 {
 	RC* topoC = auxC;
 	if (verificarClienteNIF(topoC, NIF) == 0)
@@ -28,7 +28,7 @@ RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int 
 		strcpy(novo->password, password);
 		novo->NIF = NIF;
 		novo->idade = idade;
-		novo->saldo = 0;
+		novo->saldo = saldo;
 
 		if(topoC != NULL) novo->seguinte = topoC;
     	else novo->seguinte = NULL;
@@ -124,7 +124,7 @@ RC* editarDadosCliente(RC* auxC, int NIF)
     limparTela();
     printf("Dados alterados com sucesso\n");
     enterContinuar();
-	return topoC;
+	return auxC;
 }
 
 /// @brief Esta funcao utiliza uma variavel auxiliar. Ela vai percorrendo a lista até achar o NIF igual ao do cliente que desejamos remover no endereço seguinte da lista para então o podermos remover
@@ -133,21 +133,34 @@ RC* editarDadosCliente(RC* auxC, int NIF)
 /// @return retorna um valor do tipo apontador para RC, sendo este o endereço do topo da lista com o utilizador removido
 RC* removerCliente(RC* auxC, int NIF)
 {
-	RC* topoC = auxC;
-		while (topoC != NULL)
-		{
-			if (topoC->seguinte->NIF == NIF)
-			{
-				RC* anterior = topoC;
-				topoC = topoC->seguinte;
-				anterior->seguinte = topoC->seguinte;
-				free(topoC);
+        RC* anterior = auxC, *atual = auxC, *aux;
 
-				return anterior;
-			}
-			topoC = topoC->seguinte;
-		}
-		return topoC;
+        if (atual == NULL){
+            return(NULL);
+        }
+        else if (atual->NIF == NIF) 
+        {
+            aux = atual->seguinte;
+            free(atual);
+            return(aux);
+        }
+        else
+        {
+            for (atual; atual != NULL && atual->NIF != NIF;atual=atual->seguinte){
+
+                anterior = atual;
+
+            }
+                if (atual == NULL) {
+                    return(auxC);
+                }
+                else
+                {
+                    anterior->seguinte = atual->seguinte;
+                    free(atual);
+                    return(auxC);
+                }
+        }
 }
 
 /// @brief Esta funcao percorre a lista dos clientes e vai imprimindo as informações no terminal
