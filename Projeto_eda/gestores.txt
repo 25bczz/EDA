@@ -1,2 +1,2 @@
+diogo;banana;123;123456
 testegestor;teste;teste;123456789
-diogo;tomate;123;123456

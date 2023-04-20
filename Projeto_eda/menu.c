@@ -13,7 +13,7 @@
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA* topoA)
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
@@ -26,8 +26,8 @@ void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA* topoA)
     scanf("%s", password);
     v = verificarClienteGestor(*topoC, *topoG, NIF, password);
 
-    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), topoA, NIF);
-    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), topoA, NIF);
+    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), *topoA, NIF);
+    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), &(*topoA), NIF);
 }
 
 /// @brief Menu de interação com o cliente
@@ -114,11 +114,12 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA* topoA, int NIF)
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
 {
     int op;
     do
     {
+        printf("teste");
         limparTela();
         printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Pesquisar meios por localidade\n5 - Editar dados da minha conta\n6 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
@@ -156,11 +157,11 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA* topoA, int NIF)
                 printf("Introduza o ID do meio que deseja alugar:\n");
                 scanf("%d", &ID);
 
-                v = Alugar(*topoC, *topoM, topoA, ID, NIF);
+                v = Alugar(*topoC, *topoM, *topoA, ID, NIF);
 
                 if(v)
                 {
-                    limparTela();
+                    //limparTela();
                     printf("Meio alugado com sucesso\n");
                     enterContinuar();
                 }

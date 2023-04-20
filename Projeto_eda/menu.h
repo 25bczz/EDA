@@ -8,11 +8,11 @@ typedef struct registo_alugueres RA;
 
 void menu();
 
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA* topoA);
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA);
 
 void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA);
 
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA* topoA, int NIF);
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF);
 
 void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF);
 

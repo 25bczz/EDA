@@ -236,7 +236,7 @@ int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 		}
 		topoM = topoM->seguinte;
 	}
-
+	
 	if (aux != NULL)
 	{
 		while (topoC != NULL)

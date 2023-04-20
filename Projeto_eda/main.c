@@ -41,7 +41,7 @@ void main()
         {
             case 1:
             {
-                menuLogin(&topoC, &topoG, &topoM, topoA);
+                menuLogin(&topoC, &topoG, &topoM, &topoA);
                 break; 
             }
             case 2:

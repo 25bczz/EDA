@@ -11,7 +11,8 @@
 /// @brief limpa a tela
 void limparTela()
 {
-	system("@cls||clear");
+	//system("cls||clear");
+    system("cls");
 }
 
 /// @brief limpa o buffer
@@ -140,7 +141,7 @@ int verificarAlugado(RM* auxM, int ID)
     {
         if(topoM->ID == ID)
         {
-            if(topoM->alugado) return 1;
+            if(topoM->alugado == 1) return 1;
             else return 0;
         }
         topoM = topoM->seguinte;
