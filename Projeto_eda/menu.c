@@ -119,7 +119,6 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
     int op;
     do
     {
-        printf("teste");
         limparTela();
         printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Pesquisar meios por localidade\n5 - Editar dados da minha conta\n6 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
