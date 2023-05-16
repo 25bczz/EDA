@@ -27,7 +27,13 @@ void listarClientes(RC* auxC);
 
 RC* carregarSaldo(RC* auxC, int NIF, float pagamento);
 
-int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF);
+RC* editarSaldo(RC* auxC, int NIF, float pagamento);
+
+RC* removerSaldo(RC* auxC, int NIF, float pagamento);
+
+int Alugar(RC* auxC, RM* auxM, int ID, int NIF);
+
+int CancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF);
 
 void pesquisarLocalidade(RM* auxM, char localidade[]);
 

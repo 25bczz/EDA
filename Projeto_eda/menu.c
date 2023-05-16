@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "clientes.h"
 #include "meios.h"
@@ -156,7 +157,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
                 printf("Introduza o ID do meio que deseja alugar:\n");
                 scanf("%d", &ID);
 
-                v = Alugar(*topoC, *topoM, *topoA, ID, NIF);
+                v = Alugar(*topoC, *topoM, ID, NIF);
 
                 if(v)
                 {
@@ -296,7 +297,7 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 printf("Introduza o custo para alugar o veiculo:\n");
                 scanf("%f", &custo);
 
-                *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0);
+                *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0, 0);
 
                 limparTela();
                 printf("Meio adicionado com sucesso\n");

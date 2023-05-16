@@ -6,21 +6,23 @@ typedef struct registo_meio
 	int ID;
 	char nome[TAM_NOME], localizacao[TAM_MORADA];
 	float bateria, autonomia, custo;
-	int alugado;
+	int alugado, tempoinicial;
 	struct registo_meio* seguinte;
 }RM;
 
 typedef struct registo_alugueres
 {
-	int NIF;
-	RM* meio;
+	int NIF, ID;
+	time_t tempoinicial, tempofinal;
+	char nome[TAM_NOME], localizacao[TAM_MORADA];
+	float bateria, autonomia, custo;
 	struct registo_alugueres* seguinte;
 }RA;
 
 typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 
-RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado);
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, time_t tempoinicial);
 
 RM* editarMeio(RM* auxM, int ID);
 
@@ -32,6 +34,6 @@ void listarMeios(RM* auxM);
 
 int darID(RM* auxM);
 
-RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF);
+RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF, time_t final);
 
 #endif

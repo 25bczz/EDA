@@ -8,6 +8,7 @@
         "menu.h": "c",
         "ficheiros.h": "c",
         "gestores.h": "c",
-        "utilidades.h": "c"
+        "utilidades.h": "c",
+        "time.h": "c"
     }
 }

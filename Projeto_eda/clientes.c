@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "clientes.h"
 #include "meios.h"
@@ -207,6 +208,39 @@ RC* carregarSaldo(RC* auxC, int NIF, float pagamento)
 	return topoC;
 }
 
+RC* editarSaldo(RC* auxC, int NIF, float pagamento)
+{
+	RC* topoC = auxC;
+
+	while (topoC != NULL)
+	{
+		if (topoC->NIF == NIF)
+		{
+		    topoC->saldo = pagamento;
+		    return topoC;
+        }
+		topoC = topoC->seguinte;
+	}
+
+	return topoC;
+}
+
+RC* removerSaldo(RC* auxC, int NIF, float pagamento)
+{
+	RC* topoC = auxC;
+	while (topoC != NULL)
+	{
+		if (topoC->NIF == NIF)
+		{
+		    topoC->saldo -= pagamento;
+		    return topoC;
+        }
+		topoC = topoC->seguinte;
+	}
+
+	return topoC;
+}
+
 /// @brief Esta função utiliza a função de verificação que verifica se um meio já está alugado, depois, se esse meio não se encontrar alugado, a variavel auxiliar toma os valores do meio desejado. Seguidamente, verificamos se o cliente tem saldo suficiente e fazemos a transação
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxM endereço do topo da lista dos meios
@@ -214,12 +248,10 @@ RC* carregarSaldo(RC* auxC, int NIF, float pagamento)
 /// @param ID ID do meio que desejamos alugar
 /// @param NIF NIF do cliente que quer alugar
 /// @return retorna 1 se for possivel alugar e 0 se nao se verificar esta condição
-int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
+int Alugar(RC* auxC, RM* auxM, int ID, int NIF)
 {
 	RC* topoC = auxC;
 	RM* topoM = auxM;
-	RA* topoA = auxA;
-	RM* aux = NULL;
 	int v = 0;
 
 	while (topoM != NULL)
@@ -230,32 +262,61 @@ int Alugar(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 
 			if(v == 0)
 			{
-				aux = topoM;
+				while (topoC != NULL)
+				{
+					if (topoC->NIF == NIF)
+					{
+						if (topoC->saldo < topoM->custo) return 0;
+						else
+						{
+							topoM->alugado = 1;
+							topoM->tempoinicial = time(NULL);
+							return 1;
+						}
+					}
+					topoC = topoC->seguinte;
+				}
 			}
 			else return 0;
 		}
 		topoM = topoM->seguinte;
 	}
-	
-	if (aux != NULL)
+
+}
+
+int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
+{
+	RC* topoC = auxC;
+	RM* topoM = auxM;
+	RA* topoA = auxA;
+	time_t final = time(NULL);
+	int v = 0;
+
+	while (topoM != NULL)
 	{
-		while (topoC != NULL)
+		if (topoM->ID == ID) 
 		{
-			if (topoC->NIF == NIF)
+			v = verificarAlugado(topoM, ID);
+
+			if(v == 1)
 			{
-				if (topoC->saldo < aux->custo) return 0;
-				else
-				{
-					aux->alugado = 1;
-					topoC = carregarSaldo(topoC, NIF, -(aux->custo));
-					topoA = adicionarAluguer(topoA, aux, NIF);
-					return 1;
-				}
+						while (topoC != NULL)
+						{
+							if (topoC->NIF == NIF)
+							{
+
+								topoM->alugado = 0;
+								topoC = removerSaldo(topoC, topoC->NIF, (topoM->custo * (final - topoM->tempoinicial)));
+								topoA = adicionarAluguer(topoA, topoM, NIF, final);
+								return 1;
+							}
+							topoC = topoC->seguinte;
+						}
 			}
-			topoC = topoC->seguinte;
+			else return 0;
 		}
+		topoM = topoM->seguinte;
 	}
-	else return 0;
 }
 
 /// @brief Esta função procura um meio numa certa localidade
@@ -274,7 +335,7 @@ void pesquisarLocalidade(RM* auxM, char localidade[])
 			if(strcmp(topoM->localizacao,localidade) == 0)
 			{
 				v = 1;
-				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado);
+				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->tempoinicial);
 			}
 			topoM = topoM->seguinte;
 		}

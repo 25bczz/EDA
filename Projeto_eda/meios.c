@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "clientes.h"
 #include "meios.h"
@@ -17,7 +18,7 @@
 /// @param autonomia autonomia restante do novo meio
 /// @param custo custo de aluguer de um novo meio
 /// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o novo meio adicionado no topo
-RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado)
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, time_t tempoinicial)
 {
 	RM* novo = malloc(sizeof(RM));
     RM* topoM = auxM;
@@ -29,6 +30,7 @@ RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bater
 	novo->autonomia = autonomia;
     novo->custo = custo;
     novo->alugado = alugado;
+    novo->tempoinicial = tempoinicial;
 
     if(topoM != NULL) novo->seguinte = topoM;
     else novo->seguinte = NULL;
@@ -195,20 +197,21 @@ int darID(RM* auxM)
 /// @param auxM endereço do topo da lista do meio que foi alugado
 /// @param NIF NIF do cliente que alugou um meio
 /// @return retorna um valor do tipo apontador para RA, sendo este o endereço do topo da lista com o aluguer adicionado
-RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF)
+RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF, time_t final)
 {
     RM* topoM = auxM;
     RA* topoA = auxA;
 	RA* novo = malloc(sizeof(RA));
     
-    novo->meio->ID = topoM->ID;
-    strcpy(novo->meio->nome,topoM->nome);
-    strcpy(novo->meio->localizacao,topoM->localizacao);
-    novo->meio->bateria = topoM->bateria;
-    novo->meio->autonomia = topoM->autonomia;
-    novo->meio->custo = topoM->custo;
+    novo->ID = topoM->ID;
+    strcpy(novo->nome,topoM->nome);
+    strcpy(novo->localizacao,topoM->localizacao);
+    novo->bateria = topoM->bateria;
+    novo->autonomia = topoM->autonomia;
+    novo->custo = topoM->custo * (final - topoM->tempoinicial);
     novo->NIF = NIF;
-    novo->meio->alugado = topoM->alugado;
+    novo->tempoinicial = topoM->tempoinicial;
+    novo->tempofinal = final;
 
     if(topoA != NULL) novo->seguinte = topoA;
     else novo->seguinte = NULL;

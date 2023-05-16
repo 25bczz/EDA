@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "menu.h"
 #include "clientes.h"
 #include "meios.h"
@@ -78,6 +79,7 @@ RM* conteudoRM()
 	int ID, alugado;
 	char nome[TAM_NOME], localizacao[TAM_MORADA];
 	float bateria, autonomia, custo;
+	time_t tempoinicial;
 	RM* topoM = NULL;
 
 	fp = fopen("meios.txt", "r");
@@ -91,8 +93,8 @@ RM* conteudoRM()
 		char linha[TAM_LINHA];
 		while (fgets(linha, sizeof(linha), fp))
 		{
-			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado);
-			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado);
+			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d;%ld", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado, &tempoinicial);
+			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado, tempoinicial);
 		}
 		fclose(fp);
 	}
@@ -109,6 +111,7 @@ RA* conteudoRA()
 	int NIF;
 	RA* topoA = NULL;
     RM* meio = NULL;
+	time_t tempofinal;
 
 	fp = fopen("alugueres.txt", "r");
 
@@ -121,8 +124,8 @@ RA* conteudoRA()
 		char linha[TAM_LINHA];
 		while (fgets(linha, sizeof(linha), fp))
 		{
-			sscanf(linha, "%d;%d;%[^;];%[^;];%f;%f;%f", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo);
-			topoA = adicionarAluguer(topoA, meio, NIF);
+			sscanf(linha, "%d;%d;%[^;];%[^;];%f;%f;%f;%ld;%ld", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo, &meio->tempoinicial, &tempofinal);
+			topoA = adicionarAluguer(topoA, meio, NIF, tempofinal);
 		}
 		fclose(fp);
 	}
@@ -206,7 +209,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoA != NULL)
 		{
-			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f\n", topoA->NIF, topoA->meio->ID, topoA->meio->nome, topoA->meio->localizacao, topoA->meio->bateria, topoA->meio->autonomia, topoA->meio->custo);
+			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f\n", topoA->NIF, topoA->ID, topoA->nome, topoA->localizacao, topoA->bateria, topoA->autonomia, topoA->custo, topoA->tempoinicial, topoA->tempofinal);
 			topoA = topoA->seguinte;
 		}
 		fclose(fp);
@@ -274,7 +277,7 @@ RM* conteudoBinRM()
 		RM meio;
 		while (fread(&meio, sizeof(RM), 1, fp) == 1)
 		{
-			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo, meio.alugado);
+			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo, meio.alugado, meio.tempoinicial);
 		}
 		fclose(fp);
 	}
@@ -293,10 +296,18 @@ RA* conteudoBinRA()
 
 	if (fp != NULL)
 	{
-		RA aluguer;
-		while (fread(&aluguer, sizeof(RA), 1, fp) == 1)
+		RA topoA;
+		RM *auxM;
+		while (fread(&topoA, sizeof(RA), 1, fp) == 1)
 		{
-			aux = adicionarAluguer(aux, aluguer.meio, aluguer.NIF); 
+			auxM->ID = topoA.ID;
+			strcpy(auxM->nome, topoA.nome);
+			strcpy(auxM->localizacao, topoA.localizacao);
+			auxM->bateria = topoA.bateria;
+			auxM->autonomia = topoA.autonomia;
+			auxM->custo = topoA.custo;
+			auxM->tempoinicial = topoA.tempoinicial;
+			aux = adicionarAluguer(aux, auxM ,topoA.NIF, topoA.tempofinal); 
 		}
 		fclose(fp);
 	}
