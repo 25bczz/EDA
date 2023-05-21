@@ -76,7 +76,7 @@ RG* conteudoRG()
 RM* conteudoRM()
 {
 	FILE* fp;
-	int ID, alugado;
+	int ID, alugado, NIF;
 	char nome[TAM_NOME], localizacao[TAM_MORADA];
 	float bateria, autonomia, custo;
 	time_t tempoinicial;
@@ -93,8 +93,8 @@ RM* conteudoRM()
 		char linha[TAM_LINHA];
 		while (fgets(linha, sizeof(linha), fp))
 		{
-			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d;%ld", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado, &tempoinicial);
-			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado, tempoinicial);
+			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d;%ld", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado, &NIF, &tempoinicial);
+			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado, NIF, tempoinicial);
 		}
 		fclose(fp);
 	}
@@ -191,7 +191,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoM != NULL)
 		{
-			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f;%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado);
+			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f;%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
 			topoM = topoM->seguinte;
 		}
 		fclose(fp);
@@ -277,7 +277,7 @@ RM* conteudoBinRM()
 		RM meio;
 		while (fread(&meio, sizeof(RM), 1, fp) == 1)
 		{
-			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo, meio.alugado, meio.tempoinicial);
+			aux = adicionarMeio(aux, meio.ID, meio.nome, meio.localizacao, meio.bateria, meio.autonomia, meio.custo, meio.alugado, meio.NIF, meio.tempoinicial);
 		}
 		fclose(fp);
 	}

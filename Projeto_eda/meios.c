@@ -18,7 +18,7 @@
 /// @param autonomia autonomia restante do novo meio
 /// @param custo custo de aluguer de um novo meio
 /// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o novo meio adicionado no topo
-RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, time_t tempoinicial)
+RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, int NIF, time_t tempoinicial)
 {
 	RM* novo = malloc(sizeof(RM));
     RM* topoM = auxM;
@@ -30,6 +30,7 @@ RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bater
 	novo->autonomia = autonomia;
     novo->custo = custo;
     novo->alugado = alugado;
+    novo->NIF = NIF;
     novo->tempoinicial = tempoinicial;
 
     if(topoM != NULL) novo->seguinte = topoM;
@@ -171,6 +172,38 @@ void listarMeios(RM* auxM)
 	}
 }
 
+void listarMeiosAlugados(RM* auxM, int NIF)
+{
+    RM* topoM = auxM, *aux;
+
+
+    while(topoM != NULL)
+    {
+        if(topoM->alugado == 1 && topoM->NIF == NIF)
+        {
+            aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+        }
+        topoM = topoM->seguinte;
+    }
+
+    if(aux != NULL)
+    {
+        limparTela();
+		while (aux != NULL)
+		{
+            printf("ID - %d\nTipo - %s\nLocalizacao - %s\nBateria - %.2f\nAutonomia - %2.f\nCusto - %.2f\n\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
+			aux = aux->seguinte;
+		}
+		enterContinuar();
+    }
+    else 
+    {
+        limparTela();
+        printf("Não há meios alugados por si\n");
+        enterContinuar();
+    }
+}
+
 /// @brief Esta função atribui automaticamente um ID para cada meio, por ordem crescente
 /// @param auxM endereço do topo da lista dos meios
 /// @return atribui um valor do tipo int, que é o novo ID para o meio
@@ -208,7 +241,7 @@ RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF, time_t final)
     strcpy(novo->localizacao,topoM->localizacao);
     novo->bateria = topoM->bateria;
     novo->autonomia = topoM->autonomia;
-    novo->custo = topoM->custo * (final - topoM->tempoinicial);
+    novo->custo = topoM->custo * ((final - topoM->tempoinicial) / 60);
     novo->NIF = NIF;
     novo->tempoinicial = topoM->tempoinicial;
     novo->tempofinal = final;

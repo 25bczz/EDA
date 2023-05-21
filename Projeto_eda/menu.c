@@ -121,7 +121,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
     do
     {
         limparTela();
-        printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Pesquisar meios por localidade\n5 - Editar dados da minha conta\n6 - Eliminar a minha conta\n0 - Sair\n");
+        printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Terminar aluguer\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 
         switch(op)
@@ -176,6 +176,32 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
             }
             case 4:
             {
+                int ID, v;
+
+                limparTela();
+                listarMeiosAlugados(*topoM, NIF);
+                printf("Introduza o ID do meio que deseja terminar o aluguer:\n");
+                scanf("%d", &ID);
+
+                v = cancelarAluguer(*topoC, *topoM, *topoA, ID, NIF);
+
+                if(v)
+                {
+                    //limparTela();
+                    printf("Aluguer terminado com sucesso\n");
+                    enterContinuar();
+                }
+                else
+                {
+                    limparTela();
+                    printf("Ocorreu um erro ao terminado o aluguer do meio.\n");
+                    enterContinuar();
+                }
+
+                break;
+            }
+            case 5:
+            {
                 char localidade[TAM_MORADA];
 
                 limparTela();
@@ -186,14 +212,14 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
                 pesquisarLocalidade(*topoM, localidade);
                 break;
             }
-            case 5:
+            case 6:
             {
                 limparTela();
                 *topoC = editarDadosCliente(*topoC, NIF);
 
                 break;
             }
-            case 6:
+            case 7:
             {
                 int v;
 
@@ -297,7 +323,7 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 printf("Introduza o custo para alugar o veiculo:\n");
                 scanf("%f", &custo);
 
-                *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0, 0);
+                *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0, 0, 0);
 
                 limparTela();
                 printf("Meio adicionado com sucesso\n");

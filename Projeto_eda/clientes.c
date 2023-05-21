@@ -266,10 +266,11 @@ int Alugar(RC* auxC, RM* auxM, int ID, int NIF)
 				{
 					if (topoC->NIF == NIF)
 					{
-						if (topoC->saldo < topoM->custo) return 0;
+						if (topoC->saldo < topoM->custo * 5) return 0;
 						else
 						{
 							topoM->alugado = 1;
+							topoM->NIF = NIF;
 							topoM->tempoinicial = time(NULL);
 							return 1;
 						}
@@ -281,6 +282,7 @@ int Alugar(RC* auxC, RM* auxM, int ID, int NIF)
 		}
 		topoM = topoM->seguinte;
 	}
+	return 1;
 
 }
 
@@ -306,7 +308,8 @@ int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 							{
 
 								topoM->alugado = 0;
-								topoC = removerSaldo(topoC, topoC->NIF, (topoM->custo * (final - topoM->tempoinicial)));
+								topoM->NIF = 0;
+								topoC = removerSaldo(topoC, topoC->NIF, (topoM->custo * ((final - topoM->tempoinicial) / 60)));
 								topoA = adicionarAluguer(topoA, topoM, NIF, final);
 								return 1;
 							}
@@ -317,6 +320,7 @@ int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 		}
 		topoM = topoM->seguinte;
 	}
+	return 1;
 }
 
 /// @brief Esta função procura um meio numa certa localidade
@@ -335,7 +339,7 @@ void pesquisarLocalidade(RM* auxM, char localidade[])
 			if(strcmp(topoM->localizacao,localidade) == 0)
 			{
 				v = 1;
-				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->tempoinicial);
+				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
 			}
 			topoM = topoM->seguinte;
 		}
