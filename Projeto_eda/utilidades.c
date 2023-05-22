@@ -13,7 +13,7 @@
 void limparTela()
 {
 	//system("cls||clear");
-    system("cls");
+    system("clear");
 }
 
 /// @brief limpa o buffer
@@ -27,7 +27,7 @@ void enterContinuar()
 {
 	limparBuffer();
 	printf("Pressione ENTER para continuar..");
-	getchar();
+	getc(stdin);
 }
 
 /// @brief verifica através de uma password e um NIF se o utilizador é um cliente ou um gestor
@@ -143,6 +143,22 @@ int verificarAlugado(RM* auxM, int ID)
         if(topoM->ID == ID)
         {
             if(topoM->alugado == 1) return 1;
+            else return 0;
+        }
+        topoM = topoM->seguinte;
+    }
+    return 0;
+}
+
+int verificarAlugadoNIF(RM* auxM, int ID, int NIF)
+{
+    RM* topoM = auxM;
+
+    while(topoM != NULL)
+    {
+        if(topoM->ID == ID)
+        {
+            if(topoM->alugado == 1 && topoM->NIF == NIF) return 1;
             else return 0;
         }
         topoM = topoM->seguinte;

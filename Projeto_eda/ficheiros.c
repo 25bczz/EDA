@@ -93,7 +93,7 @@ RM* conteudoRM()
 		char linha[TAM_LINHA];
 		while (fgets(linha, sizeof(linha), fp))
 		{
-			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d;%ld", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado, &NIF, &tempoinicial);
+			sscanf(linha, "%d;%[^;];%[^;];%f;%f;%f;%d;%d;%ld", &ID, nome, localizacao, &bateria, &autonomia, &custo, &alugado, &NIF, &tempoinicial);
 			topoM = adicionarMeio(topoM, ID, nome, localizacao, bateria, autonomia, custo, alugado, NIF, tempoinicial);
 		}
 		fclose(fp);
@@ -191,7 +191,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoM != NULL)
 		{
-			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f;%d\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+			fprintf(fp, "%d;%s;%s;%.2f;%.2f;%.2f;%d;%d;%ld\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
 			topoM = topoM->seguinte;
 		}
 		fclose(fp);
@@ -209,7 +209,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		while (topoA != NULL)
 		{
-			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f\n", topoA->NIF, topoA->ID, topoA->nome, topoA->localizacao, topoA->bateria, topoA->autonomia, topoA->custo, topoA->tempoinicial, topoA->tempofinal);
+			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f;%ld;%ld\n", topoA->NIF, topoA->ID, topoA->nome, topoA->localizacao, topoA->bateria, topoA->autonomia, topoA->custo, topoA->tempoinicial, topoA->tempofinal);
 			topoA = topoA->seguinte;
 		}
 		fclose(fp);

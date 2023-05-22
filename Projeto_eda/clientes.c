@@ -32,7 +32,7 @@ RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int 
 		novo->saldo = saldo;
 
 		if(topoC != NULL) novo->seguinte = topoC;
-    	else novo->seguinte = NULL;
+    		else novo->seguinte = NULL;
 
 		return novo;
 	}
@@ -298,7 +298,7 @@ int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 	{
 		if (topoM->ID == ID) 
 		{
-			v = verificarAlugado(topoM, ID);
+			v = verificarAlugadoNIF(topoM, ID, NIF);
 
 			if(v == 1)
 			{

@@ -20,6 +20,8 @@ int verificarGestorNIF(RG* auxG, int NIF);
 
 int verificarAlugado(RM* auxM, int ID);
 
+int verificarAlugadoNIF(RM* auxM, int ID, int NIF);
+
 int verificarPasswordAntigaClientes(RC* auxC, int NIF, char password[]);
 
 int verificarPasswordAntigaGestores(RG* auxG, int NIF, char password[]);
