@@ -176,28 +176,31 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
             }
             case 4:
             {
-                int ID, v;
+                int ID, v1, v2;
 
                 limparTela();
-                listarMeiosAlugados(*topoM, NIF);
-                printf("Introduza o ID do meio que deseja terminar o aluguer:\n");
-                scanf("%d", &ID);
+                v1 = listarMeiosAlugados(*topoM, NIF);
 
-                v = cancelarAluguer(*topoC, *topoM, *topoA, ID, NIF);
-
-                if(v)
+                if(v1 == 1)
                 {
-                    //limparTela();
-                    printf("Aluguer terminado com sucesso\n");
-                    enterContinuar();
-                }
-                else
-                {
-                    limparTela();
-                    printf("Ocorreu um erro ao terminado o aluguer do meio.\n");
-                    enterContinuar();
-                }
+                    printf("Introduza o ID do meio que deseja terminar o aluguer:\n");
+                    scanf("%d", &ID);
 
+                    v2 = cancelarAluguer(*topoC, *topoM, *topoA, ID, NIF);
+
+                    if(v2)
+                    {
+                        //limparTela();
+                        printf("Aluguer terminado com sucesso\n");
+                        enterContinuar();
+                    }
+                    else
+                    {
+                        limparTela();
+                        printf("Ocorreu um erro ao terminado o aluguer do meio.\n");
+                        enterContinuar();
+                    }
+                }
                 break;
             }
             case 5:

@@ -172,9 +172,9 @@ void listarMeios(RM* auxM)
 	}
 }
 
-void listarMeiosAlugados(RM* auxM, int NIF)
+int listarMeiosAlugados(RM* auxM, int NIF)
 {
-    RM* topoM = auxM, *aux;
+    RM* topoM = auxM, *aux = NULL;
 
 
     while(topoM != NULL)
@@ -191,16 +191,18 @@ void listarMeiosAlugados(RM* auxM, int NIF)
         limparTela();
 		while (aux != NULL)
 		{
-            printf("ID - %d\nTipo - %s\nLocalizacao - %s\nBateria - %.2f\nAutonomia - %2.f\nCusto - %.2f\n\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
+            printf("ID - %d\nTipo - %s\nLocalizacao - %s\nBateria - %.2f\nAutonomia - %2.f\nCusto - %.2f\n\n", aux->ID, aux->nome, aux->localizacao, aux->bateria, aux->autonomia, aux->custo);
 			aux = aux->seguinte;
 		}
 		enterContinuar();
+        return 1;
     }
     else 
     {
         limparTela();
         printf("Não há meios alugados por si\n");
         enterContinuar();
+        return 0;
     }
 }
 

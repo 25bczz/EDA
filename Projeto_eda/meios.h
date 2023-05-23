@@ -33,7 +33,7 @@ void ordenarMeios(RM** auxM);
 
 void listarMeios(RM* auxM);
 
-void listarMeiosAlugados(RM* auxM, int NIF);
+int listarMeiosAlugados(RM* auxM, int NIF);
 
 int darID(RM* auxM);
 
