@@ -286,7 +286,7 @@ int Alugar(RC* auxC, RM* auxM, int ID, int NIF)
 
 }
 
-int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
+int cancelarAluguer(RC* auxC, RM* auxM, RA** auxA, int ID, int NIF)
 {
 	RC* topoC = auxC;
 	RM* topoM = auxM;
@@ -306,7 +306,7 @@ int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF)
 							if (topoC->NIF == NIF)
 							{
 								topoC = removerSaldo(topoC, topoC->NIF, (topoM->custo * ((final - topoM->tempoinicial) / 60)));
-								auxA = adicionarAluguer(auxA, topoM, NIF, final);
+								*auxA = adicionarAluguer(*auxA, topoM, NIF, final);
 								topoM->tempoinicial = 0;
 								topoM->alugado = 0;
 								topoM->NIF = 0;

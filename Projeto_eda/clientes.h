@@ -33,7 +33,7 @@ RC* removerSaldo(RC* auxC, int NIF, float pagamento);
 
 int Alugar(RC* auxC, RM* auxM, int ID, int NIF);
 
-int cancelarAluguer(RC* auxC, RM* auxM, RA* auxA, int ID, int NIF);
+int cancelarAluguer(RC* auxC, RM* auxM, RA** auxA, int ID, int NIF);
 
 void pesquisarLocalidade(RM* auxM, char localidade[]);
 

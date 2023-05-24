@@ -186,11 +186,11 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
                     printf("Introduza o ID do meio que deseja terminar o aluguer:\n");
                     scanf("%d", &ID);
 
-                    v2 = cancelarAluguer(*topoC, *topoM, *topoA, ID, NIF);
+                    v2 = cancelarAluguer(*topoC, *topoM, &(*topoA), ID, NIF);
 
                     if(v2)
                     {
-                        //limparTela();
+                        limparTela();
                         printf("Aluguer terminado com sucesso\n");
                         enterContinuar();
                     }
