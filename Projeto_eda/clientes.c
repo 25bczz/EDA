@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 /// @brief Esta funcao adiciona um novo cliente à lista ligada. Primeiramente ela verifica se já existe um cliente com o mesmo NIF, caso não exista acrescenta então o novo membro no topo da lista.
 /// @param auxC endereço do topo da lista a que vamos acrescentar o novo cliente

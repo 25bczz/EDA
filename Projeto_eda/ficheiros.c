@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 //				FICHEIROS DE TEXTO
 

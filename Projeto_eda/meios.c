@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 /// @brief Esta funcao adiciona um novo meio à lista ligada. Ela utiliza uma função auxiliar que atribui automaticamente o ID
 /// @param auxM endereço do topo da lista dos meios

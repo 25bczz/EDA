@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 /// @brief limpa a tela
 void limparTela()
@@ -25,9 +26,10 @@ void limparBuffer()
 /// @brief limpa o buffer e espera a interação do cliente para continuar
 void enterContinuar()
 {
+    char in;
 	limparBuffer();
 	printf("Pressione ENTER para continuar..");
-	getc(stdin);
+	fgets(in, sizeof(char), stdin);
 }
 
 /// @brief verifica através de uma password e um NIF se o utilizador é um cliente ou um gestor

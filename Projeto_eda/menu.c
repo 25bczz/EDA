@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 /// @brief Menu de interação com o cliente
 /// @param topoC endereço do topo da lista dos clientes
@@ -54,7 +55,7 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 
                 printf("Introduza o seu nome:\n");
                 limparBuffer();
-                gets(nome);
+                fgets(nome, sizeof(nome), stdin);
                 printf("Introduza a sua morada:\n");
                 limparBuffer();
                 scanf("%s", morada);
@@ -81,7 +82,7 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 
                 printf("Introduza o seu nome:\n");
                 limparBuffer();
-                gets(nome);
+                fgets(nome, sizeof(nome), stdin);
                 printf("Introduza a sua morada:\n");
                 limparBuffer();
                 scanf("%s", morada);
@@ -315,7 +316,7 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 ID = darID(*topoM);
                 printf("Introduza o tipo de meio que deseja adicionar:\n");
                 limparBuffer();
-                gets(nome);
+                fgets(nome, sizeof(nome), stdin);
                 printf("Introduza a localizacao do veiculo:\n");
                 limparBuffer();
                 scanf("%s", localizacao);
@@ -380,47 +381,3 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
     } while (op != 0);
     
 }
-
-/*
-/// @brief Menu de interação com o cliente
-void menu()
-{
-    int op;
-    RC* topoC = conteudoRC();
-	RG* topoG = conteudoRG();
-	RM* topoM = conteudoRM();
-	RA* topoA = conteudoRA();
-
-    do
-    {
-        limparTela();
-        printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
-        scanf("%d", &op);
-        limparTela();
-        switch(op)
-        {
-            case 1:
-            {
-                menuLogin(topoC, topoG, topoM, topoA);
-                break; 
-            }
-            case 2:
-            {
-                menuRegistro(topoC, topoG, topoM, topoA);
-                break;
-            }
-            case 0: break;
-            default:
-            {
-                limparTela();
-                printf("Opcao invalida.\n");
-                enterContinuar();
-                break;
-            }
-        }
-    }while(op != 0);
-
-    adicionarFicheiro(topoC, topoG, topoM, topoA);
-    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
-}
-*/

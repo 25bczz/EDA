@@ -8,6 +8,7 @@
 #include "gestores.h"
 #include "ficheiros.h"
 #include "utilidades.h"
+#include "grafos.h"
 
 /// @brief Esta funcao adiciona um novo gestor à lista ligada. Primeiramente ela verifica se já existe um gestor com o mesmo NIF, caso não exista acrescenta então o novo membro no topo da lista.
 /// @param auxG endereço do topo da lista a que vamos acrescentar o novo gestor
