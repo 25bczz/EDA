@@ -20,15 +20,20 @@ void limparTela()
 /// @brief limpa o buffer
 void limparBuffer()
 {
-	fflush(stdin);
+	scanf("%*c");
+}
+
+void removerCaracter(char string[])
+{
+    int len = strlen(string);
+    if (len > 0 && string[len - 1] == '\n') string[len - 1] = '\0';
 }
 
 /// @brief limpa o buffer e espera a interação do cliente para continuar
 void enterContinuar()
 {
-    char in;
-	limparBuffer();
 	printf("Pressione ENTER para continuar..");
+    limparBuffer();
 	getchar();
 }
 

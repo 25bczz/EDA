@@ -10,6 +10,8 @@ void limparTela();
 
 void limparBuffer();
 
+void removerCaracter(char string[]);
+
 void enterContinuar();
 
 void imprimirLogo();

@@ -83,7 +83,7 @@ RG* editarDadosGestor(RG* auxG, int NIF)
 			while (vf != 0)
 			{
                 limparTela();
-				printf("A password introduzida e errada.\n Introduza novamente a password antiga:\n");
+				printf("A password introduzida e errada.\nIntroduza novamente a password antiga:\n");
                 limparBuffer();
 				scanf("%s", password);
 				vf = verificarPasswordAntigaGestores(topoG, NIF, password);

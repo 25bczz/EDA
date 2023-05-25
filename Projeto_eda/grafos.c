@@ -10,7 +10,12 @@
 #include "utilidades.h"
 #include "grafos.h"
 
-void adicionarVertice()
+VTC* lerVertices()
+{
+
+}
+
+GRAFO* lerGrafo()
 {
     
 }

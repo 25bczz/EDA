@@ -338,8 +338,11 @@ void pesquisarLocalidade(RM* auxM, char localidade[])
 		{
 			if(strcmp(topoM->localizacao,localidade) == 0)
 			{
-				v = 1;
-				aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+				if(topoM->alugado == 0)
+				{
+					v = 1;
+					aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+				}
 			}
 			topoM = topoM->seguinte;
 		}
@@ -348,17 +351,19 @@ void pesquisarLocalidade(RM* auxM, char localidade[])
 		{
 			limparTela();
 			listarMeios(aux);
-			enterContinuar();
 		}
 		else
 		{
 			printf("Nao existem meios disponiveis nessa localidade neste momento.\n");
+			limparBuffer();
+			enterContinuar();
 		}
 	}
 	else
 	{
 		limparTela();
 		printf("Nao existem meios disponiveis no momento\n");
+		limparBuffer();
 		enterContinuar();
 	}
 }
