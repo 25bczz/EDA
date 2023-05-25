@@ -12,6 +12,12 @@ void limparBuffer();
 
 void enterContinuar();
 
+void imprimirLogo();
+
+void imprimirDadosCliente(RC* auxC, int NIF);
+
+void imprimirDadosGestor(RG* auxG, int NIF);
+
 int verificarClienteGestor(RC* auxC, RG* auxG, int NIF, char password[]);
 
 int verificarClienteNIF(RC* auxC, int NIF);

@@ -244,7 +244,7 @@ RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF, time_t final)
     strcpy(novo->localizacao,topoM->localizacao);
     novo->bateria = topoM->bateria;
     novo->autonomia = topoM->autonomia;
-    novo->custo = topoM->custo * ((final - topoM->tempoinicial) / 60);
+    novo->custo = topoM->custo * ((double)(final - topoM->tempoinicial) / 60);
     novo->NIF = NIF;
     novo->tempoinicial = topoM->tempoinicial;
     novo->tempofinal = final;

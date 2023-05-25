@@ -10,3 +10,7 @@
 #include "utilidades.h"
 #include "grafos.h"
 
+void adicionarVertice()
+{
+    
+}

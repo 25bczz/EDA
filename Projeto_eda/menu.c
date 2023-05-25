@@ -122,6 +122,8 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
     do
     {
         limparTela();
+        imprimirLogo();
+        imprimirDadosCliente(*topoC, NIF);
         printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Terminar aluguer\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 
@@ -162,7 +164,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
 
                 if(v)
                 {
-                    //limparTela();
+                    limparTela();
                     printf("Meio alugado com sucesso\n");
                     enterContinuar();
                 }
@@ -265,6 +267,8 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
     do
     {
         limparTela();
+        imprimirLogo();
+        imprimirDadosGestor(*topoG, NIF);
         printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 

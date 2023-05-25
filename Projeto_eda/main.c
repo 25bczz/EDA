@@ -36,6 +36,7 @@ void main()
     do
     {
         limparTela();
+        imprimirLogo();
         printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
         scanf("%d", &op);
         limparTela();

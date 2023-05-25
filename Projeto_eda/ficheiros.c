@@ -111,7 +111,7 @@ RA* conteudoRA()
 	FILE* fp;
 	int NIF;
 	RA* topoA = NULL;
-    RM* meio = NULL;
+    RM* meio = malloc(sizeof(RM));
 	time_t tempofinal;
 
 	fp = fopen("alugueres.txt", "r");
@@ -126,6 +126,7 @@ RA* conteudoRA()
 		while (fgets(linha, sizeof(linha), fp))
 		{
 			sscanf(linha, "%d;%d;%[^;];%[^;];%f;%f;%f;%ld;%ld", &NIF, &meio->ID, meio->nome, meio->localizacao, &meio->bateria, &meio->autonomia, &meio->custo, &meio->tempoinicial, &tempofinal);
+			meio->custo = meio->custo / ((double)(tempofinal - meio->tempoinicial) / 60);
 			topoA = adicionarAluguer(topoA, meio, NIF, tempofinal);
 		}
 		fclose(fp);

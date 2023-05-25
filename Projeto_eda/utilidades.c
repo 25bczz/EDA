@@ -29,7 +29,33 @@ void enterContinuar()
     char in;
 	limparBuffer();
 	printf("Pressione ENTER para continuar..");
-	fgets(in, sizeof(char), stdin);
+	getchar();
+}
+
+void imprimirLogo()
+{
+    printf("  _____                  _       _        \n");
+    printf(" | ____|          _ __  (_)   __| |   ___ \n");
+    printf(" |  _|    _____  | '__| | |  / _` |  / _ |\n");
+    printf(" | |___  |_____| | |    | | | (_| | |  __/\n");
+    printf(" |_____|         |_|    |_|  |__,_|  |___|\n");
+    printf("\n\t\t\tby: Diogo Goncalves\n\n");
+}
+
+void imprimirDadosCliente(RC* auxC, int NIF)
+{
+    RC* topoC = auxC;
+    while(topoC != NULL && NIF != topoC->NIF)   topoC = topoC->seguinte;
+
+    if(topoC != NULL)   printf("Bem-vindo, %s!!\nO seu saldo é: %.2f€\n\n", topoC->nome, topoC->saldo);
+}
+
+void imprimirDadosGestor(RG* auxG, int NIF)
+{
+    RG* topoG = auxG;
+    while(topoG != NULL && NIF != topoG->NIF)   topoG = topoG->seguinte;
+
+    if(topoG != NULL)   printf("Bem-vindo, %s!!\n\n", topoG->nome);
 }
 
 /// @brief verifica através de uma password e um NIF se o utilizador é um cliente ou um gestor
