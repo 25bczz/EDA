@@ -58,8 +58,8 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
                 printf("Introduza o seu nome:\n");
                 limparBuffer();
                 fgets(nome, sizeof(nome), stdin);
+                removerCaracter(nome);
                 printf("Introduza a sua morada:\n");
-                limparBuffer();
                 scanf("%s", morada);
                 printf("Introduza a sua password:\n");
                 limparBuffer();
@@ -68,8 +68,6 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
                 scanf("%d", &NIF);
                 printf("Introduza a sua idade:\n");
                 scanf("%d", &idade);
-
-                removerCaracter(nome);
 
                 v = verificarClienteNIF(*topoC, NIF);
 
@@ -323,8 +321,8 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 printf("Introduza o tipo de meio que deseja adicionar:\n");
                 limparBuffer();
                 fgets(nome, sizeof(nome), stdin);
+                removerCaracter(nome);
                 printf("Introduza a localizacao do veiculo:\n");
-                limparBuffer();
                 scanf("%s", localizacao);
                 printf("Introduza a bateria restante no veiculo:\n");
                 scanf("%f", &bateria);
@@ -332,8 +330,6 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 scanf("%f", &autonomia);
                 printf("Introduza o custo para alugar o veiculo:\n");
                 scanf("%f", &custo);
-
-                removerCaracter(nome);
 
                 *topoM = adicionarMeio(*topoM, ID, nome, localizacao, bateria, autonomia, custo, 0, 0, 0);
 
