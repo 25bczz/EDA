@@ -15,8 +15,13 @@ typedef struct registo_arestas
     struct registo_arestas *seguinte;
 }GRAFO;
 
-VTC* lerVertices();
+typedef struct registo_cliente RC;
+typedef struct registo_gestor RG;
+typedef struct registo_meio RM;
+typedef struct registo_alugueres RA;
 
-GRAFO* lerGrafo();
+VTC* adicionarVertice(VTC* topoVTC, int id, char loc[]);
+
+void adicionarAresta(GRAFO* topoGRAFO, int v1, int v2, float peso);
 
 #endif

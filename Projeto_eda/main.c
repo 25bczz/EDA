@@ -27,11 +27,15 @@ void main()
 	RG* topoG = NULL;
 	RM* topoM = NULL;
 	RA* topoA = NULL;
+    VTC* topoVTC = NULL;
+    GRAFO* topoGRAFO[TAM_VERTICES];
 
     topoC = conteudoRC();
 	topoG = conteudoRG();
 	topoM = conteudoRM();
 	topoA = conteudoRA();
+    topoVTC = conteudoVTC();
+    conteudoGRAFO(topoGRAFO);
 
     do
     {
@@ -44,12 +48,12 @@ void main()
         {
             case 1:
             {
-                menuLogin(&topoC, &topoG, &topoM, &topoA);
-                break; 
+                menuLogin(&topoC, &topoG, &topoM, &topoA, &topoVTC, &topoGRAFO);
+                break;
             }
             case 2:
             {
-                menuRegistro(&topoC, &topoG, &topoM, &topoA);
+                menuRegistro(&topoC, &topoG);
                 break;
             }
             case 0: break;
@@ -63,6 +67,6 @@ void main()
         }
     }while(op != 0);
 
-    adicionarFicheiro(topoC, topoG, topoM, topoA);
-    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
+    adicionarFicheiro(topoC, topoG, topoM, topoA, topoVTC, topoGRAFO);
+    adicionarFicheiroBin(topoC, topoG, topoM, topoA, topoVTC, topoGRAFO);
 }

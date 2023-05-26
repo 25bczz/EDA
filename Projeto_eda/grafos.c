@@ -10,12 +10,12 @@
 #include "utilidades.h"
 #include "grafos.h"
 
-VTC* lerVertices()
+VTC* adicionarVertice(VTC* topoVTC, int id, char loc[])
 {
-
+    
 }
 
-GRAFO* lerGrafo()
+void adicionarAresta(GRAFO* topoGRAFO, int v1, int v2, float peso)
 {
     
 }

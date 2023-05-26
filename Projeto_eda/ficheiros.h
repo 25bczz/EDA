@@ -5,6 +5,8 @@ typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
+typedef struct registo_vertices VTC;
+typedef struct registo_arestas GRAFO;
 
 //				FICHEIROS DE TEXTO
 
@@ -16,7 +18,12 @@ RM* conteudoRM();
 
 RA* conteudoRA();
 
-void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA);
+VTC* conteudoVTC();
+
+GRAFO* conteudoGRAFO();
+
+
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAFO* auxGRAFO);
 
 
 //				FICHEIROS BINÁRIOS
@@ -29,6 +36,10 @@ RM* conteudoBinRM();
 
 RA* conteudoBinRA();
 
-void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA);
+VTC* conteudoBinVTC();
+
+GRAFO* conteudoBinGRAFO();
+
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAFO* auxGRAFO);
 
 #endif

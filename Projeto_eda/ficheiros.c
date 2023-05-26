@@ -135,18 +135,74 @@ RA* conteudoRA()
 	return topoA;
 }
 
+VTC* conteudoVTC()
+{
+	FILE* fp;
+	int id;
+	char geocode[TAM_MORADA];
+	VTC* topoVTC = NULL;
+
+	fp = fopen("vertices.txt", "r");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
+		{
+			sscanf(linha, "%d;%[\n]\n", &id, geocode);
+			topoVTC = adicionarVertice(topoVTC, id, geocode);
+		}
+		fclose(fp);
+	}
+
+	return topoVTC;
+}
+
+GRAFO* conteudoGRAFO(GRAFO grafo[])
+{
+	FILE* fp;
+	int id, adj;
+	float peso;
+	GRAFO* topoGRAFO = NULL;
+
+	fp = fopen("grafo.txt", "r");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
+		{
+			sscanf(linha, "%d;%d;%f", &id, &adj, &peso);
+			adicionarAresta(topoGRAFO, id, adj, peso);
+		}
+		fclose(fp);
+	}
+
+	return topoGRAFO;
+}
+
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro de texto
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
-void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAFO* auxGRAFO)
 {
 	FILE* fp;
 	RC* topoC = auxC;
 	RG* topoG = auxG;
 	RM* topoM = auxM;
 	RA* topoA = auxA;
+	VTC* topoVTC = auxVTC;
+	GRAFO* topoGRAFO = auxGRAFO;
 
 //				CLIENTES
 	fp = fopen("clientes.txt", "w");
@@ -216,6 +272,43 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 		}
 		fclose(fp);
 	}
+
+
+//				VERTICES
+	fp = fopen("vertices.txt", "w");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		while (topoVTC != NULL)
+		{
+			fprintf(fp, "%d;%s\n", topoVTC->num, topoVTC->geocode);
+			topoVTC = topoVTC->seguinte;
+		}
+		fclose(fp);
+	}	
+
+
+//				GRAFO
+	fp = fopen("grafo.txt", "w");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		int id = 0;
+		while (id < TAM_VERTICES)
+		{
+			fprintf(fp, "%d;%d;%f\n", id, topoGRAFO[id].adj, topoGRAFO[id].peso);
+			id++;
+		}
+		fclose(fp);
+	}	
 }
 
 
@@ -317,18 +410,65 @@ RA* conteudoBinRA()
 	return aux;
 }
 
+VTC* conteudoBinVTC()
+{
+	FILE* fp;
+	VTC* aux = NULL;
+
+	fp = fopen("vertices.bin", "rb");
+
+	if (fp != NULL)
+	{
+		VTC vertice;
+		while (fread(&vertice, sizeof(VTC), 1, fp) == 1)
+		{
+			aux = adicionarVertice(aux, vertice.num, vertice.geocode);
+		}
+		fclose(fp);
+	}
+	
+	return aux;
+}
+
+ GRAFO* conteudoBinGRAFO()
+{
+	FILE* fp;
+	GRAFO* aux = NULL;
+
+	fp = fopen("grafo.bin", "rb");
+
+	if (fp != NULL)
+	{
+		GRAFO grafo;
+		int id;
+		
+		while(fread(&id , sizeof(id),1, fp))
+		{
+			if (fread(&grafo, sizeof(GRAFO), 1, fp) == 1)
+			{
+				adicionarAresta(aux, id, grafo.adj, grafo.peso);
+			}
+		}
+		fclose(fp);
+	}
+	
+	return aux;
+} 
+
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro binário
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
-void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAFO* auxGRAFO)
 {
 	FILE* fp;
 	RC* topoC = auxC;
 	RG* topoG = auxG;
 	RM* topoM = auxM;
 	RA* topoA = auxA;
+	VTC* topoVTC = auxVTC;
+	GRAFO* topoGRAFO = auxGRAFO;
 
 //				CLIENTES
 	fp = fopen("clientes.bin", "wb");
@@ -376,4 +516,28 @@ void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	}
 
 	fclose(fp);
+
+
+//				VERTICES
+	fp = fopen("vertices.bin", "wb");
+
+	while (topoVTC != NULL)
+	{
+		fwrite(topoVTC, sizeof(VTC), 1, fp);
+		topoVTC = topoVTC->seguinte;
+	}
+
+	fclose(fp);
+
+
+//				GRAFO
+/*  	fp = fopen("grafo.bin", "wb");
+
+	while (topoGRAFO != NULL)
+	{
+		fwrite(topoGRAFO, sizeof(GRAFO), 1, fp);
+		topoGRAFO = topoGRAFO->seguinte;
+	}
+
+	fclose(fp); */
 }
