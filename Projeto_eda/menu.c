@@ -15,7 +15,7 @@
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO)
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
@@ -29,8 +29,8 @@ void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GR
     scanf("%s", password);
     v = verificarClienteGestor(*topoC, *topoG, NIF, password);
 
-    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), *topoA, &(*topoVTC), &(*topoGRAFO), NIF);
-    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), &(*topoA), &(*topoVTC), &(*topoGRAFO), NIF);
+    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), *topoA, NIF);
+    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), &(*topoA), NIF);
 }
 
 /// @brief Menu de interação com o cliente
@@ -38,7 +38,7 @@ void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GR
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuRegistro(RC** topoC, RG** topoG)
+void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 {
     int op, v;
 
@@ -120,7 +120,7 @@ void menuRegistro(RC** topoC, RG** topoG)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF)
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
 {
     int op;
     do
@@ -263,7 +263,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, G
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF)
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
 {
     int op;
 
