@@ -15,7 +15,7 @@
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO* topoGRAFO)
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
@@ -120,7 +120,7 @@ void menuRegistro(RC** topoC, RG** topoG)
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO* topoGRAFO, int NIF)
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF)
 {
     int op;
     do
@@ -263,7 +263,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, G
 /// @param topoG endereço do topo da lista dos gestores
 /// @param topoM endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, GRAFO* topoGRAFO, int NIF)
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF)
 {
     int op;
 

@@ -153,8 +153,7 @@ VTC* conteudoVTC()
 		char linha[TAM_LINHA];
 		while (fgets(linha, sizeof(linha), fp))
 		{
-			sscanf(linha, "%d;%[^\n]\n", &id, geocode);
-			printf("%s", geocode);
+			sscanf(linha, "%d;%[\n]\n", &id, geocode);
 			topoVTC = adicionarVertice(topoVTC, id, geocode);
 		}
 		fclose(fp);
@@ -163,12 +162,12 @@ VTC* conteudoVTC()
 	return topoVTC;
 }
 
-GRAFO* conteudoGRAFO()
+GRAFO* conteudoGRAFO(GRAFO grafo[])
 {
 	FILE* fp;
 	int id, adj;
 	float peso;
-	GRAFO** auxGRAFO = NULL;
+	GRAFO* topoGRAFO = NULL;
 
 	fp = fopen("grafo.txt", "r");
 
@@ -182,12 +181,12 @@ GRAFO* conteudoGRAFO()
 		while (fgets(linha, sizeof(linha), fp))
 		{
 			sscanf(linha, "%d;%d;%f", &id, &adj, &peso);
-			*auxGRAFO = adicionarAresta(auxGRAFO, id, adj, peso);
+			adicionarAresta(topoGRAFO, id, adj, peso);
 		}
 		fclose(fp);
 	}
 
-	return *auxGRAFO;
+	return topoGRAFO;
 }
 
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro de texto
@@ -305,12 +304,7 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAF
 		int id = 0;
 		while (id < TAM_VERTICES)
 		{
-			GRAFO* adjacentes = &topoGRAFO[id];
-			while(adjacentes != NULL)
-			{
-				fprintf(fp, "%d;%d;%f\n", id, adjacentes->adj, adjacentes->peso);
-				adjacentes = adjacentes->seguinte;
-			}
+			fprintf(fp, "%d;%d;%f\n", id, topoGRAFO[id].adj, topoGRAFO[id].peso);
 			id++;
 		}
 		fclose(fp);
@@ -448,11 +442,11 @@ VTC* conteudoBinVTC()
 		GRAFO grafo;
 		int id;
 		
-		while(fread(&id , sizeof(int),1, fp) == 1)
+		while(fread(&id , sizeof(id),1, fp))
 		{
 			if (fread(&grafo, sizeof(GRAFO), 1, fp) == 1)
 			{
-				aux = adicionarAresta(&aux, id, grafo.adj, grafo.peso);
+				adicionarAresta(aux, id, grafo.adj, grafo.peso);
 			}
 		}
 		fclose(fp);
@@ -537,20 +531,13 @@ void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, G
 
 
 //				GRAFO
- 	fp = fopen("grafo.bin", "wb");
+/*  	fp = fopen("grafo.bin", "wb");
 
-	int id = 0;
-	while(id < TAM_VERTICES)
+	while (topoGRAFO != NULL)
 	{
-		GRAFO* adjacentes = &topoGRAFO[id];
-		while (adjacentes != NULL)
-		{
-			fwrite(&id, sizeof(int), 1, fp);
-			fwrite(adjacentes, sizeof(GRAFO), 1, fp);
-			adjacentes = adjacentes->seguinte;
-		}
-		id++;
+		fwrite(topoGRAFO, sizeof(GRAFO), 1, fp);
+		topoGRAFO = topoGRAFO->seguinte;
 	}
 
-	fclose(fp);
+	fclose(fp); */
 }

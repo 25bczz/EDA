@@ -20,7 +20,7 @@ RA* conteudoRA();
 
 VTC* conteudoVTC();
 
-//void conteudoGRAFO(GRAFO* topoGRAFO);
+GRAFO* conteudoGRAFO();
 
 
 void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC, GRAFO* auxGRAFO);

@@ -10,12 +10,12 @@ typedef struct registo_arestas GRAFO;
 
 void menu();
 
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO* topoGRAFO);
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO);
 
 void menuRegistro(RC** topoC, RG** topoG);
 
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO* topoGRAFO, int NIF);
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF);
 
-void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, GRAFO* topoGRAFO, int NIF);
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, GRAFO** topoGRAFO, int NIF);
 
 #endif
