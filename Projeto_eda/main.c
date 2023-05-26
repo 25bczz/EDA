@@ -22,25 +22,32 @@
 /// @brief Esta função acede ao menu de interação
 void main()
 {
-	int op;
+	int op, z;
 	RC* topoC = NULL;
 	RG* topoG = NULL;
 	RM* topoM = NULL;
 	RA* topoA = NULL;
     VTC* topoVTC = NULL;
-    GRAFO* topoGRAFO[TAM_VERTICES];
+    GRAFO** topoGRAFO = malloc(TAM_VERTICES * sizeof(GRAFO*));
+
+    for (z = 0; z < TAM_VERTICES; z++)  topoGRAFO[z] = NULL;
 
     topoC = conteudoRC();
 	topoG = conteudoRG();
 	topoM = conteudoRM();
 	topoA = conteudoRA();
     topoVTC = conteudoVTC();
-    conteudoGRAFO(topoGRAFO);
+    *topoGRAFO = conteudoGRAFO();
 
     do
     {
         limparTela();
+
         imprimirLogo();
+        while(topoVTC != NULL)
+        {
+            printf("%d ; %s", topoVTC->num, topoVTC->geocode);
+        }
         printf("Introduza a opcao que desejar:\n1 - Login\n2 - Registro\n0 - Sair\n");
         scanf("%d", &op);
         limparTela();
@@ -48,7 +55,7 @@ void main()
         {
             case 1:
             {
-                menuLogin(&topoC, &topoG, &topoM, &topoA, &topoVTC, &topoGRAFO);
+                menuLogin(&topoC, &topoG, &topoM, &topoA, &topoVTC, *topoGRAFO);
                 break;
             }
             case 2:
@@ -67,6 +74,6 @@ void main()
         }
     }while(op != 0);
 
-    adicionarFicheiro(topoC, topoG, topoM, topoA, topoVTC, topoGRAFO);
-    adicionarFicheiroBin(topoC, topoG, topoM, topoA, topoVTC, topoGRAFO);
+    adicionarFicheiro(topoC, topoG, topoM, topoA, topoVTC, *topoGRAFO);
+    adicionarFicheiroBin(topoC, topoG, topoM, topoA, topoVTC, *topoGRAFO);
 }
