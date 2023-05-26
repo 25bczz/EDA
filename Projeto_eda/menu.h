@@ -5,6 +5,8 @@ typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
+typedef struct registo_vertices VTC;
+typedef struct registo_adjacentes ADJ;
 
 void menu();
 

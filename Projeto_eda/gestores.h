@@ -11,6 +11,8 @@ typedef struct registo_gestor
 typedef struct registo_cliente RC;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
+typedef struct registo_vertices VTC;
+typedef struct registo_adjacentes ADJ;
 
 RG* adicionarGestor(RG* auxG, char nome[], char morada[], char password[], int NIF);
 

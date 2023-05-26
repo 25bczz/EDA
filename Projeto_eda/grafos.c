@@ -10,12 +10,3 @@
 #include "utilidades.h"
 #include "grafos.h"
 
-VTC* lerVertices()
-{
-
-}
-
-GRAFO* lerGrafo()
-{
-    
-}

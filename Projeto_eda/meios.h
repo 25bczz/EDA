@@ -22,6 +22,8 @@ typedef struct registo_alugueres
 
 typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
+typedef struct registo_vertices VTC;
+typedef struct registo_adjacentes ADJ;
 
 RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, int NIF, time_t tempoinicial);
 
