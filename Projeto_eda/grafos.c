@@ -53,7 +53,7 @@ VTC* editarVertice(VTC* auxVTC, int id)
     return auxVTC;
 }
 
-VTC* removerVertice(VTC* auxVTC, char id) // ja removemos o vertice em si, falta remover as ligacoes com aquele vertice utilizar loop e removeraresta
+VTC* removerVertice(VTC* auxVTC, char id)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
 
@@ -62,7 +62,15 @@ VTC* removerVertice(VTC* auxVTC, char id) // ja removemos o vertice em si, falta
     {
         aux = atual->seguinte;
         free(atual);
-        //
+
+        VTC* elim = aux;
+
+        while(elim != NULL)
+        {
+            elim = removerAresta(elim, elim->id, id);
+            elim = elim->seguinte;
+        }
+
         return (aux);
     }
     else
@@ -78,7 +86,15 @@ VTC* removerVertice(VTC* auxVTC, char id) // ja removemos o vertice em si, falta
         {
             anterior->seguinte = atual->seguinte;
             free(atual);
-            //
+            
+            VTC* elim = auxVTC;
+
+            while(elim != NULL)
+            {
+                elim = removerAresta(elim, elim->id, id);
+                elim = elim->seguinte;
+            }
+
             return (auxVTC);
         }
     }
@@ -138,13 +154,32 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
 
-    //falta andar pelos adjacentes e verificar se sao iguais a v2(fzr um ADJ* anterior, ADJ* atual e ADJ* aux tbm)
     if (atual == NULL)  return (NULL);
     else if (atual->id == v1)
     {
-        aux = atual->seguinte;
-        free(atual);
-        return (aux);
+        if(atual->adjacentes == NULL) return auxVTC;
+        else if(atual->adjacentes->adj == v2)
+        {
+            ADJ* auxADJ;
+            auxADJ = atual->adjacentes->seguinte;
+            free(atual->adjacentes);
+            atual->adjacentes = auxADJ;
+            return auxVTC;
+        }
+        else
+        {
+            ADJ* auxANT = atual->adjacentes, *auxATUAL = atual->adjacentes;
+
+            for(auxATUAL; auxATUAL != NULL && auxATUAL->adj != v2; auxATUAL = auxATUAL->seguinte) auxANT = auxATUAL;
+
+            if(auxATUAL == NULL)    return auxVTC;
+            else
+            {
+                auxANT = auxATUAL->seguinte;
+                free(auxATUAL);
+                return auxVTC;
+            }
+        }
     }
     else
     {
@@ -157,10 +192,31 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
             return (auxVTC);
         else
         {
-            //falta andar pelos adjacentes e verificar se sao iguais a v2(fzr um ADJ* anterior, ADJ* atual e ADJ* aux tbm)
-            anterior->seguinte = atual->seguinte;
-            free(atual);
-            return (auxVTC);
+            if(atual->adjacentes == NULL) return auxVTC;
+            else if(atual->adjacentes->adj == v2)
+            {
+                ADJ* auxADJ;
+                auxADJ = atual->adjacentes->seguinte;
+                free(atual->adjacentes);
+                atual->adjacentes = auxADJ;
+                return auxVTC;
+            }
+            else
+            {
+                ADJ* auxANT = atual->adjacentes, *auxATUAL = atual->adjacentes;
+
+                for(auxATUAL; auxATUAL != NULL && auxATUAL->adj != v2; auxATUAL = auxATUAL ->seguinte) auxANT = auxATUAL;
+
+                if(auxATUAL == NULL)    return auxVTC;
+                else
+                {
+                    auxANT = auxATUAL->seguinte;
+                    free(auxATUAL);
+                    return auxVTC;
+                }
+                /* anterior->seguinte = atual->seguinte;
+                free(atual); */
+            }
         }
     }
 }
