@@ -135,6 +135,33 @@ RA* conteudoRA()
 	return topoA;
 }
 
+VTC* conteudoVTC()
+{
+	FILE* fp;
+	int id;
+	char geocode[TAM_MORADA];
+	VTC* topoVTC = NULL;
+
+	fp = fopen("vertices.txt", "r");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
+		{
+			sscanf(linha, "%d;%[^\n]\n", &id, geocode);
+			topoVTC = adicionarVertice(topoVTC, id, geocode, NULL);
+		}
+		fclose(fp);
+	}
+
+	return topoVTC;
+}
+
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro de texto
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxG endereço do topo da lista dos gestores

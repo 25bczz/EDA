@@ -21,6 +21,8 @@ typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
 
+VTC* adicionarVertice(int id, char geocode[], ADJ* adj);
+
 
 
 #endif
