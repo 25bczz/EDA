@@ -18,7 +18,11 @@ RM* conteudoRM();
 
 RA* conteudoRA();
 
-void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA);
+VTC* conteudoVTC();
+
+VTC* conteudoADJ(VTC* auxVTC);
+
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC);
 
 
 //				FICHEIROS BINÁRIOS
@@ -31,6 +35,10 @@ RM* conteudoBinRM();
 
 RA* conteudoBinRA();
 
-void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA);
+VTC* conteudoBinVTC();
+
+VTC* conteudoBinADJ(VTC* auxVTC);
+
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC);
 
 #endif

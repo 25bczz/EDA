@@ -3,7 +3,7 @@
 
 typedef struct registo_vertices
 {
-    int num;
+    int id;
     char geocode[TAM_MORADA];
     ADJ* adjacentes;
     struct registo_vertices *seguinte;
@@ -21,8 +21,8 @@ typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
 typedef struct registo_alugueres RA;
 
-VTC* adicionarVertice(int id, char geocode[], ADJ* adj);
+VTC* adicionarVertice(VTC* auxVTC, int id, char geocode[]);
 
-
+VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
 
 #endif

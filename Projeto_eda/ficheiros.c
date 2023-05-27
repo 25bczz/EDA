@@ -154,7 +154,34 @@ VTC* conteudoVTC()
 		while (fgets(linha, sizeof(linha), fp))
 		{
 			sscanf(linha, "%d;%[^\n]\n", &id, geocode);
-			topoVTC = adicionarVertice(topoVTC, id, geocode, NULL);
+			topoVTC = adicionarVertice(topoVTC, id, geocode);
+		}
+		fclose(fp);
+	}
+
+	return topoVTC;
+}
+
+VTC* conteudoADJ(VTC* auxVTC)
+{
+	FILE* fp;
+	int id, adj;
+	float peso;
+	VTC* topoVTC = auxVTC;
+
+	fp = fopen("grafo.txt", "r");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		char linha[TAM_LINHA];
+		while (fgets(linha, sizeof(linha), fp))
+		{
+			sscanf(linha, "%d;%d;%f", &id, &adj, &peso);
+			topoVTC = adicionarAresta(topoVTC, id, adj, peso);
 		}
 		fclose(fp);
 	}
@@ -167,13 +194,15 @@ VTC* conteudoVTC()
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
-void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
+void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 {
 	FILE* fp;
 	RC* topoC = auxC;
 	RG* topoG = auxG;
 	RM* topoM = auxM;
 	RA* topoA = auxA;
+	VTC* topoVTC = auxVTC;
+	VTC* topoGRAF = auxVTC;
 
 //				CLIENTES
 	fp = fopen("clientes.txt", "w");
@@ -240,6 +269,46 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 		{
 			fprintf(fp, "%d;%d;%s;%s;%.2f;%.2f;%.2f;%ld;%ld\n", topoA->NIF, topoA->ID, topoA->nome, topoA->localizacao, topoA->bateria, topoA->autonomia, topoA->custo, topoA->tempoinicial, topoA->tempofinal);
 			topoA = topoA->seguinte;
+		}
+		fclose(fp);
+	}
+
+
+//				VERTICES
+	fp = fopen("vertices.txt", "w");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		while (topoVTC != NULL)
+		{
+			fprintf(fp, "%d;%s\n", topoVTC->id, topoVTC->geocode);
+			topoVTC = topoVTC->seguinte;
+		}
+		fclose(fp);
+	}
+
+
+//				GRAFO
+	fp = fopen("grafo.txt", "w");
+
+	if (fp == NULL)
+	{
+		printf("Ficheiro indisponivel.\n");
+	}
+	else
+	{
+		while (topoGRAF != NULL)
+		{
+			while(topoGRAF->adjacentes != NULL)
+			{
+				fprintf(fp, "%d;%d;%.2f\n", topoGRAF->id, topoGRAF->adjacentes->adj, topoGRAF->adjacentes->peso);
+				topoGRAF->adjacentes = topoGRAF->adjacentes->seguinte;
+			}
+			topoGRAF = topoGRAF->seguinte;
 		}
 		fclose(fp);
 	}
@@ -344,18 +413,74 @@ RA* conteudoBinRA()
 	return aux;
 }
 
+VTC* conteudoBinVTC()
+{
+	FILE* fp;
+	VTC* aux = NULL;
+
+	fp = fopen("vertices.bin", "rb");
+
+	if (fp != NULL)
+	{
+		while(!feof(fp))
+		{
+			int id;
+			if(fread(&id, sizeof(int), 1, fp) == 1)
+			{
+				char geocode[TAM_MORADA];
+				if (fread(&geocode, sizeof(TAM_MORADA), 1, fp) == 1)
+				{
+					aux = adicionarVertice(aux, id, geocode);
+				}
+			}
+		}
+	}
+	fclose(fp);
+
+	return aux;
+}
+
+VTC* conteudoBinADJ(VTC* auxVTC)
+{
+	FILE* fp;
+	VTC* aux = auxVTC;
+
+	fp = fopen("grafo.bin", "rb");
+
+	if (fp != NULL)
+	{
+		while(!feof(fp))
+		{
+			int id;
+			if(fread(&id, sizeof(int), 1, fp) == 1)
+			{
+				ADJ adj;
+				if (fread(&adj, sizeof(ADJ), 1, fp) == 1)
+				{
+					auxVTC = adicionarAresta(auxVTC, id, adj.adj, adj.peso);
+				}
+			}
+		}
+	}
+	fclose(fp);
+
+	return auxVTC;
+}
+
 /// @brief Função que vai percorrendo as listas recebidas por parâmetros e vai adicionando ao respetivo ficheiro binário
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
-void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
+void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 {
 	FILE* fp;
 	RC* topoC = auxC;
 	RG* topoG = auxG;
 	RM* topoM = auxM;
 	RA* topoA = auxA;
+	VTC* topoVTC = auxVTC;
+	VTC* topoGRAF = auxVTC;
 
 //				CLIENTES
 	fp = fopen("clientes.bin", "wb");
@@ -400,6 +525,36 @@ void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA)
 	{
 		fwrite(topoA, sizeof(RA), 1, fp);
 		topoA = topoA->seguinte;
+	}
+
+	fclose(fp);
+
+
+//				VERTICES
+	fp = fopen("vertices.bin", "wb");
+
+	while (topoVTC != NULL)
+	{
+		fwrite(&topoVTC->id, sizeof(int), 1, fp);
+		fwrite(topoVTC->geocode, sizeof(TAM_MORADA), 1, fp);
+		topoVTC = topoVTC->seguinte;
+	}
+
+	fclose(fp);
+
+
+//				GRAFO
+	fp = fopen("grafo.bin", "wb");
+
+	while (topoGRAF != NULL)
+	{
+		while(topoGRAF->adjacentes != NULL)
+		{
+			fwrite(&topoGRAF->id, sizeof(int), 1, fp);
+			fwrite(topoGRAF->adjacentes, sizeof(ADJ), 1, fp);
+			topoGRAF->adjacentes = topoGRAF->adjacentes->seguinte;
+		}
+		topoGRAF = topoGRAF->seguinte;
 	}
 
 	fclose(fp);

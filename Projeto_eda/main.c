@@ -27,11 +27,14 @@ void main()
 	RG* topoG = NULL;
 	RM* topoM = NULL;
 	RA* topoA = NULL;
+    VTC* topoVTC = NULL;
 
     topoC = conteudoRC();
 	topoG = conteudoRG();
 	topoM = conteudoRM();
 	topoA = conteudoRA();
+    topoVTC = conteudoVTC();
+    topoVTC = conteudoADJ(topoVTC);
 
     do
     {
@@ -63,6 +66,6 @@ void main()
         }
     }while(op != 0);
 
-    adicionarFicheiro(topoC, topoG, topoM, topoA);
-    adicionarFicheiroBin(topoC, topoG, topoM, topoA);
+    adicionarFicheiro(topoC, topoG, topoM, topoA, topoVTC);
+    adicionarFicheiroBin(topoC, topoG, topoM, topoA, topoVTC);
 }
