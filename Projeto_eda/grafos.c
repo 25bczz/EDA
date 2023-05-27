@@ -53,16 +53,16 @@ VTC* editarVertice(VTC* auxVTC, int id)
     return auxVTC;
 }
 
-VTC* removerVertice(VTC* auxVTC, char id) // falta ir ao grafo e remover todas as ligacoes!
+VTC* removerVertice(VTC* auxVTC, char id) // ja removemos o vertice em si, falta remover as ligacoes com aquele vertice utilizar loop e removeraresta
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
 
-    if (atual == NULL)
-        return (NULL);
+    if (atual == NULL)  return (NULL);
     else if (atual->id == id)
     {
         aux = atual->seguinte;
         free(atual);
+        //
         return (aux);
     }
     else
@@ -71,12 +71,14 @@ VTC* removerVertice(VTC* auxVTC, char id) // falta ir ao grafo e remover todas a
         {
             anterior = atual;
         }
+
         if (atual == NULL)
             return (auxVTC);
         else
         {
             anterior->seguinte = atual->seguinte;
             free(atual);
+            //
             return (auxVTC);
         }
     }
@@ -103,4 +105,62 @@ VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso)
     }
 
     return auxVTC;
+}
+
+VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso)
+{
+    VTC* topoVTC = auxVTC;
+
+    while (topoVTC != NULL && topoVTC->id != v1)    topoVTC = topoVTC->seguinte;
+
+    if (topoVTC != NULL) 
+    {
+        ADJ* adj = topoVTC->adjacentes;
+        
+        while(adj != NULL)
+        {
+            if(adj->adj == v2)
+            {
+                adj->peso = peso;
+            }
+            adj = adj->seguinte;
+        }
+    }
+    else
+    {
+        printf("A aresta que introduziu não é válida.");
+    }
+
+    return auxVTC;
+}
+
+VTC* removerAresta(VTC* auxVTC, int v1, int v2)
+{
+    VTC* anterior = auxVTC, *atual = auxVTC, *aux;
+
+    //falta andar pelos adjacentes e verificar se sao iguais a v2(fzr um ADJ* anterior, ADJ* atual e ADJ* aux tbm)
+    if (atual == NULL)  return (NULL);
+    else if (atual->id == v1)
+    {
+        aux = atual->seguinte;
+        free(atual);
+        return (aux);
+    }
+    else
+    {
+        for (atual; atual != NULL && atual->id != v1; atual = atual->seguinte)
+        {
+            anterior = atual;
+        }
+
+        if (atual == NULL)
+            return (auxVTC);
+        else
+        {
+            //falta andar pelos adjacentes e verificar se sao iguais a v2(fzr um ADJ* anterior, ADJ* atual e ADJ* aux tbm)
+            anterior->seguinte = atual->seguinte;
+            free(atual);
+            return (auxVTC);
+        }
+    }
 }

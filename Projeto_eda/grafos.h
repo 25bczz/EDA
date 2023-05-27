@@ -23,6 +23,14 @@ typedef struct registo_alugueres RA;
 
 VTC* adicionarVertice(VTC* auxVTC, int id, char geocode[]);
 
+VTC* editarVertice(VTC* auxVTC, int id);
+
+VTC* removerVertice(VTC* auxVTC, char id);
+
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
+
+VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso);
+
+VTC* removerAresta(VTC* auxVTC, int v1, int v2);
 
 #endif
