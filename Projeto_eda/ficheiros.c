@@ -303,10 +303,14 @@ void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 	{
 		while (topoGRAF != NULL)
 		{
-			while(topoGRAF->adjacentes != NULL)
+			if(topoGRAF->adjacentes != NULL)
 			{
-				fprintf(fp, "%d;%d;%.2f\n", topoGRAF->id, topoGRAF->adjacentes->adj, topoGRAF->adjacentes->peso);
-				topoGRAF->adjacentes = topoGRAF->adjacentes->seguinte;
+				ADJ* adj = topoGRAF->adjacentes;
+				while(adj != NULL)
+				{
+					fprintf(fp, "%d;%d;%.2f\n", topoGRAF->id, adj->adj, adj->peso);
+					adj = adj->seguinte;
+				}
 			}
 			topoGRAF = topoGRAF->seguinte;
 		}
@@ -428,7 +432,7 @@ VTC* conteudoBinVTC()
 			if(fread(&id, sizeof(int), 1, fp) == 1)
 			{
 				char geocode[TAM_MORADA];
-				if (fread(&geocode, sizeof(TAM_MORADA), 1, fp) == 1)
+				if (fread(&geocode, sizeof(char) * TAM_MORADA, 1, fp) == 1)
 				{
 					aux = adicionarVertice(aux, id, geocode);
 				}
@@ -443,7 +447,6 @@ VTC* conteudoBinVTC()
 VTC* conteudoBinADJ(VTC* auxVTC)
 {
 	FILE* fp;
-	VTC* aux = auxVTC;
 
 	fp = fopen("grafo.bin", "rb");
 
@@ -536,7 +539,7 @@ void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 	while (topoVTC != NULL)
 	{
 		fwrite(&topoVTC->id, sizeof(int), 1, fp);
-		fwrite(topoVTC->geocode, sizeof(TAM_MORADA), 1, fp);
+		fwrite(topoVTC->geocode, sizeof(char) * TAM_MORADA, 1, fp);
 		topoVTC = topoVTC->seguinte;
 	}
 
