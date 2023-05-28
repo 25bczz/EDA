@@ -1,5 +1,6 @@
-2;ppppp;lllll;11.00;20.00;2.00;0;0;0
-1;ttttt;aaaa;123.00;44.00;3.00;0;0;0
-3;ggggg;jjjj;1233.00;44.00;3.00;0;0;0
-4;bici;braga;33.00;200.00;5.00;0;0;0
-5;teste;este1;25.00;600.00;0.50;0;0;0
+6;bicicleta;justo.bicos.operação;122.00;3333.00;4.00;0;0;0
+5;trotinete;calha.recodificado.juros;25.00;600.00;0.50;0;0;0
+4;bicicleta;alimentação.focinho.dividir;33.00;200.00;5.00;0;0;0
+3;trotinete;remar.energias.exigente;1233.00;44.00;3.00;0;0;0
+1;trotinete;calha.recodificado.juros;123.00;44.00;3.00;0;0;0
+2;bicicleta;remar.energias.exigente;11.00;20.00;2.00;0;0;0

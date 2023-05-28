@@ -11,11 +11,12 @@
 #include "grafos.h"
 
 /// @brief Menu de interação com o cliente
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
-/// @param topoA endereço do topo da lista dos alugueres
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
+/// @param topoC apontador para o endereço do topo da lista dos clientes
+/// @param topoG apontador para o endereço do topo da lista dos gestores
+/// @param topoM apontador para o endereço do topo da lista dos meios
+/// @param topoA apontador para o endereço do topo da lista dos alugueres
+/// @param topoVTC apontador para o endereço do topo da lista dos vertices/grafo
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC)
 {
     int v, NIF;
     char password[TAM_PASSWORD];
@@ -29,16 +30,15 @@ void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
     scanf("%s", password);
     v = verificarClienteGestor(*topoC, *topoG, NIF, password);
 
-    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), *topoA, NIF);
-    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), &(*topoA), NIF);
+    if(v == 1) menuGestor(&(*topoC), &(*topoG), &(*topoM), *topoA, &(*topoVTC), NIF);
+    else if(v == 0) menuCliente(&(*topoC), *topoG, &(*topoM), &(*topoA), *topoVTC, NIF);
 }
 
 /// @brief Menu de interação com o cliente
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
-/// @param topoA endereço do topo da lista dos alugueres
-void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
+/// @param topoC apontador para o endereço do topo da lista dos clientes
+/// @param topoG apontador para o endereço do topo da lista dos gestores
+/// @param topoM endereço do topo da lista dos vertices/grafo
+void menuRegistro(RC** topoC, RG** topoG, VTC* topoVTC)
 {
     int op, v;
 
@@ -52,15 +52,17 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
         {
             case 1:
             {
-                char nome[TAM_NOME], morada[TAM_MORADA], password[TAM_PASSWORD];
-                int NIF, idade;
+                char nome[TAM_NOME], *morada = malloc(sizeof(char) * TAM_MORADA), password[TAM_PASSWORD];
+                int NIF, idade, loc;
 
                 printf("Introduza o seu nome:\n");
                 limparBuffer();
                 fgets(nome, sizeof(nome), stdin);
                 removerCaracter(nome);
-                printf("Introduza a sua morada:\n");
-                scanf("%s", morada);
+                printf("Introduza o numero correspondente a sua morada:\n");
+                listarVertices(topoVTC);
+                scanf("%d", &loc);
+                morada = procurarMorada(topoVTC, loc);
                 printf("Introduza a sua password:\n");
                 limparBuffer();
                 scanf("%s", password);
@@ -116,11 +118,13 @@ void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA)
 }
 
 /// @brief Menu de interação com o cliente
-/// @param topoC endereço do topo da lista dos clientes
+/// @param topoC apontador para o endereço do topo da lista dos clientes
 /// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
-/// @param topoA endereço do topo da lista dos alugueres
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
+/// @param topoM apontador para o endereço do topo da lista dos meios
+/// @param topoA apontador para o endereço do topo da lista dos alugueres
+/// @param topoVTC endereço do topo da lista dos vertices/grafo
+/// @param NIF NIF do cliente que realizou o login
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC* topoVTC, int NIF)
 {
     int op;
     do
@@ -211,20 +215,22 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
             }
             case 5:
             {
-                char localidade[TAM_MORADA];
+                char *localizacao = malloc(sizeof(char) * TAM_MORADA);
+                int loc;
 
                 limparTela();
-                printf("Introduza a localidade que quer procurar:\n");
-                limparBuffer();
-                scanf("%s", localidade);
+                printf("Introduza o numero da localizacao do veiculo:\n");
+                listarVertices(topoVTC);
+                scanf("%d", &loc);
+                localizacao = procurarMorada(topoVTC, loc);
 
-                pesquisarLocalidade(*topoM, localidade);
+                pesquisarLocalidade(*topoM, localizacao);
                 break;
             }
             case 6:
             {
                 limparTela();
-                *topoC = editarDadosCliente(*topoC, NIF);
+                *topoC = editarDadosCliente(*topoC, topoVTC, NIF);
 
                 break;
             }
@@ -259,11 +265,13 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF)
 }
 
 /// @brief Menu de interação com o cliente
-/// @param topoC endereço do topo da lista dos clientes
-/// @param topoG endereço do topo da lista dos gestores
-/// @param topoM endereço do topo da lista dos meios
+/// @param topoC apontador para o endereço do topo da lista dos clientes
+/// @param topoG apontador para o endereço do topo da lista dos gestores
+/// @param topoM apontador para o endereço do topo da lista dos meios
 /// @param topoA endereço do topo da lista dos alugueres
-void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
+/// @param topoVTC apontador para o endereço do topo da lista dos vertices/grafo
+/// @param NIF NIF do gestor que realizou o login
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, int NIF)
 {
     int op;
 
@@ -312,8 +320,8 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
             }
             case 4:
             {
-                int ID;
-                char nome[TAM_NOME], localizacao[TAM_MORADA];
+                int ID, loc;
+                char nome[TAM_NOME], *localizacao = malloc(sizeof(char) * TAM_MORADA);
                 float bateria, autonomia, custo;
 
                 limparTela();
@@ -322,8 +330,10 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
                 limparBuffer();
                 fgets(nome, sizeof(nome), stdin);
                 removerCaracter(nome);
-                printf("Introduza a localizacao do veiculo:\n");
-                scanf("%s", localizacao);
+                printf("Introduza o numero da localizacao do veiculo:\n");
+                listarVertices(*topoVTC);
+                scanf("%d", &loc);
+                localizacao = procurarMorada(*topoVTC, loc);
                 printf("Introduza a bateria restante no veiculo:\n");
                 scanf("%f", &bateria);
                 printf("Introduza a autonomia restante no veiculo:\n");
@@ -340,20 +350,22 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF)
             }
             case 5:
             {
-                char localidade[TAM_MORADA];
+                char *localizacao = malloc(sizeof(char) * TAM_MORADA);
+                int loc;
 
                 limparTela();
-                printf("Introduza a localidade que quer procurar:\n");
-                limparBuffer();
-                scanf("%s", localidade);
+                printf("Introduza o numero da localizacao do veiculo:\n");
+                listarVertices(*topoVTC);
+                scanf("%d", &loc);
+                localizacao = procurarMorada(*topoVTC, loc);
 
-                pesquisarLocalidade(*topoM, localidade);
+                pesquisarLocalidade(*topoM, localizacao);
                 break;
             }
             case 6:
             {
                 limparTela();
-                *topoG = editarDadosGestor(*topoG, NIF);
+                *topoG = editarDadosGestor(*topoG, *topoVTC, NIF);
                 break;
             }
             case 7:

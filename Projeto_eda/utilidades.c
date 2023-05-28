@@ -23,6 +23,8 @@ void limparBuffer()
 	scanf("%*c");
 }
 
+/// @brief funcao utilizada para remover o ultimo caracter de uma string e trocar por \0
+/// @param string string que queremos remover o ult caracter
 void removerCaracter(char string[])
 {
     int len = strlen(string);
@@ -32,35 +34,42 @@ void removerCaracter(char string[])
 /// @brief limpa o buffer e espera a interação do cliente para continuar
 void enterContinuar()
 {
-	printf("Pressione ENTER para continuar..");
+	printf(GREEN"Pressione ENTER para continuar.."RESET);
     limparBuffer();
 	getchar();
 }
 
+/// @brief imprime o logo do programa
 void imprimirLogo()
 {
-    printf("  _____                  _       _        \n");
+    printf(BLUE"  _____                  _       _        \n");
     printf(" | ____|          _ __  (_)   __| |   ___ \n");
     printf(" |  _|    _____  | '__| | |  / _` |  / _ |\n");
     printf(" | |___  |_____| | |    | | | (_| | |  __/\n");
-    printf(" |_____|         |_|    |_|  |__,_|  |___|\n");
+    printf(" |_____|         |_|    |_|  |__,_|  |___|\n"RESET);
     printf("\n\t\t\tby: Diogo Goncalves\n\n");
 }
 
+/// @brief esta funcao imprime os dados dos clientes(saldo e nome)
+/// @param auxC endereço do topo da lista dos clientes
+/// @param NIF cliente que realizou o login
 void imprimirDadosCliente(RC* auxC, int NIF)
 {
     RC* topoC = auxC;
     while(topoC != NULL && NIF != topoC->NIF)   topoC = topoC->seguinte;
 
-    if(topoC != NULL)   printf("Bem-vindo, %s!!\nO seu saldo é: %.2f€\n\n", topoC->nome, topoC->saldo);
+    if(topoC != NULL)   printf(YELLOW"Bem-vindo, %s!!\nO seu saldo é: %.2f€\n\n"RESET, topoC->nome, topoC->saldo);
 }
 
+/// @brief esta funcao imprime os dados dos gestores(nome)
+/// @param auxG endereço do topo da lista dos gestores
+/// @param NIF gestor que realizou o login
 void imprimirDadosGestor(RG* auxG, int NIF)
 {
     RG* topoG = auxG;
     while(topoG != NULL && NIF != topoG->NIF)   topoG = topoG->seguinte;
 
-    if(topoG != NULL)   printf("Bem-vindo, %s!!\n\n", topoG->nome);
+    if(topoG != NULL)   printf(YELLOW"Bem-vindo, %s!!\n\n"RESET, topoG->nome);
 }
 
 /// @brief verifica através de uma password e um NIF se o utilizador é um cliente ou um gestor
@@ -183,6 +192,11 @@ int verificarAlugado(RM* auxM, int ID)
     return 0;
 }
 
+/// @brief esta funcao verifica se um veiculo esta alugado por um certo utilizador
+/// @param auxM endereço do topo da lista dos veiculos
+/// @param ID id do meio que queremos verificar se esta alugado
+/// @param NIF NIF do utilizador que queremos ver se tem o veiculo alugaod
+/// @return retorna 1 se estiver alugado por esse utilizador e 0 caso contrario
 int verificarAlugadoNIF(RM* auxM, int ID, int NIF)
 {
     RM* topoM = auxM;

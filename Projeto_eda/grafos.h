@@ -27,10 +27,16 @@ VTC* editarVertice(VTC* auxVTC, int id);
 
 VTC* removerVertice(VTC* auxVTC, int id);
 
+void listarVertices(VTC* auxVTC);
+
+char* procurarMorada(VTC* auxVTC, int v);
+
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
 
 VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso);
 
 VTC* removerAresta(VTC* auxVTC, int v1, int v2);
+
+int procurarMeiosRaio(VTC* auxVTC, RM* auxRM, int localizacao, char veiculo[], float raio);
 
 #endif

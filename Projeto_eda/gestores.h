@@ -16,7 +16,7 @@ typedef struct registo_adjacentes ADJ;
 
 RG* adicionarGestor(RG* auxG, char nome[], char morada[], char password[], int NIF);
 
-RG* editarDadosGestor(RG* auxG, int NIF);
+RG* editarDadosGestor(RG* auxG, VTC* auxVTC, int NIF);
 
 RG* removerGestor(RG* auxG, int NIF);
 

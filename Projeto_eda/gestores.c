@@ -39,12 +39,14 @@ RG* adicionarGestor(RG* auxG, char nome[], char morada[], char password[], int N
 
 /// @brief Esta função interage com o gestor e pergunta que dados ele quer alterar. Dependendo da escolha ele encaminha para tal e vai percorrendo a lista até ter o NIF igual ao introduzido anteriormente e altera os valores.
 /// @param auxG endereço do topo da lista dos gestores
+/// @param auxVTC endereço do topo da lista dos vertices
 /// @param NIF NIF do gestor que desejamos alterar os dados
 /// @return retorna um valor do tipo apontador para RG, sendo este o endereço do topo da lista com os dados atualizados
-RG* editarDadosGestor(RG* auxG, int NIF)
+RG* editarDadosGestor(RG* auxG, VTC* auxVTC, int NIF)
 {
 	int opcao;
 	RG* topoG = auxG;
+	VTC* topoVTC = auxVTC;
 
 	printf("Escolha a opcao que deseja alterar:\n");
 	printf("1 - Morada\n2 - Password\n");
@@ -54,10 +56,12 @@ RG* editarDadosGestor(RG* auxG, int NIF)
 	{
 		case 1:
 		{
-			char morada[TAM_MORADA];
-			printf("Introduza a sua nova morada:\n");
-            limparBuffer();
-			scanf("%s", morada);
+			char *morada = malloc(sizeof(char) * TAM_MORADA);
+			int esc;
+			printf("Introduza o numero da sua nova morada:\n");
+            listarVertices(topoVTC);
+			scanf("%d", &esc);
+			morada = procurarMorada(topoVTC, esc);
 
 			while (topoG != NULL)
 			{

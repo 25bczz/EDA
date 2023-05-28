@@ -10,6 +10,11 @@
 #include "utilidades.h"
 #include "grafos.h"
 
+/// @brief esta funcao e atualizada para adicionar um vertice
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param id id do vertice que deseja inserir
+/// @param geocode nome da localidade que deseja inserir
+/// @return apontador para o inicio da lista do grafo atualizado
 VTC* adicionarVertice(VTC* auxVTC, int id, char geocode[])
 {
     VTC* novo = malloc(sizeof(VTC));
@@ -25,6 +30,10 @@ VTC* adicionarVertice(VTC* auxVTC, int id, char geocode[])
     return novo;
 }
 
+/// @brief esta funcao e utilizada para editar um vertice
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param id id do vertice que desejamos alterar a localizacao
+/// @return apontador para o inicio da lista do grafo atualizado
 VTC* editarVertice(VTC* auxVTC, int id)
 {
     char loc[TAM_MORADA];
@@ -53,6 +62,10 @@ VTC* editarVertice(VTC* auxVTC, int id)
     return auxVTC;
 }
 
+/// @brief esta funcao e utilizada para remover um vertice
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param id id do vertice que desejamos remover
+/// @return apontador para o inicio da lista do grafo atualizado
 VTC* removerVertice(VTC* auxVTC, int id)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
@@ -99,6 +112,41 @@ VTC* removerVertice(VTC* auxVTC, int id)
     }
 }
 
+/// @brief lista o dos vertices todos, juntamente com a localizacao
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+void listarVertices(VTC* auxVTC)
+{
+    VTC* topoVTC = auxVTC;
+
+    while(topoVTC != NULL)
+    {
+        printf("%d - %s\n", topoVTC->id, topoVTC->geocode);
+        topoVTC = topoVTC->seguinte;
+    }
+}
+
+/// @brief procura a morada no grafo atraves do id do vertice
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param v id do vertice que deseja procurar
+/// @return string da morada encontrada
+char* procurarMorada(VTC* auxVTC, int v)
+{
+    VTC* topoVTC = auxVTC;
+
+    while(topoVTC != NULL)
+    {
+        if(topoVTC->id == v)    return topoVTC->geocode;
+        topoVTC = topoVTC->seguinte;
+    }
+    return NULL;
+}
+
+/// @brief funcao utilizada para adicionar uma aresta
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param id id do vertice de origem da aresta
+/// @param adj id do vertice de destino da aresta
+/// @param peso peso da aresta
+/// @return apontador para o inicio da lista do grafo atualizado
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso)
 {
     VTC* topoVTC = auxVTC;
@@ -122,6 +170,12 @@ VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso)
     return auxVTC;
 }
 
+/// @brief funcao utilizada para alterar o peso de uma aresta
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param v1 vertice de origem da aresta
+/// @param v2 vertice de destino da aresta
+/// @param peso peso que deseja colocar na aresta
+/// @return apontador para o inicio da lista do grafo atualizado
 VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso)
 {
     VTC* topoVTC = auxVTC;
@@ -149,6 +203,11 @@ VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso)
     return auxVTC;
 }
 
+/// @brief Esta função é utilizada para remover uma aresta do grafo
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param v1 vertice de origem da aresta
+/// @param v2 vertice de destino da aresta
+/// @return valor do topo da lista do grafo alterado
 VTC* removerAresta(VTC* auxVTC, int v1, int v2)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
@@ -214,5 +273,65 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
                 }
             }
         }
+    }
+}
+
+/// @brief esta funcao e uma funcao auxiliar a funcao de procurarMeiosAux, e utilizada para andar pelos adjacentes todos
+/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param visitados array dos pontos visitados
+/// @param dist distancia atualizada conforme vamos andando
+/// @param raio raio maximo que podemos alcancar
+/// @return 1 se sair corretamente e 0 se nao sair corretamente
+int procurarMeiosRaioAux(VTC* auxVTC, int visitados[], int dist, float raio)
+{
+    ADJ* adj = auxVTC->adjacentes;
+
+    while(adj != NULL)
+    {
+        dist += adj->peso;
+
+        if(dist <= raio)
+        {
+            VTC* aux = auxVTC;
+
+            while(aux ->id != adj->adj)  aux = aux->seguinte;
+
+            procurarMeiosRaioAux(aux, visitados, dist, raio);
+        }
+
+        adj = adj->seguinte;
+    }
+
+    return 1;
+}
+
+/// @brief esta funcao procura todos os meios presentes num raio e lista-os
+/// @param auxVTC apontador para o inicio da lista do grafo
+/// @param auxRM apontador para o inicio da lista dos veiculos
+/// @param localizacao vertice da localizacao onde se encontra o cliente
+/// @param veiculo tipo de veiculo que o cliente deseja procurar
+/// @param raio raio maximo onde o cliente deseja encontrar o veiculo
+/// @return 1 se sair corretamente e 0 se nao sair corretamente
+int procurarMeiosRaio(VTC* auxVTC, RM* auxRM, int localizacao, char veiculo[], float raio)// usar meios por localizacao
+{
+    VTC* topoVTC = auxVTC;
+    RM* topoRM = auxRM;
+    int visitados[TAM_VERTICES], i;
+
+    for(i = 0; i < TAM_VERTICES; i++) visitados[i] = 0;
+
+    while(topoVTC != NULL && topoVTC->id != localizacao)    topoVTC = topoVTC->seguinte;
+
+    if(topoVTC == NULL) return 0;
+    else 
+    {
+        visitados[topoVTC->id] = 1;
+        int dist = 0;
+
+        procurarMeiosRaioAux(topoVTC, visitados, dist, raio);
+
+        for(i = 0; i < TAM_VERTICES; i++) printf("%d - %d\n", i, visitados[i]); // testar
+
+        return 1;
     }
 }

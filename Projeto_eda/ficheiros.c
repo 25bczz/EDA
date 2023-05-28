@@ -135,6 +135,8 @@ RA* conteudoRA()
 	return topoA;
 }
 
+/// @brief esta funcao le o conteudo do ficheiro vertices.txt
+/// @return retorna o valor atualizado dos vertices
 VTC* conteudoVTC()
 {
 	FILE* fp;
@@ -162,6 +164,9 @@ VTC* conteudoVTC()
 	return topoVTC;
 }
 
+/// @brief esta funcao le o conteudo em bin do ficheiro grafo.txt
+/// @param auxVTC endereço do topo da lista do grafo
+/// @return retorna o valor atualizado do grafo
 VTC* conteudoADJ(VTC* auxVTC)
 {
 	FILE* fp;
@@ -194,6 +199,7 @@ VTC* conteudoADJ(VTC* auxVTC)
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
+/// @param auxVTC endereço do topo da lista dos vertices/grafo
 void adicionarFicheiro(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 {
 	FILE* fp;
@@ -417,6 +423,8 @@ RA* conteudoBinRA()
 	return aux;
 }
 
+/// @brief esta funcao le o conteudo bin do ficheiro vertices.bin
+/// @return retorna o valor atualizado dos vertices
 VTC* conteudoBinVTC()
 {
 	FILE* fp;
@@ -444,6 +452,9 @@ VTC* conteudoBinVTC()
 	return aux;
 }
 
+/// @brief esta funcao le o conteudo em bin do ficheiro grafo.bin
+/// @param auxVTC endereço do topo da lista do grafo
+/// @return retorna o valor atualizado do grafo
 VTC* conteudoBinADJ(VTC* auxVTC)
 {
 	FILE* fp;
@@ -475,6 +486,7 @@ VTC* conteudoBinADJ(VTC* auxVTC)
 /// @param auxG endereço do topo da lista dos gestores
 /// @param auxM endereço do topo da lista dos meios
 /// @param auxA endereço do topo da lista dos alugueres
+/// @param auxVTC endereço do topo da lista dos vertices/grafo
 void adicionarFicheiroBin(RC* auxC, RG* auxG, RM* auxM, RA* auxA, VTC* auxVTC)
 {
 	FILE* fp;

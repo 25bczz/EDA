@@ -18,6 +18,9 @@
 /// @param bateria bateria restante do novo meio
 /// @param autonomia autonomia restante do novo meio
 /// @param custo custo de aluguer de um novo meio
+/// @param alugado 0 se estiver disponivel e 1 se estiver alugado
+/// @param NIF NIF do utilizador que alugou o meio
+/// @param tempoinicial tempo inicial normamlente é 0, apenas quando e alugado e que altera
 /// @return retorna um valor do tipo apontador para RM, sendo este o endereço do topo da lista com o novo meio adicionado no topo
 RM* adicionarMeio(RM* auxM, int ID, char nome[], char localizacao[], float bateria, float autonomia, float custo, int alugado, int NIF, time_t tempoinicial)
 {
@@ -147,6 +150,44 @@ void ordenarMeios(RM** auxM)
     }else   printf("\nA lista esta vazia\n");
 }
 
+/* void ordenarMeiosDist(RM** auxM)
+{
+    int trocado = 1;
+    RM** topoM = &(*auxM);
+    if ((*auxM) != NULL){
+        while (trocado) 
+        {
+            trocado = 0;
+            RM* anterior = NULL;
+            RM* atual = (*topoM);
+            while (atual->seguinte != NULL) 
+            {
+                if (atual->autonomia < atual->seguinte->autonomia) 
+                {
+                    RM* proximo = atual->seguinte;
+                    atual->seguinte = proximo->seguinte;
+                    proximo->seguinte = atual;
+                    if (anterior != NULL)
+                    {
+                        anterior->seguinte = proximo;
+                    } else 
+                    {
+                        (*topoM) = proximo;
+                    }
+                    anterior = proximo;
+                    trocado = 1;
+                } 
+                else 
+                {
+                    anterior = atual;
+                    atual = atual->seguinte;
+                }
+            }
+        }
+        listarMeios(*topoM);
+    }else   printf("\nA lista esta vazia\n");
+} */
+
 /// @brief Esta funcao percorre a lista dos meios e vai imprimindo as informações no terminal
 /// @param auxM endereço do topo da lista dos meios
 void listarMeios(RM* auxM)
@@ -155,14 +196,18 @@ void listarMeios(RM* auxM)
 	if (topoM != NULL)
 	{
 		limparTela();
+        printf(MAGENTA"------------------------------------------------------------------------------------------------\n");
+        printf("%-3s\t%-12s\t%-30s\t%-10s\t%-10s\t%-7s\n", "ID", "Tipo", "Localizacao", "Bateria", "Autonomia", "Custo");
+        printf("------------------------------------------------------------------------------------------------\n"RESET);
 		while (topoM != NULL)
 		{
             if(topoM->alugado == 0)
             {
-                printf("ID - %d\nTipo - %s\nLocalizacao - %s\nBateria - %.2f\nAutonomia - %2.f\nCusto - %.2f\n\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
+                printf("%-3d\t%-12s\t%-30s\t%-10.2f\t%-10.2f\t%-7.2f\n", topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo);
             }
 			topoM = topoM->seguinte;
 		}
+        printf("\n");
 		enterContinuar();
 	}
 	else
@@ -173,6 +218,10 @@ void listarMeios(RM* auxM)
 	}
 }
 
+/// @brief esta funcao lista apenas os meios alugados por um utilizador
+/// @param auxM endereço do topo da lista dos veiculos
+/// @param NIF NIF do utilizador cujos meios alugados queremos verificar
+/// @return retorna 1 se tiver algum meio e sair corretamente, caso contrario retorna 0
 int listarMeiosAlugados(RM* auxM, int NIF)
 {
     RM* topoM = auxM, *aux = NULL;
@@ -232,6 +281,7 @@ int darID(RM* auxM)
 /// @param auxA endereço do topo da lista dos alugueres
 /// @param auxM endereço do topo da lista do meio que foi alugado
 /// @param NIF NIF do cliente que alugou um meio
+/// @param final tempo final em que o aluguer foi terminado
 /// @return retorna um valor do tipo apontador para RA, sendo este o endereço do topo da lista com o aluguer adicionado
 RA* adicionarAluguer(RA* auxA, RM* auxM, int NIF, time_t final)
 {

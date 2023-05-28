@@ -10,12 +10,12 @@ typedef struct registo_adjacentes ADJ;
 
 void menu();
 
-void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA);
+void menuLogin(RC** topoC, RG** topoG, RM** topoM, RA** topoA, VTC** topoVTC);
 
-void menuRegistro(RC** topoC, RG** topoG, RM** topoM, RA** topoA);
+void menuRegistro(RC** topoC, RG** topoG, VTC* topoVTC);
 
-void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, int NIF);
+void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC* topoVTC, int NIF);
 
-void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, int NIF);
+void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, int NIF);
 
 #endif

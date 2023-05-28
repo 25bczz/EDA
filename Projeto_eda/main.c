@@ -36,9 +36,6 @@ void main()
     topoVTC = conteudoVTC();
     topoVTC = conteudoADJ(topoVTC);
 
-    topoVTC = removerVertice(topoVTC, 17);
-    topoVTC = removerAresta(topoVTC, 1, 7);
-
     do
     {
         limparTela();
@@ -50,12 +47,12 @@ void main()
         {
             case 1:
             {
-                menuLogin(&topoC, &topoG, &topoM, &topoA);
+                menuLogin(&topoC, &topoG, &topoM, &topoA, &topoVTC);
                 break; 
             }
             case 2:
             {
-                menuRegistro(&topoC, &topoG, &topoM, &topoA);
+                menuRegistro(&topoC, &topoG, topoVTC);
                 break;
             }
             case 0: break;

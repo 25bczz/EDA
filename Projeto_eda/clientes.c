@@ -17,6 +17,7 @@
 /// @param password password do cliente novo
 /// @param NIF NIF do cliente novo
 /// @param idade idade do cliente novo
+/// @param saldo saldo do utilizador novo
 /// @return retorna um valor do tipo apontador para RC, ou seja o novo endereço do topo da lista
 RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade, float saldo)
 {
@@ -41,12 +42,14 @@ RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int 
 }
 /// @brief Esta função interage com o utilizador e pergunta que dados ele quer alterar. Dependendo da escolha ele encaminha para tal e vai percorrendo a lista até ter o NIF igual ao introduzido anteriormente e altera os valores.
 /// @param auxC endereço do topo da lista dos clientes
+/// @param auxVTC endereco do topo da lista dos vertices
 /// @param NIF NIF do cliente que desejamos alterar os dados
 /// @return retorna um valor do tipo apontador para RC, sendo este o endereço do topo da lista com os dados atualizados
-RC* editarDadosCliente(RC* auxC, int NIF)
+RC* editarDadosCliente(RC* auxC, VTC* auxVTC, int NIF)
 {
 	int opcao;
 	RC* topoC = auxC;
+	VTC* topoVTC = auxVTC;
 
 	printf("Escolha a opcao que deseja alterar:\n");
 	printf("1 - Morada\n2 - Password\n3 - Idade\n");
@@ -56,10 +59,14 @@ RC* editarDadosCliente(RC* auxC, int NIF)
 	{
 		case 1:
 		{
-			char morada[TAM_MORADA];
-			printf("Introduza a sua nova morada:\n");
-            limparBuffer();
-			scanf("%s", morada);
+			int esc;
+			printf("Introduza o numero da morada que deseja:\n");
+            listarVertices(topoVTC);
+			scanf("%d", &esc);
+
+			char *morada = malloc(sizeof(char) * TAM_MORADA);
+
+			morada = procurarMorada(topoVTC, esc);
 
 			while (topoC != NULL)
 			{
@@ -209,6 +216,11 @@ RC* carregarSaldo(RC* auxC, int NIF, float pagamento)
 	return topoC;
 }
 
+/// @brief esta funcao e utilizada para editar o saldo diretamente de um cliente
+/// @param auxC endereço do topo da lista dos clientes
+/// @param NIF NIF do cliente que desejamos alterar o saldo
+/// @param pagamento quantidade que queremos que o cliente tenha
+/// @return retorna o endereço para o topo da lista atualizada
 RC* editarSaldo(RC* auxC, int NIF, float pagamento)
 {
 	RC* topoC = auxC;
@@ -226,6 +238,11 @@ RC* editarSaldo(RC* auxC, int NIF, float pagamento)
 	return topoC;
 }
 
+/// @brief funcao utilizada para remover o saldo de um cliente
+/// @param auxC endereço do topo da lista dos clientes
+/// @param NIF NIF do cliente que queremos remover o saldo
+/// @param pagamento quantidade que queremos que o cliente tenha
+/// @return retorna o endereço para o topo da lista atualizada
 RC* removerSaldo(RC* auxC, int NIF, float pagamento)
 {
 	RC* topoC = auxC;
@@ -245,7 +262,6 @@ RC* removerSaldo(RC* auxC, int NIF, float pagamento)
 /// @brief Esta função utiliza a função de verificação que verifica se um meio já está alugado, depois, se esse meio não se encontrar alugado, a variavel auxiliar toma os valores do meio desejado. Seguidamente, verificamos se o cliente tem saldo suficiente e fazemos a transação
 /// @param auxC endereço do topo da lista dos clientes
 /// @param auxM endereço do topo da lista dos meios
-/// @param auxA endereço do topo da lista dos alugueres
 /// @param ID ID do meio que desejamos alugar
 /// @param NIF NIF do cliente que quer alugar
 /// @return retorna 1 se for possivel alugar e 0 se nao se verificar esta condição
@@ -287,6 +303,13 @@ int Alugar(RC* auxC, RM* auxM, int ID, int NIF)
 
 }
 
+/// @brief esta funcao serve para cancelar/ terminar o aluguer que esta a decorrer e remove o respetivo saldo, adiciona ao historico e mete o meio disponivel de novo
+/// @param auxC endereço do topo da lista dos clientes
+/// @param auxM endereço do topo da lista dos veiculos
+/// @param auxA endereço do topo da lista do historico
+/// @param ID id do meio que desejamos terminar o aluguer
+/// @param NIF NIF do cliente que esta a terminar o aluguer
+/// @return retorna 1 se conseguir terminar com sucesso e 0 caso contrario
 int cancelarAluguer(RC* auxC, RM* auxM, RA** auxA, int ID, int NIF)
 {
 	RC* topoC = auxC;

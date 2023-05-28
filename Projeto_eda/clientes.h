@@ -5,6 +5,13 @@
 #define TAM_PASSWORD 30
 #define TAM_LINHA 200
 #define TAM_VERTICES 18
+#define RED     "\x1b[31m"
+#define GREEN   "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE    "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN    "\x1b[36m"
+#define RESET   "\x1b[0m"
 
 typedef struct registo_cliente
 {
@@ -22,7 +29,7 @@ typedef struct registo_adjacentes ADJ;
 
 RC* adicionarCliente(RC* auxC, char nome[], char morada[], char password[], int NIF, int idade, float saldo);
 
-RC* editarDadosCliente(RC* auxC, int NIF);
+RC* editarDadosCliente(RC* auxC, VTC* auxVTC, int NIF);
 
 RC* removerCliente(RC* auxC, int NIF);
 
