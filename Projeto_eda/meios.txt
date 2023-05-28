@@ -1,6 +1,6 @@
-6;bicicleta;justo.bicos.operação;122.00;3333.00;4.00;0;0;0
-5;bicicleta;alerta.brincadeira.firme;25.00;600.00;0.50;0;0;0
-4;bicicleta;alimentação.focinho.dividir;33.00;200.00;5.00;0;0;0
-3;bicicleta;espuma.indica.reparação;1233.00;44.00;3.00;0;0;0
-1;bicicleta;espuma.indica.reparação;123.00;44.00;3.00;0;0;0
 2;bicicleta;remar.energias.exigente;11.00;20.00;2.00;0;0;0
+1;bicicleta;espuma.indica.reparação;123.00;44.00;3.00;0;0;0
+3;bicicleta;espuma.indica.reparação;1233.00;44.00;3.00;0;0;0
+4;bicicleta;alimentação.focinho.dividir;33.00;200.00;5.00;0;0;0
+5;bicicleta;alerta.brincadeira.firme;25.00;600.00;0.50;0;0;0
+6;bicicleta;justo.bicos.operação;122.00;3333.00;4.00;0;0;0

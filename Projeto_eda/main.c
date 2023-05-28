@@ -10,13 +10,13 @@
 #include "utilidades.h"
 #include "grafos.h"
 
-#include "menu.c"
+/*#include "menu.c"
 #include "clientes.c"
 #include "meios.c"
 #include "gestores.c"
 #include "ficheiros.c"
 #include "utilidades.c"
-#include "grafos.c"
+#include "grafos.c"*/
 
 
 /// @brief Esta função acede ao menu de interação
