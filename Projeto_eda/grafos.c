@@ -360,3 +360,34 @@ int procurarMeiosRaio(VTC* auxVTC, RM* auxM, int localizacao, char veiculo[], fl
         return 1;
     }
 }
+
+/// @brief esta funcao anda pelos vtc e devolve acima um do valor mais alto
+/// @param auxVTC apontador para o topo da lista dos vertices
+/// @return devolve acima um do valor mais alto
+int darIDVertice(VTC* auxVTC)
+{
+    int aux = 0;
+    VTC* topoVTC = auxVTC;
+
+    if(topoVTC == NULL) return 0;
+
+    while (topoVTC != NULL)
+    {
+        if (topoVTC->id > aux) aux = topoVTC->id;
+        topoVTC = topoVTC->seguinte;
+    }
+
+    if (aux = (TAM_VERTICES - 1))   return -1;
+    else    return ++aux;
+}
+
+/// @brief esta funcao verifica se um vertice introduzido é valido ou nao
+/// @param auxVTC apontador para o topo dos vertices
+/// @param v vertice introduzido que queremos verificar
+/// @return retorna 1 se for valido e 0 caso contrario
+int verificarVerticeValido(VTC* auxVTC, int v)
+{
+    if(v >= 0 && v < TAM_VERTICES)  return 1;
+    
+    
+}

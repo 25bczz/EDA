@@ -41,4 +41,8 @@ int procurarMeiosRaio(VTC* auxVTC, RM* auxM, int localizacao, char veiculo[], fl
 
 int procurarMeiosRaioAux(VTC* topoVTC, int v , int visitados[], int dist, float raio);
 
+int darIDVertice(VTC* auxVTC);
+
+int verificarVerticeValido(VTC* auxVTC, int v);
+
 #endif

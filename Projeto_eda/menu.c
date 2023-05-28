@@ -132,7 +132,7 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC* topoVTC, in
         limparTela();
         imprimirLogo();
         imprimirDadosCliente(*topoC, NIF);
-        printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Terminar aluguer\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
+        printf("Introduza a opcao que desejar:\n1 - Carregar saldo\n2 - Listar meios\n3 - Alugar meio\n4 - Terminar aluguer\n5 - Pesquisar meios por localidade\n6 - Pesquisar meio por raio\n7 - Editar dados da minha conta\n8 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 
         switch(op)
@@ -229,12 +229,31 @@ void menuCliente(RC** topoC, RG* topoG, RM** topoM, RA** topoA, VTC* topoVTC, in
             }
             case 6:
             {
+                char veiculo[TAM_NOME];
+                int loc;
+                float raio;
+
+                limparTela();
+                printf("Introduza o raio em que deseja procurar:\n");
+                scanf("%f", &raio);
+                printf("Introduza o veiculo que deseja procurar\n");
+                scanf("%s", veiculo);
+                printf("Introduza o numero da localizacao onde esta:\n");
+                listarVertices(topoVTC);
+                scanf("%d", &loc);
+                limparTela();
+
+                procurarMeiosRaio(topoVTC, *topoM, loc, veiculo, raio);
+                break;
+            }
+            case 7:
+            {
                 limparTela();
                 *topoC = editarDadosCliente(*topoC, topoVTC, NIF);
 
                 break;
             }
-            case 7:
+            case 8:
             {
                 int v;
 
@@ -280,7 +299,7 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
         limparTela();
         imprimirLogo();
         imprimirDadosGestor(*topoG, NIF);
-        printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Editar dados da minha conta\n7 - Eliminar a minha conta\n0 - Sair\n");
+        printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Procurar meios por raio\n7 - Editar dados da minha conta\n8 - Adicionar localidade\n9 - Alterar localidade\n10 - Remover localidade\n11 - Adicionar ligacoes\n12 - Alterar ligacoes\n13 - Remover ligacoes\n14 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 
         switch(op)
@@ -364,11 +383,103 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
             }
             case 6:
             {
+                char veiculo[TAM_NOME];
+                int loc;
+                float raio;
+
+                limparTela();
+                printf("Introduza o raio em que deseja procurar:\n");
+                scanf("%f", &raio);
+                printf("Introduza o veiculo que deseja procurar\n");
+                scanf("%s", veiculo);
+                printf("Introduza o numero da localizacao onde esta:\n");
+                listarVertices(*topoVTC);
+                scanf("%d", &loc);
+                limparTela();
+                
+                procurarMeiosRaio(*topoVTC, *topoM, loc, veiculo, raio);
+                break;
+            }
+            case 7:
+            {
                 limparTela();
                 *topoG = editarDadosGestor(*topoG, *topoVTC, NIF);
                 break;
             }
-            case 7:
+            case 8:
+            {
+                int id = darIDVertice(*topoVTC);
+                char geocode[TAM_MORADA];
+
+                limparTela();
+                printf("Introduza a geolocalizacao que deseja para essa nova localidade:\n");
+                scanf("%s", geocode);
+
+                adicionarVertice(*topoVTC, id, geocode);
+                break;
+            }
+            case 9:
+            {
+                int id;
+
+                printf("Introduza o numero do vertice que deseja alterar:\n");
+                scanf("%d", &id);
+                editarVertice(*topoVTC, id);
+                break;
+            }
+            case 10:
+            {
+                int id;
+
+                printf("Introduza o numero do vertice que deseja remover:\n");
+                scanf("%d", &id);
+
+                removerVertice(*topoVTC, id);
+                break;
+            }
+            case 11:
+            {
+                int v1, v2;
+                float peso;
+
+                printf("Introduza o ID do vertice de origem:\n");
+                scanf("%d", &v1);
+                printf("Introduza o ID do vertice de destino:\n");
+                scanf("%d", &v2);
+                printf("Introduza o peso da aresta:\n");
+                scanf("%f", &peso);
+
+                adicionarAresta(*topoVTC, v1, v2, peso);
+                break;
+            }
+            case 12:
+            {
+                int v1, v2;
+                float peso;
+
+                printf("Introduza o ID do vertice de origem da aresta que deseja editar:\n");
+                scanf("%d", &v1);
+                printf("Introduza o ID do vertice de destino da aresta que deseja editar:\n");
+                scanf("%d", &v2);
+                printf("Introduza o peso que deseja colocar na aresta:\n");
+                scanf("%f", &peso);
+
+                editarAresta(*topoVTC, v1, v2, peso);
+                break;
+            }
+            case 13:
+            {
+                int v1, v2;
+
+                printf("Introduza o ID do vertice de origem da aresta que deseja remover:\n");
+                scanf("%d", &v1);
+                printf("Introduza o ID do vertice de destino da aresta que deseja remover:\n");
+                scanf("%d", &v2);
+
+                removerAresta(*topoVTC, v1, v2);
+                break;
+            }
+            case 14:
             {
                 int v;
 
