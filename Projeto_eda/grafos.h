@@ -37,6 +37,8 @@ VTC* editarAresta(VTC* auxVTC, int v1, int v2, float peso);
 
 VTC* removerAresta(VTC* auxVTC, int v1, int v2);
 
-int procurarMeiosRaio(VTC* auxVTC, RM* auxRM, int localizacao, char veiculo[], float raio);
+int procurarMeiosRaio(VTC* auxVTC, RM* auxM, int localizacao, char veiculo[], float raio);
+
+int procurarMeiosRaioAux(VTC* topoVTC, int v , int visitados[], int dist, float raio);
 
 #endif

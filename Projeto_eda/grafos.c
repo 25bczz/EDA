@@ -277,31 +277,35 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
 }
 
 /// @brief esta funcao e uma funcao auxiliar a funcao de procurarMeiosAux, e utilizada para andar pelos adjacentes todos
-/// @param auxVTC é o apontador para o inicio da lista do grafo
+/// @param topoVTC é o apontador para o inicio da lista do grafo
+/// @param v e o ultimo vertice que visitamos para pegarmos os adjacentes deles
 /// @param visitados array dos pontos visitados
 /// @param dist distancia atualizada conforme vamos andando
 /// @param raio raio maximo que podemos alcancar
 /// @return 1 se sair corretamente e 0 se nao sair corretamente
-int procurarMeiosRaioAux(VTC* auxVTC, int visitados[], int dist, float raio)
+int procurarMeiosRaioAux(VTC* topoVTC, int v , int visitados[], int dist, float raio)
 {
-    ADJ* adj = auxVTC->adjacentes;
+    VTC* auxVTC = topoVTC;
 
-    while(adj != NULL)
+    while(auxVTC != NULL && auxVTC->id != v)    auxVTC = auxVTC->seguinte;
+
+    if(auxVTC != NULL)
     {
-        dist += adj->peso;
+        ADJ* adj = auxVTC->adjacentes;
 
-        if(dist <= raio)
+        while(adj != NULL)
         {
-            VTC* aux = auxVTC;
+            if(dist + adj->peso <= raio && !visitados[adj->adj])
+            {
+                dist += adj->peso;
+                visitados[adj->adj] = 1;
 
-            while(aux ->id != adj->adj)  aux = aux->seguinte;
+                procurarMeiosRaioAux(topoVTC, adj->adj, visitados, dist, raio);
+            }
 
-            procurarMeiosRaioAux(aux, visitados, dist, raio);
+            adj = adj->seguinte;
         }
-
-        adj = adj->seguinte;
     }
-
     return 1;
 }
 
@@ -312,10 +316,9 @@ int procurarMeiosRaioAux(VTC* auxVTC, int visitados[], int dist, float raio)
 /// @param veiculo tipo de veiculo que o cliente deseja procurar
 /// @param raio raio maximo onde o cliente deseja encontrar o veiculo
 /// @return 1 se sair corretamente e 0 se nao sair corretamente
-int procurarMeiosRaio(VTC* auxVTC, RM* auxRM, int localizacao, char veiculo[], float raio)// usar meios por localizacao
+int procurarMeiosRaio(VTC* auxVTC, RM* auxM, int localizacao, char veiculo[], float raio)
 {
     VTC* topoVTC = auxVTC;
-    RM* topoRM = auxRM;
     int visitados[TAM_VERTICES], i;
 
     for(i = 0; i < TAM_VERTICES; i++) visitados[i] = 0;
@@ -328,9 +331,31 @@ int procurarMeiosRaio(VTC* auxVTC, RM* auxRM, int localizacao, char veiculo[], f
         visitados[topoVTC->id] = 1;
         int dist = 0;
 
-        procurarMeiosRaioAux(topoVTC, visitados, dist, raio);
+        procurarMeiosRaioAux(auxVTC, topoVTC->id, visitados, dist, raio);
 
-        for(i = 0; i < TAM_VERTICES; i++) printf("%d - %d\n", i, visitados[i]); // testar
+        RM* aux = NULL;
+
+        for(i = 0; i < TAM_VERTICES; i++)
+        {
+            if(visitados[i] == 1)
+            {
+                char *geocode = malloc(sizeof(char) * TAM_MORADA);
+
+                geocode = procurarMorada(auxVTC, i);
+
+                RM* topoM = auxM;
+                while(topoM != NULL)
+                {
+                    if(strcmp(topoM->nome, veiculo) == 0 && strcmp(geocode,topoM->localizacao) == 0 && topoM->alugado == 0)
+                    {
+                        aux = adicionarMeio(aux, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+                    }
+                    topoM = topoM->seguinte;
+                }
+            }
+        }
+
+        ordenarMeios(&aux);
 
         return 1;
     }
