@@ -53,7 +53,7 @@ VTC* editarVertice(VTC* auxVTC, int id)
     return auxVTC;
 }
 
-VTC* removerVertice(VTC* auxVTC, char id)
+VTC* removerVertice(VTC* auxVTC, int id)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
 
@@ -67,11 +67,11 @@ VTC* removerVertice(VTC* auxVTC, char id)
 
         while(elim != NULL)
         {
-            elim = removerAresta(elim, elim->id, id);
+            removerAresta(elim, elim->id, id);
             elim = elim->seguinte;
         }
 
-        return (aux);
+        return auxVTC;
     }
     else
     {
@@ -80,8 +80,7 @@ VTC* removerVertice(VTC* auxVTC, char id)
             anterior = atual;
         }
 
-        if (atual == NULL)
-            return (auxVTC);
+        if (atual == NULL)  return (auxVTC);
         else
         {
             anterior->seguinte = atual->seguinte;
@@ -91,11 +90,11 @@ VTC* removerVertice(VTC* auxVTC, char id)
 
             while(elim != NULL)
             {
-                elim = removerAresta(elim, elim->id, id);
+                removerAresta(elim, elim->id, id);
                 elim = elim->seguinte;
             }
 
-            return (auxVTC);
+            return auxVTC;
         }
     }
 }
@@ -154,14 +153,13 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
 {
     VTC* anterior = auxVTC, *atual = auxVTC, *aux;
 
-    if (atual == NULL)  return (NULL);
+    if (atual == NULL)  return auxVTC;
     else if (atual->id == v1)
     {
         if(atual->adjacentes == NULL) return auxVTC;
         else if(atual->adjacentes->adj == v2)
         {
-            ADJ* auxADJ;
-            auxADJ = atual->adjacentes->seguinte;
+            ADJ* auxADJ = atual->adjacentes->seguinte;
             free(atual->adjacentes);
             atual->adjacentes = auxADJ;
             return auxVTC;
@@ -214,8 +212,6 @@ VTC* removerAresta(VTC* auxVTC, int v1, int v2)
                     free(auxATUAL);
                     return auxVTC;
                 }
-                /* anterior->seguinte = atual->seguinte;
-                free(atual); */
             }
         }
     }

@@ -36,6 +36,9 @@ void main()
     topoVTC = conteudoVTC();
     topoVTC = conteudoADJ(topoVTC);
 
+    topoVTC = removerVertice(topoVTC, 17);
+    topoVTC = removerAresta(topoVTC, 1, 7);
+
     do
     {
         limparTela();

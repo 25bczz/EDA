@@ -25,7 +25,7 @@ VTC* adicionarVertice(VTC* auxVTC, int id, char geocode[]);
 
 VTC* editarVertice(VTC* auxVTC, int id);
 
-VTC* removerVertice(VTC* auxVTC, char id);
+VTC* removerVertice(VTC* auxVTC, int id);
 
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
 
