@@ -411,35 +411,67 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
                 int id = darIDVertice(*topoVTC);
                 char geocode[TAM_MORADA];
 
-                limparTela();
-                printf("Introduza a geolocalizacao que deseja para essa nova localidade:\n");
-                scanf("%s", geocode);
+                if(id != -1)
+                {
+                    limparTela();
+                    printf("Introduza a geolocalizacao que deseja para essa nova localidade:\n");
+                    scanf("%s", geocode);
 
-                adicionarVertice(*topoVTC, id, geocode);
+                    *topoVTC = adicionarVertice(*topoVTC, id, geocode);
+                }
+                else
+                {
+                    limparTela();
+                    printf("Atingiu o numero maximo de localizacoes.\n");
+                    enterContinuar();
+                }
+
                 break;
             }
             case 9:
             {
-                int id;
+                int id, v;
 
                 printf("Introduza o numero do vertice que deseja alterar:\n");
                 scanf("%d", &id);
-                editarVertice(*topoVTC, id);
+                v = verificarVerticeValido(*topoVTC, id);
+
+                if(v == 1)  editarVertice(*topoVTC, id);
+                else    
+                {
+                    limparTela();
+                    printf("Vertice invalido introduzido\n");
+                    enterContinuar();
+                }
                 break;
             }
             case 10:
             {
-                int id;
+                int id, v;
 
                 printf("Introduza o numero do vertice que deseja remover:\n");
                 scanf("%d", &id);
+                v = verificarVerticeValido(*topoVTC, id);
 
-                removerVertice(*topoVTC, id);
+                if(v == 1)  
+                {
+                    removerVertice(*topoVTC, id);
+                    limparTela();
+                    printf("Vertice removido con sucesso\n");
+                    enterContinuar();
+                }
+                else    
+                {
+                    limparTela();
+                    printf("Vertice invalido introduzido\n");
+                    enterContinuar();
+                }
+
                 break;
             }
             case 11:
             {
-                int v1, v2;
+                int v1, v2, vv1, vv2, va;
                 float peso;
 
                 printf("Introduza o ID do vertice de origem:\n");
@@ -449,34 +481,100 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
                 printf("Introduza o peso da aresta:\n");
                 scanf("%f", &peso);
 
-                adicionarAresta(*topoVTC, v1, v2, peso);
+                vv1 = verificarVerticeValido(*topoVTC, v1);
+                vv2 = verificarVerticeValido(*topoVTC, v2);
+
+                if(vv1 == 1 && vv2 == 1)  
+                {
+                    va = verificarArestaValida(*topoVTC, v1, v2);
+
+                    if(va == 1) adicionarAresta(*topoVTC, v1, v2, peso);
+                    else
+                    {
+                        limparTela();
+                        printf("Aresta introduzida invalida\n");
+                        enterContinuar();
+                    }
+                }
+                else    
+                {
+                    limparTela();
+                    printf("Vertices introduzidos invalidos\n");
+                    enterContinuar();
+                }
+
                 break;
             }
             case 12:
             {
-                int v1, v2;
+                int v1, v2, vv1, vv2, va;
                 float peso;
 
                 printf("Introduza o ID do vertice de origem da aresta que deseja editar:\n");
                 scanf("%d", &v1);
                 printf("Introduza o ID do vertice de destino da aresta que deseja editar:\n");
                 scanf("%d", &v2);
-                printf("Introduza o peso que deseja colocar na aresta:\n");
-                scanf("%f", &peso);
 
-                editarAresta(*topoVTC, v1, v2, peso);
+                vv1 = verificarVerticeValido(*topoVTC, v1);
+                vv2 = verificarVerticeValido(*topoVTC, v2);
+
+                if(vv1 == 1 && vv2 == 1)  
+                {
+                    va = verificarArestaValida(*topoVTC, v1, v2);
+
+                    if(va == 1) 
+                    {
+                        printf("Introduza o peso que deseja colocar na aresta:\n");
+                        scanf("%f", &peso);
+                        editarAresta(*topoVTC, v1, v2, peso);
+                    }
+                    else
+                    {
+                        limparTela();
+                        printf("Aresta introduzida invalida\n");
+                        enterContinuar();
+                    }
+                }
+                else   
+                {
+                    limparTela();
+                    printf("Vertices introduzidos invalidos\n");
+                    enterContinuar();
+                }
+
                 break;
             }
             case 13:
             {
-                int v1, v2;
+                int v1, v2, vv1, vv2, va;
 
                 printf("Introduza o ID do vertice de origem da aresta que deseja remover:\n");
                 scanf("%d", &v1);
                 printf("Introduza o ID do vertice de destino da aresta que deseja remover:\n");
                 scanf("%d", &v2);
 
-                removerAresta(*topoVTC, v1, v2);
+                vv1 = verificarVerticeValido(*topoVTC, v1);
+                vv2 = verificarVerticeValido(*topoVTC, v2);
+
+                if(vv1 == 1 && vv2 == 1)
+                {
+                    va = verificarArestaValida(*topoVTC, v1, v2);
+
+                    if(va == 1) removerAresta(*topoVTC, v1, v2);
+                    else
+                    {
+                        limparTela();
+                        printf("Aresta introduzida invalida\n");
+                        enterContinuar();
+                    }
+                }
+                else    
+                {
+                    limparTela();
+                    printf("Vertices introduzidos invalidos\n");
+                    enterContinuar();
+                }
+
                 break;
             }
             case 14:

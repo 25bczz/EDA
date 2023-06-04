@@ -363,21 +363,34 @@ int procurarMeiosRaio(VTC* auxVTC, RM* auxM, int localizacao, char veiculo[], fl
 
 /// @brief esta funcao anda pelos vtc e devolve acima um do valor mais alto
 /// @param auxVTC apontador para o topo da lista dos vertices
-/// @return devolve acima um do valor mais alto
+/// @return devolve acima um do valor mais alto, se ja tiver atingido o max verifica se tem algum numero que ainda nao esta registado, caso contrario devolve -1, se for o primeiro devolve 0
 int darIDVertice(VTC* auxVTC)
 {
-    int aux = 0;
     VTC* topoVTC = auxVTC;
+    int visitados[TAM_VERTICES], i;
+
+    for(i = 0; i < TAM_VERTICES; i++)   visitados[i] = 0;
 
     if(topoVTC == NULL) return 0;
 
+    int aux = 0;
+
     while (topoVTC != NULL)
     {
-        if (topoVTC->id > aux) aux = topoVTC->id;
+        visitados[topoVTC->id] = 1;
+        if (topoVTC->id > aux)  aux = topoVTC->id;
         topoVTC = topoVTC->seguinte;
     }
 
-    if (aux = (TAM_VERTICES - 1))   return -1;
+    if (aux == (TAM_VERTICES - 1))
+    {
+        for(i = 0; i < TAM_VERTICES; i++)
+        {
+            if(visitados[i] == 0)  return i; 
+        }
+
+        return -1;
+    }
     else    return ++aux;
 }
 
@@ -387,7 +400,38 @@ int darIDVertice(VTC* auxVTC)
 /// @return retorna 1 se for valido e 0 caso contrario
 int verificarVerticeValido(VTC* auxVTC, int v)
 {
-    if(v >= 0 && v < TAM_VERTICES)  return 1;
-    
-    
+    if(v >= 0 && v < TAM_VERTICES)
+    {
+        VTC* topoVTC = auxVTC;
+
+        while(topoVTC != NULL)
+        {
+            if(v == topoVTC->id) return 1;
+            topoVTC = topoVTC->seguinte;
+        }
+
+        if(topoVTC == NULL) return 0;
+    }
+    else return 0;
+}
+
+int verificarArestaValida(VTC* auxVTC, int v1, int v2)
+{
+    VTC* topoVTC = auxVTC;
+
+    while(topoVTC != NULL && topoVTC->id != v1) topoVTC = topoVTC->seguinte;
+
+    if(topoVTC == NULL) return 0;
+    else
+    {
+        ADJ* adj = topoVTC->adjacentes;
+
+        while(adj != NULL)
+        {
+            if(adj->adj == v2)  return 1;
+            adj = adj->seguinte;
+        }
+        
+        return 0;
+    }
 }

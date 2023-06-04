@@ -45,4 +45,6 @@ int darIDVertice(VTC* auxVTC);
 
 int verificarVerticeValido(VTC* auxVTC, int v);
 
+int verificarArestaValida(VTC* auxVTC, int v1, int v2);
+
 #endif
