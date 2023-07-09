@@ -445,6 +445,31 @@ int verificarArestaValida(VTC* auxVTC, int v1, int v2)
     }
 }
 
+CM* adicionarCM(CM* auxCM, int vtc)
+{
+    CM* topoCM = auxCM;
+
+    while(topoCM != NULL)
+    {
+        if(topoCM->vertice == vtc)
+        {
+            topoCM->quantidade++;
+            return auxCM;
+        }
+        topoCM  = topoCM->seguinte;
+    }
+
+    CM* novo = malloc(sizeof(CM));
+
+    novo->quantidade = 1;
+    novo->vertice = vtc;
+
+    if(auxCM == NULL) novo->seguinte = NULL;
+    else novo->seguinte = auxCM;
+
+    return novo;
+}
+
 void camiao(RM* auxM, VTC* auxVTC, int nmr)
 {
     RM* veiculos = NULL, *topoM = auxM;
@@ -461,9 +486,16 @@ void camiao(RM* auxM, VTC* auxVTC, int nmr)
         {
             id = procurarIDVTC(topoVTC, veiculos->localizacao);
 
-
+            topoCM = adicionarCM(topoCM, id);
 
             veiculos = veiculos->seguinte;
+        }
+
+        CM* auxCM =  topoCM;
+
+        while(auxCM != NULL)
+        {
+            
         }
     }
 }

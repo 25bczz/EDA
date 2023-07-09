@@ -56,8 +56,8 @@ int verificarVerticeValido(VTC* auxVTC, int v);
 
 int verificarArestaValida(VTC* auxVTC, int v1, int v2);
 
-void camiao(RM* auxM, VTC* auxVTC, int nmr);
+CM* adicionarCM(CM* auxCM, int vtc);
 
-CM* adicionarCM();
+void camiao(RM* auxM, VTC* auxVTC, int nmr);
 
 #endif
