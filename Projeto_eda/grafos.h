@@ -16,6 +16,13 @@ typedef struct registo_adjacentes
     struct registo_adjacentes *seguinte;
 }ADJ;
 
+typedef struct registo_camiao
+{
+    int quantidade;
+    int vertice;
+    struct registo_camiao *seguinte;
+}CM;
+
 typedef struct registo_cliente RC;
 typedef struct registo_gestor RG;
 typedef struct registo_meio RM;
@@ -30,6 +37,8 @@ VTC* removerVertice(VTC* auxVTC, int id);
 void listarVertices(VTC* auxVTC);
 
 char* procurarMorada(VTC* auxVTC, int v);
+
+int procurarIDVTC(VTC* auxVTC, char* localizacao);
 
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
 
@@ -46,5 +55,9 @@ int darIDVertice(VTC* auxVTC);
 int verificarVerticeValido(VTC* auxVTC, int v);
 
 int verificarArestaValida(VTC* auxVTC, int v1, int v2);
+
+void camiao(RM* auxM, VTC* auxVTC, int nmr);
+
+CM* adicionarCM();
 
 #endif

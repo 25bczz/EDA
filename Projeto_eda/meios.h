@@ -33,8 +33,6 @@ RM* removerMeio(RM* auxM, int ID);
 
 void ordenarMeios(RM** auxM);
 
-/* void ordenarMeiosDist(RM** auxM); */
-
 void listarMeios(RM* auxM);
 
 int listarMeiosAlugados(RM* auxM, int NIF);

@@ -246,3 +246,19 @@ int verificarPasswordAntigaGestores(RG* auxG, int NIF, char password[])
 	}
     return -1;
 }
+
+RM* verificarBateria50(RM* auxM)
+{
+    RM* veiculos = NULL, *topoM = auxM;
+
+    while(topoM != NULL)
+    {
+        if(topoM->bateria <= 50)
+        {
+            veiculos = adicionarMeio(veiculos, topoM->ID, topoM->nome, topoM->localizacao, topoM->bateria, topoM->autonomia, topoM->custo, topoM->alugado, topoM->NIF, topoM->tempoinicial);
+        }
+        topoM = topoM->seguinte;
+    }
+
+    return veiculos;
+}

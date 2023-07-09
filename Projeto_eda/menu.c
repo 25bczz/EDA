@@ -299,7 +299,7 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
         limparTela();
         imprimirLogo();
         imprimirDadosGestor(*topoG, NIF);
-        printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Procurar meios por raio\n7 - Editar dados da minha conta\n8 - Adicionar localidade\n9 - Alterar localidade\n10 - Remover localidade\n11 - Adicionar ligacoes\n12 - Alterar ligacoes\n13 - Remover ligacoes\n14 - Eliminar a minha conta\n0 - Sair\n");
+        printf("Introduza a opcao que desejar:\n1 - Listar clientes\n2 - Remover clientes\n3 - Listar meios\n4 - Adionar meio\n5 - Pesquisar meios por localidade\n6 - Procurar meios por raio\n7 - Editar dados da minha conta\n8 - Adicionar localidade\n9 - Alterar localidade\n10 - Remover localidade\n11 - Adicionar ligacoes\n12 - Alterar ligacoes\n13 - Remover ligacoes\n14 - Recolher veiculos\n15 - Eliminar a minha conta\n0 - Sair\n");
         scanf("%d", &op);
 
         switch(op)
@@ -578,6 +578,20 @@ void menuGestor(RC** topoC, RG** topoG, RM** topoM, RA* topoA, VTC** topoVTC, in
                 break;
             }
             case 14:
+            {
+                int nmr;
+
+                limparTela();
+                printf("Introduza o numero de veiculos que o seu camiao pode recolher:\n");
+                scanf("%d", &nmr);
+
+                limparTela();
+                camiao(*topoM, *topoVTC, nmr);
+                enterContinuar();
+
+                break;
+            }
+            case 15:
             {
                 int v;
 

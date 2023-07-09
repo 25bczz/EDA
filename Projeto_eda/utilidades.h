@@ -36,4 +36,6 @@ int verificarPasswordAntigaClientes(RC* auxC, int NIF, char password[]);
 
 int verificarPasswordAntigaGestores(RG* auxG, int NIF, char password[]);
 
+RM* verificarBateria50(RM* auxM);
+
 #endif

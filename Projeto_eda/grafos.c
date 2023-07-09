@@ -141,6 +141,15 @@ char* procurarMorada(VTC* auxVTC, int v)
     return NULL;
 }
 
+int procurarIDVTC(VTC* auxVTC,char *localizacao)
+{
+    int ID;
+
+    VTC* topoVTC = auxVTC;
+
+    return ID;
+}
+
 /// @brief funcao utilizada para adicionar uma aresta
 /// @param auxVTC é o apontador para o inicio da lista do grafo
 /// @param id id do vertice de origem da aresta
@@ -433,5 +442,28 @@ int verificarArestaValida(VTC* auxVTC, int v1, int v2)
         }
         
         return 0;
+    }
+}
+
+void camiao(RM* auxM, VTC* auxVTC, int nmr)
+{
+    RM* veiculos = NULL, *topoM = auxM;
+    VTC* topoVTC = auxVTC;
+    CM* topoCM = NULL;
+    int id;
+
+    veiculos = verificarBateria50(auxM);
+
+    if(veiculos == NULL)    printf("Nao ha veiculos disponiveis com bateria inferior a 50 para recolha.\n");
+    else
+    {
+        while(veiculos != NULL)
+        {
+            id = procurarIDVTC(topoVTC, veiculos->localizacao);
+
+
+
+            veiculos = veiculos->seguinte;
+        }
     }
 }
