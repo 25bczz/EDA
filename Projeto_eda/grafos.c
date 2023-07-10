@@ -141,11 +141,16 @@ char* procurarMorada(VTC* auxVTC, int v)
     return NULL;
 }
 
-int procurarIDVTC(VTC* auxVTC,char *localizacao)
+int procurarIDVTC(VTC* auxVTC, char localizacao[])
 {
     int ID;
-
     VTC* topoVTC = auxVTC;
+
+    while(topoVTC != NULL)
+    {
+        if(strcmp(localizacao, topoVTC->geocode) == 0)  ID = topoVTC->id;
+        topoVTC = topoVTC->seguinte;
+    }
 
     return ID;
 }
@@ -495,7 +500,8 @@ void camiao(RM* auxM, VTC* auxVTC, int nmr)
 
         while(auxCM != NULL)
         {
-            
+            printf("%d %d\n", auxCM->vertice, auxCM->quantidade);
+            auxCM = auxCM->seguinte;
         }
     }
 }

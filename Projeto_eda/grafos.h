@@ -38,7 +38,7 @@ void listarVertices(VTC* auxVTC);
 
 char* procurarMorada(VTC* auxVTC, int v);
 
-int procurarIDVTC(VTC* auxVTC, char* localizacao);
+int procurarIDVTC(VTC* auxVTC, char localizacao[]);
 
 VTC* adicionarAresta(VTC* auxVTC, int id, int adj, float peso);
 
