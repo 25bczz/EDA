@@ -475,6 +475,48 @@ CM* adicionarCM(CM* auxCM, int vtc)
     return novo;
 }
 
+int caminhoMaisCurto(VTC* auxVTC, int v1, int v2)   // falta andar pelos adjs dos adjs e fzr o de voltar ao vtc que tava anteriormente escolhido
+{
+    VTC* topoVTC = auxVTC;
+    float vertices[TAM_VERTICES], vertices_menor[TAM_VERTICES], peso, peso_menor;
+    int i, visitados[TAM_VERTICES];
+
+    for(i = 0; i < TAM_VERTICES; i++)   vertices[i] = INFINITO;     //declaramos todos os pesos como infinito inicalmente
+    for(i = 0; i < TAM_VERTICES; i++)   visitados[i] = 0;           //declaramos todos os visitados como 0 inicalmente
+
+    vertices[v1] = 0;       // o de origem fica com peso 0
+    visitados[v1] = 1;      // e fica visitado tambem
+
+    while(topoVTC != NULL && topoVTC->id != v1)   topoVTC = topoVTC->seguinte;      //vamos ate ao 1 vtc
+
+    if(topoVTC == NULL) return -1;      // se vier nulo e pq o vertice era invalido
+
+    while(topoVTC->adjacentes != NULL)      // vamos aos adj do vtc inicial
+    {
+        if(vertices[topoVTC->adjacentes->adj] > (peso + topoVTC->adjacentes->peso))    vertices[topoVTC->adjacentes->adj] = peso + topoVTC->adjacentes->peso; // significa que o caminho que estamos a percorrer atualmente nos levou "mais depressa a tal vtc ent substituimos"
+        else
+        {
+            // temos de voltar ate esse vertice com o peso que ja tava la e ver os adjacentes a partir dai pq tinhamos um cmainho menor ate chegar ate tal vtc
+        }
+        peso = vertices[topoVTC->adjacentes->adj]; // o peso fica sempre com o peso atual do vertice onde tamos, que é o ultimo do caminho ate ao momento, ou seja tem o maior peso
+
+        if(topoVTC->adjacentes->adj == v2 && peso < peso_menor)  // se chegarmos ao vtc desejado e o peso atual for menor que o declarado anteriormente
+        {
+            peso_menor = peso;  // o peso menor pega o valor deste peso que passa a ser o menor
+            for(i = 0; i < TAM_VERTICES; i++)   vertices_menor[i] = vertices[i];    // vtcs para sabermos depois o caminho exato que foi utilizado
+        }
+
+        for(i = 0; i < TAM_VERTICES; i++)   vertices[i] = INFINITO; // declaramos tudo de novo para entrar novamente no ciclo
+        for(i = 0; i < TAM_VERTICES; i++)   visitados[i] = 0;
+        vertices[v1] = 0;
+        visitados[v1] = 1;
+
+        topoVTC->adjacentes = topoVTC->adjacentes->seguinte;    // andamos com o clico para a frente e vamos verificar os outros adjacentes do vtc inicial
+    }
+
+
+}
+
 void camiao(RM* auxM, VTC* auxVTC, int nmr)
 {
     RM* veiculos = NULL, *topoM = auxM;
@@ -500,8 +542,12 @@ void camiao(RM* auxM, VTC* auxVTC, int nmr)
 
         while(auxCM != NULL)
         {
-            printf("%d %d\n", auxCM->vertice, auxCM->quantidade);
-            auxCM = auxCM->seguinte;
+            //printf("%d %d\n", auxCM->vertice, auxCM->quantidade);
+            if(auxCM->quantidade == 0)
+            {
+                caminhoMaisCurto(auxVTC, auxCM->vertice, auxCM->seguinte->vertice);
+                auxCM = auxCM->seguinte;
+            }
         }
     }
 }

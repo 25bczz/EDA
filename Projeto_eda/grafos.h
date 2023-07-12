@@ -1,5 +1,6 @@
 #ifndef GRAFOS_H
 #define GRAFOS_H
+#define INFINITO 1000
 
 typedef struct registo_vertices
 {
@@ -57,6 +58,8 @@ int verificarVerticeValido(VTC* auxVTC, int v);
 int verificarArestaValida(VTC* auxVTC, int v1, int v2);
 
 CM* adicionarCM(CM* auxCM, int vtc);
+
+int caminhoMaisCurto(VTC* auxVTC, int v1, int v2);
 
 void camiao(RM* auxM, VTC* auxVTC, int nmr);
 
